@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "vital-app"
+    }
+  },
+  "defaultProject": "vital-app",
+  "cli": {
+    "analytics": false
+  }
 }
