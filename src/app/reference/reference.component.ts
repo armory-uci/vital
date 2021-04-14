@@ -14,8 +14,8 @@ export class ReferenceComponent implements OnInit {
   constructor(private referenceService: ReferenceService) { }
 
   ngOnInit(): void {
-    this.referenceService.getReference('1').subscribe(data => {
-      this.refer = {id: data._id, title: data.title, content: data.content};
+    this.referenceService.getReference().subscribe(data => {
+      this.referenceList = data.posts;
     });
   }
 
@@ -25,6 +25,12 @@ export class ReferenceComponent implements OnInit {
       title: 'r1',
       content: ''
     };
+  }
+
+  receiveData() {
+    this.referenceService.getReference().subscribe(data => {
+      this.referenceList = data.posts;
+    });
   }
 
 }

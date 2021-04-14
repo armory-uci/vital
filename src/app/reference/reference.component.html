@@ -1,2 +1,8 @@
 <p>reference works!</p>
 <button (click)="sendData()">Send Data</button>
+<button (click)="receiveData()">Receive Data</button>
+<div *ngFor="let item of referenceList">
+  {{item.id}}
+  {{item.title}}
+  {{item.content}}
+</div>
