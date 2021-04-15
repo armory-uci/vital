@@ -14,4 +14,8 @@ export class ReferenceService {
       "http://localhost:3000/api/getRefer"
     );
   }
+
+  postReference(postData: IRefer) {
+    return this.http.post<{message: string}>("http://localhost:3000/api/postRefer", postData);
+  }
 }

@@ -20,11 +20,14 @@ export class ReferenceComponent implements OnInit {
   }
 
   sendData() {
-    const data: IRefer = {
-      id: 'xx',
-      title: 'r1',
-      content: ''
+    const post:IRefer = {
+      id: '343ff4',
+      title: 'Post Request Title',
+      content: 'Some post content'
     };
+    this.referenceService.postReference(post).subscribe((responseData) => {
+      console.log(responseData.message);
+    });
   }
 
   receiveData() {

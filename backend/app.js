@@ -1,6 +1,10 @@
 const express = require('express');
+const bodyparser = require('body-parser');
 
 const app = express();
+
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended: false}));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -15,7 +19,15 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/getRefer', (req, res, next) => {
+app.post('/api/postRefer', (req, res, next) => {
+  const post = req.body;
+  console.log(post);
+  res.status(201).json({
+    message: 'Post added successfully'
+  });
+})
+
+app.get('/api/getRefer', (req, res, next) => {
   const refer = [{
     id: "fd345",
     title: "Some title",
