@@ -15,6 +15,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/sandbox', require('./sandbox'));
+
 app.use('/api/getRefer', (req, res, next) => {
   const refer = [{
     id: "fd345",
