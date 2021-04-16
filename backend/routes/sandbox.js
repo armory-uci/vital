@@ -10,21 +10,21 @@ router.route('/')
         // console.log(response);
         // return res.json(req.headers);
 
-        // ecs.listTasks({cluster:'httpd-siab'}, (err, data) => {
-        //     if (err) return res.json(err);
-        //     return res.json(data);
-        // });
-        ecs.waitFor('tasksRunning', { cluster: 'httpd-siab', tasks: ["arn:aws:ecs:us-east-1:999744867675:task/httpd-siab/51bc7a0e3c434accba57bf8742b6fc64"] }, (err, data) => {
+        ecs.listTasks({cluster:'httpd-siab'}, (err, data) => {
             if (err) return res.json(err);
-            data.tasks[0].attachments[0].details.forEach((each) => {
-                if (each.name == 'networkInterfaceId') {
-                    ec2.describeNetworkInterfaces({ NetworkInterfaceIds: [ each.value ] }, (err, data) => {
-                        if (err) return res.json(err);
-                        return res.redirect(`http://${data.NetworkInterfaces[0].Association.PublicIp}:3001`);
-                    })
-                }
-            });
+            return res.json(data);
         });
+        // ecs.waitFor('tasksRunning', { cluster: 'httpd-siab', tasks: ["arn:aws:ecs:us-east-1:999744867675:task/httpd-siab/51bc7a0e3c434accba57bf8742b6fc64"] }, (err, data) => {
+        //     if (err) return res.json(err);
+        //     data.tasks[0].attachments[0].details.forEach((each) => {
+        //         if (each.name == 'networkInterfaceId') {
+        //             ec2.describeNetworkInterfaces({ NetworkInterfaceIds: [ each.value ] }, (err, data) => {
+        //                 if (err) return res.json(err);
+        //                 return res.redirect(`http://${data.NetworkInterfaces[0].Association.PublicIp}:3001`);
+        //             })
+        //         }
+        //     });
+        // });
     });
 
     

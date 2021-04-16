@@ -1,6 +1,12 @@
 const express = require('express');
+const bodyparser = require('body-parser');
+
+const routes = require("./routes/router")
 
 const app = express();
+
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended: false}));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -15,24 +21,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/sandbox', require('./sandbox'));
-
-app.use('/api/getRefer', (req, res, next) => {
-  const refer = [{
-    id: "fd345",
-    title: "Some title",
-    content: "some content"
-  },
-  {
-    id: "ed345",
-    title: "Some title2",
-    content: "new content"
-  },
-]
-  res.status(200).json({
-    message: "get successfully",
-    posts: refer
-  });
-});
+app.use(routes);
 
 module.exports = app;

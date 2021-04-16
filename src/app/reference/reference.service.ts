@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { IRefer } from './reference.model';
+import { environment } from '../../environments/environment';
+
+const NODE_URL = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,11 @@ export class ReferenceService {
 
   getReference() {
     return this.http.get<{message: string, posts: IRefer[]}>(
-      "http://localhost:3000/api/getRefer"
+      NODE_URL + "/getRefer"
     );
+  }
+
+  postReference(postData: IRefer) {
+    return this.http.post<{message: string}>(NODE_URL+"/postRefer", postData);
   }
 }
