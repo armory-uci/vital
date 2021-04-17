@@ -1,5 +1,5 @@
 const express = require("express")
-
+const path = require("path");
 const router = express.Router()
 
 router.post('/api/postRefer', (req, res, next) => {
@@ -26,6 +26,11 @@ router.get('/api/getRefer', (req, res, next) => {
     message: "get successfully",
     posts: refer
   });
+});
+
+//experimenting
+router.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "../frontend", "index.html"))
 });
 
 module.exports = router;
