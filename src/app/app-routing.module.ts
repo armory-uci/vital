@@ -8,19 +8,23 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ReferenceComponent } from './reference/reference.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent},
-  { path: 'reference', component: ReferenceComponent},
-  { path: 'home', component: HomeComponent, children: [
-    { path: '', component: ProblemListComponent},
-    { path: 'problem', component: ProblemListComponent},
-    { path: 'tutorial', component: TutorialPageComponent}
-  ]},
-  { path: 'notfound', component: PageNotFoundComponent},
-  { path: '**', redirectTo: '/notfound'}
+  { path: '', component: LoginComponent },
+  { path: 'reference', component: ReferenceComponent },
+  {
+    path: 'home',
+    component: HomeComponent,
+    children: [
+      { path: '', component: ProblemListComponent },
+      { path: 'problem', component: ProblemListComponent },
+      { path: 'tutorial', component: TutorialPageComponent }
+    ]
+  },
+  { path: 'notfound', component: PageNotFoundComponent },
+  { path: '**', redirectTo: '/notfound' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

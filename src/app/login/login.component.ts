@@ -7,22 +7,19 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   goToTutorial() {
-    this.router.navigate(['home/tutorial'], {relativeTo: this.route});
+    this.router.navigate(['home/tutorial'], { relativeTo: this.route });
   }
 
   goToReference() {
-    this.router.navigate(['reference'], {relativeTo: this.route});
+    this.router.navigate(['reference'], { relativeTo: this.route });
   }
 
   goToProblem() {
-    this.router.navigate(['home/problem'], {relativeTo: this.route});
+    this.router.navigate(['home/problem'], { relativeTo: this.route });
   }
-
 }
