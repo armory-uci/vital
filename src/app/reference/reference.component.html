@@ -1,8 +1,12 @@
 <p>reference works!</p>
-<button color="primary" mat-raised-button (click)="sendData()">Send Data</button>
-<button color="warn" mat-raised-button (click)="receiveData()">Receive Data</button>
+<button color="primary" mat-raised-button (click)="sendData()">
+  Send Data
+</button>
+<button color="warn" mat-raised-button (click)="receiveData()">
+  Receive Data
+</button>
 <div *ngFor="let item of referenceList">
-  {{item.id}}
-  {{item.title}}
-  {{item.content}}
+  {{ item.id }}
+  {{ item.title }}
+  {{ item.content }}
 </div>
