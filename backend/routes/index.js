@@ -30,7 +30,7 @@ router.get('/api/getRefer', (req, res, next) => {
 });
 
 router.use('/sandbox', require('./sandbox'));
-//experimenting
+
 router.use((req, res, next) => {
   res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
 });
