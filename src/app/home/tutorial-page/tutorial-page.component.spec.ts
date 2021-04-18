@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReferenceComponent } from './reference.component';
+import { TutorialPageComponent } from './tutorial-page.component';
 
-describe('ReferenceComponent', () => {
-  let component: ReferenceComponent;
-  let fixture: ComponentFixture<ReferenceComponent>;
+describe('TutorialPageComponent', () => {
+  let component: TutorialPageComponent;
+  let fixture: ComponentFixture<TutorialPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ReferenceComponent]
+      declarations: [TutorialPageComponent]
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReferenceComponent);
+    fixture = TestBed.createComponent(TutorialPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

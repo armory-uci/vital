@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReferenceComponent } from './reference.component';
+import { ProblemListComponent } from './problem-list.component';
 
-describe('ReferenceComponent', () => {
-  let component: ReferenceComponent;
-  let fixture: ComponentFixture<ReferenceComponent>;
+describe('ProblemListComponent', () => {
+  let component: ProblemListComponent;
+  let fixture: ComponentFixture<ProblemListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ReferenceComponent]
+      declarations: [ProblemListComponent]
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ReferenceComponent);
+    fixture = TestBed.createComponent(ProblemListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
