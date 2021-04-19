@@ -5,10 +5,10 @@ router.get('/', sandboxController.listSandboxes);
 
 // there is one to one user to task mapping
 // won't allow one user to open multiple sessions/tabs.
-// so we can use user_id as task_id.
+// so we can use userId as task_id.
 
 router
-  .route('/:user_id')
+  .route('/:userId')
   .get(sandboxController.redirectToTask)
   .delete(sandboxController.cleanupTask);
 // .put(sandboxController.createTask)
