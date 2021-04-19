@@ -9,25 +9,6 @@ const http = require('http');
 const config = require('../config');
 
 /**
- * Normalize a port into a number, string, or false.
- */
-const normalizePort = (val) => {
-  const parsedPort = parseInt(val, 10);
-
-  if (isNaN(parsedPort)) {
-    // named pipe
-    return val;
-  }
-
-  if (parsedPort >= 0) {
-    // port number
-    return parsedPort;
-  }
-
-  return false;
-};
-
-/**
  * Event listener for HTTP server "error" event.
  */
 const onError = (error) => {
@@ -64,7 +45,7 @@ const onListening = () => {
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort(config.port);
+const port = config.port;
 app.set('port', port);
 
 /**
