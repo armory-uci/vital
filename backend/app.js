@@ -1,26 +1,22 @@
 const express = require('express');
-const bodyparser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors');
+const path = require('path');
 
-const routes = require("./routes/router")
+const routes = require('./routes');
+const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
 
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({extended: false}));
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
-  );
-  next();
-});
+app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(cors());
 
 app.use(routes);
+app.use(errorHandler);
 
 module.exports = app;
