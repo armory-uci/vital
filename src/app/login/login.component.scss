@@ -3,3 +3,21 @@
   margin-bottom: 50px;
   float: left;
 }
+
+.login-card {
+  max-width: 600px;
+  margin-bottom: 100px;
+  margin-right: 200px;
+  margin-top: 50px;
+  float: right;
+}
+
+// Display content in a column
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    h1{
+        // Adjust margin-bottom:
+        margin-bottom: 1rem;
+    }
+}
