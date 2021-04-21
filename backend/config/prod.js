@@ -17,7 +17,7 @@ const vulnerabilities = {
 };
 
 const sandbox = {
-  port: 3001,
+  port: 5001,
   ssl: 'http'
 };
 
