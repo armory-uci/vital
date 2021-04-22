@@ -21,8 +21,7 @@ module.exports = (config) => {
       fixWebpackSourcePaths: true
     },
     customLaunchers: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      ChromeHeadlessNoSandbox: {
+      chromeHeadlessNoSandbox: {
         base: 'ChromeHeadless',
         flags: ['--no-sandbox']
       }
