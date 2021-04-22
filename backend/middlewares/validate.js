@@ -31,7 +31,7 @@ const validateResponse = (req, next, schema) => {
   const { error, value } = schema.validate(data, options);
   if (error) {
     next(
-      `request validation error:
+      `response validation error:
       ${error.details.map((x) => x.message).join(', ')}`
     );
   } else {

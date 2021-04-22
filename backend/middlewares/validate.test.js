@@ -4,8 +4,10 @@ const schemaValidationSuccess = {
   validate: () => ({ value: 'success' })
 };
 
+const err = new Error('validation error:');
+
 const schemaValidationFailure = {
-  validate: () => ({ error: { details: [{ message: 'mock_error' }] } })
+  validate: () => ({ error: { details: [err] } })
 };
 
 describe('validateRequest', () => {
@@ -30,10 +32,33 @@ describe('validateRequest', () => {
 
   test('failure', () => {
     const next = jest.fn();
+
     validateRequest({}, next, schemaValidationFailure);
 
     expect(next).toHaveBeenCalled();
     expect(next.mock.calls[0].length).toBe(1);
-    expect(next.mock.calls[0][0]).toContain('mock_error');
+    expect(next.mock.calls[0][0]).toContain(err.message);
+  });
+});
+
+describe('validate Request', () => {
+  test('success', () => {
+    const next = jest.fn();
+    const req = {};
+    validateResponse(req, next, schemaValidationSuccess);
+
+    expect(next).toHaveBeenCalled();
+    expect(next.mock.calls[0].length).toBe(0);
+    expect(req.body).toBe('success');
+  });
+
+  test('failure', () => {
+    const next = jest.fn();
+    const req = {};
+    validateResponse(req, next, schemaValidationFailure);
+
+    expect(next).toHaveBeenCalled();
+    expect(next.mock.calls[0].length).toBe(1);
+    expect(next.mock.calls[0][0]).toContain(err.message);
   });
 });
