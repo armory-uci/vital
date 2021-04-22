@@ -1,6 +1,5 @@
 # Credits: https://faun.pub/configuring-travis-ci-for-angular-application-34afee1715f
 dist: trusty
-sudo: false
 
 language: node_js
 node_js:
