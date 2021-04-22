@@ -47,12 +47,9 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-<<<<<<< HEAD
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule
-=======
+    AngularFireDatabaseModule,
     MatPasswordStrengthModule
->>>>>>> a24caf5449bc3b29535da10c74587e04a6be69a5
   ],
   providers: [],
   bootstrap: [AppComponent]

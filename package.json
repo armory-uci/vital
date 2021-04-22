@@ -21,10 +21,7 @@
     "@angular/compiler": "~10.1.5",
     "@angular/core": "~10.1.5",
     "@angular/fire": "^6.1.4",
-<<<<<<< HEAD
-=======
     "@angular/flex-layout": "^11.0.0-beta.33",
->>>>>>> a24caf5449bc3b29535da10c74587e04a6be69a5
     "@angular/forms": "~10.1.5",
     "@angular/material": "^10.2.7",
     "@angular/platform-browser": "~10.1.5",
@@ -38,10 +35,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "firebase": "^8.4.1",
-<<<<<<< HEAD
-=======
     "ngx-auth-firebaseui": "^5.2.0",
->>>>>>> a24caf5449bc3b29535da10c74587e04a6be69a5
     "joi": "^17.4.0",
     "morgan": "^1.10.0",
     "rxjs": "~6.6.0",
