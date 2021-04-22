@@ -6,10 +6,12 @@ import { TutorialPageComponent } from './home/tutorial-page/tutorial-page.compon
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ReferenceComponent } from './reference/reference.component';
+import { TopicListComponent } from './topic-list/topic-list.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'reference', component: ReferenceComponent },
+  { path: 'topic-list', component: TopicListComponent },
   {
     path: 'home',
     component: HomeComponent,

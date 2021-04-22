@@ -22,4 +22,8 @@ export class LoginComponent implements OnInit {
   goToProblem() {
     this.router.navigate(['home/problem'], { relativeTo: this.route });
   }
+
+  goToTopics() {
+    this.router.navigate(['topic-list'], { relativeTo: this.route });
+  }
 }
