@@ -1,21 +1,16 @@
-<p>login works!</p>
-<mat-card class="card-row">
-  <button color="primary" mat-raised-button (click)="goToTutorial()">
-    Visit Tutorial Page
-  </button>
-</mat-card>
-<mat-card class="card-row">
-  <button color="warn" mat-raised-button (click)="goToReference()">
-    Visit Reference Page
-  </button>
-</mat-card>
-<mat-card class="card-row">
-  <button color="accent" mat-raised-button (click)="goToProblem()">
-    Visit Problem Page
-  </button>
-  <mat-card class="card-row">
-    <button color="warn" mat-raised-button (click)="goToTopics()">
-      See topics from firebase
-    </button>
-  </mat-card>
-</mat-card>
+<div class="wrapper login-card">
+  <h1>Login</h1>
+  <div class="card-row">
+    <ngx-auth-firebaseui-providers
+      layout="column"
+      [providers]="[
+        providers.Google,
+        providers.Facebook,
+        providers.Github,
+        providers.Microsoft,
+        providers.Twitter
+      ]"
+      (onSuccess)="onButtonClick($event)"
+    ></ngx-auth-firebaseui-providers>
+  </div>
+</div>
