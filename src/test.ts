@@ -7,6 +7,9 @@ import {
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 
+// @ts-ignore
+const globalThis = require('globalthis')();
+
 declare const require: {
   context(
     path: string,
