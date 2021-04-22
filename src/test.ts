@@ -8,7 +8,8 @@ import {
 } from '@angular/platform-browser-dynamic/testing';
 
 // @ts-ignore
-const globalThis = require('globalthis')();
+// eslint-disable-next-line no-var
+var globalThis = require('globalthis')();
 
 declare const require: {
   context(
