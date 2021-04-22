@@ -9,7 +9,7 @@ const {
   redirectToTask
 } = require('./sandbox');
 
-const tasksListMockSuccessRes = { taskArns: ['arnId'] };
+const tasksListMockSuccessRes = { taskArns: ['mockListArnId'] };
 const stopTaskSuccessRes = { tasks: { taskArn: 'arn:/mockStoppedArnId' } };
 const startTaskSuccessRes = { tasks: [{ taskArn: 'arn:/mockStartedArnId' }] };
 
@@ -117,7 +117,7 @@ describe('sandboxes', () => {
     expect(res.json).toHaveBeenCalledWith(stopTaskSuccessRes);
   });
 
-  test('spawn sandbox success', async () => {
+  test('POST spawn sandbox success', async () => {
     const req = mockRequest();
     req.method = 'POST';
     req.params = { vulnerability: 'sqlInjection' };
@@ -127,6 +127,29 @@ describe('sandboxes', () => {
     await createTask(req, res, next);
     expect(next).not.toHaveBeenCalled();
     expect(res.json).toHaveBeenCalledWith('mockStartedArnId');
+  });
+
+  test('GET spawn sandbox success', async () => {
+    const req = mockRequest();
+    req.method = 'GET';
+    req.params = { vulnerability: 'sqlInjection' };
+    const res = mockResponse();
+    const next = jest.fn();
+
+    await createTask(req, res, next);
+    expect(next).not.toHaveBeenCalled();
+    expect(res.redirect).toHaveBeenCalledWith('http://localhost:3001');
+  });
+
+  test('spawn sandbox fail', async () => {
+    const req = mockRequest();
+    req.method = 'POST';
+    req.params = { vulnerability: 'nonExistant' };
+    const res = mockResponse();
+    const next = jest.fn();
+
+    await createTask(req, res, next);
+    expect(next).toHaveBeenCalled();
   });
 
   test('sandbox redirection success', async () => {
