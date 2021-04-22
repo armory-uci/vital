@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {AuthProvider} from 'ngx-auth-firebaseui';
+import { AuthProvider } from 'ngx-auth-firebaseui';
 
 @Component({
   selector: 'app-login',
@@ -9,8 +9,8 @@ import {AuthProvider} from 'ngx-auth-firebaseui';
 })
 export class LoginComponent implements OnInit {
   providers = AuthProvider;
-  username = "";
-  password = "";
+  username = '';
+  password = '';
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
   }
 
   onButtonClick($event) {
+    //TODO: Remove console. Pass info to backend/ session storage as needed.
     console.log($event);
     this.router.navigate(['home/problem'], { relativeTo: this.route });
   }

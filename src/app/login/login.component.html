@@ -1,9 +1,16 @@
-
 <div class="wrapper login-card">
   <h1>Login</h1>
   <div class="card-row">
-  <ngx-auth-firebaseui-providers  layout="column" [providers]="[providers.Google,
-  providers.Facebook, providers.Github, providers.Microsoft, providers.Twitter]"
-  (onSuccess)="onButtonClick($event)"></ngx-auth-firebaseui-providers>
+    <ngx-auth-firebaseui-providers
+      layout="column"
+      [providers]="[
+        providers.Google,
+        providers.Facebook,
+        providers.Github,
+        providers.Microsoft,
+        providers.Twitter
+      ]"
+      (onSuccess)="onButtonClick($event)"
+    ></ngx-auth-firebaseui-providers>
   </div>
 </div>
