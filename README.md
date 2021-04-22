@@ -1,11 +1,13 @@
 # VitalApp
 
+[![Build Status](https://travis-ci.com/armory-uci/vital.svg?branch=main)](https://travis-ci.com/armory-uci/vital)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.6.
 You will need [Angular CLI](https://github.com/angular/angular-cli) to run the `ng <>` commands
 
 ## Development server frontend
 
-If you don't have Angular Cli installed run `npm start` for a dev server.  Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+If you don't have Angular Cli installed run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
