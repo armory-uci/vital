@@ -7,6 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
+    "lint:server": "eslint backend/**",
     "e2e": "ng e2e",
     "start:nodeserver": "nodemon ./backend/bin/server",
     "prepare": "husky install",
