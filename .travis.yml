@@ -1,0 +1,21 @@
+# Credits: https://faun.pub/configuring-travis-ci-for-angular-application-34afee1715f
+dist: trusty
+
+language: node_js
+node_js:
+  - '12'
+
+# Get stable Chrome https://docs.travis-ci.com/user/chrome#selecting-a-chrome-version
+addons:
+  chrome: stable
+
+cache:
+  directories:
+    - ./node_modules
+
+install:
+  - npm install
+
+script:
+  - npm run lint
+  - npm run test -- --watch=false --no-progress --browsers=chromeHeadlessNoSandbox
