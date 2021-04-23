@@ -3,7 +3,7 @@ const convict = require('convict');
 
 const config = convict({
   env: {
-    format: ['prod'],
+    format: ['prod', 'test'],
     default: 'dev',
     env: 'NODE_ENV',
     arg: 'nodeEnv'
@@ -37,6 +37,6 @@ const config = convict({
 });
 
 const env = config.get('env');
-config.load(require(`./${env}`));
+config.load(require(`./${env}_env`));
 config.validate();
 module.exports = config.getProperties();
