@@ -6,5 +6,9 @@ module.exports = {
       .map((file) => `--lint-file-patterns ${file}`)
       .join(' ')}`,
     `git add ${files.join(' ')}`
+  ],
+  'backend/**/*.js': (files) => [
+    `eslint --fix ${files.join(' ')}`,
+    `git add ${files.join(' ')}`
   ]
 };
