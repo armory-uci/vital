@@ -32,14 +32,14 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
     ProblemListComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
     NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule,
     MatPasswordStrengthModule
   ],
   providers: [],
