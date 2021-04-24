@@ -1,0 +1,7 @@
+@import '~@angular/material/_theming';
+
+@include mat-core();
+
+// Define colors.
+$vital-indigo: mat-color($mat-indigo, A200);
+$vital-red: mat-color($mat-red, A200);
