@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  & mat-card {
+    flex-basis: 33.333%;
+  }
+}
+
+#tutorial-card {
+  display: flex;
+  flex-direction: column;
+
+  & mat-card-content {
+    flex-grow: 1;
+  }
+}
+
+iframe {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border: 2px solid lightblue; // TODO color
+  border-radius: 5px;
+}
