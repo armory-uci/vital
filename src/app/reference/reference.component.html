@@ -1,14 +1,16 @@
-<div class="refer">
-  <p>reference works!</p>
-</div>
-<button color="primary" mat-raised-button (click)="sendData()">
-  Send Data
-</button>
-<button color="warn" mat-raised-button (click)="receiveData()">
-  Receive Data
-</button>
-<div *ngFor="let item of referenceList">
-  {{ item.id }}
-  {{ item.title }}
-  {{ item.content }}
+<div class="vital-dark-theme">
+  <div class="refer">
+    <p>reference works!</p>
+  </div>
+  <button color="primary" mat-raised-button (click)="sendData()">
+    Send Data
+  </button>
+  <button color="warn" mat-raised-button (click)="receiveData()">
+    Receive Data
+  </button>
+  <div *ngFor="let item of referenceList">
+    {{ item.id }}
+    {{ item.title }}
+    {{ item.content }}
+  </div>
 </div>

@@ -1,7 +1,57 @@
 @import '~@angular/material/_theming';
-
 @include mat-core();
 
+/* For use in src/lib/core/theming/_palette.scss */
+$vital-dark: (
+    50 : #e2e2e2,
+    100 : #b6b6b6,
+    200 : #858585,
+    300 : #545454,
+    400 : #30302f,
+    500 : #0b0b0a,
+    600 : #0a0a09,
+    700 : #080807,
+    800 : #060605,
+    900 : #030303,
+    A100 : #a6a6a6,
+    A200 : #8c8c8c,
+    A400 : #737373,
+    A700 : #666666,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
 // Define colors.
-$vital-indigo: mat-color($mat-indigo, A200);
-$vital-red: mat-color($mat-red, A200);
+.vital-default-theme {
+  $vital-primary: mat-palette($mat-indigo);
+  $vital-warn: mat-palette($mat-red);
+  $vital-accent: mat-palette($mat-pink);
+
+  $vital-theme: mat-light-theme($vital-primary, $vital-warn, $vital-accent);
+  @include angular-material-theme($vital-theme);
+}
+
+.vital-dark-theme {
+  $vital-dark-primary: mat-palette($vital-dark);
+  $vital-warn: mat-palette($mat-red);
+  $vital-accent: mat-palette($mat-pink);
+
+  $vital-dark-theme: mat-light-theme($vital-dark-primary, $vital-warn, $vital-accent);
+  @include angular-material-theme($vital-dark-theme);
+}
+
+
