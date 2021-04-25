@@ -18,6 +18,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
     ProblemListComponent,
     TutorialPageComponent,
     PageNotFoundComponent,
-    ProblemListComponent
+    ProblemListComponent,
+    FooterComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),

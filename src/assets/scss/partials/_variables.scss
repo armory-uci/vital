@@ -1,6 +1,8 @@
 @import '~@angular/material/_theming';
 @include mat-core();
 
+$vital-grey: mat-color($mat-grey, 700);
+
 /* For use in src/lib/core/theming/_palette.scss */
 $vital-dark: (
     50 : #e2e2e2,
