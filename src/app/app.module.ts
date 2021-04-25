@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReferenceComponent } from './reference/reference.component';
@@ -25,18 +28,13 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
     HeaderComponent,
     ProblemListComponent,
     TutorialPageComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ProblemListComponent
   ],
   imports: [
-    NgxAuthFirebaseUIModule.forRoot({
-      apiKey: 'AIzaSyA_08j-qQznU7TwDNPNK8WrbUkZo5QGtdM',
-      authDomain: 'vital-8262d.firebaseapp.com',
-      projectId: 'vital-8262d',
-      storageBucket: 'vital-8262d.appspot.com',
-      messagingSenderId: '253296918538',
-      appId: '1:253296918538:web:61ee5a41302d2d72ac9ff3',
-      measurementId: 'G-MF7ES3S7H6'
-    }),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

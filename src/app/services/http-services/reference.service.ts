@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IRefer } from './reference.model';
-import { environment } from '../../environments/environment';
+import { IRefer } from '../../reference/reference.model';
+import { environment } from '../../../environments/environment';
 
 const NODE_URL = environment.apiUrl;
 

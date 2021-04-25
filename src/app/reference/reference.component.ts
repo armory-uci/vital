@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IRefer } from './reference.model';
-import { ReferenceService } from './reference.service';
+import { ReferenceService } from '../services/http-services/reference.service';
 
 @Component({
   selector: 'app-reference',

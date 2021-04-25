@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProblemListService } from '../../services/utility-services/problem-list.service';
+import { IProblem } from './problem.model';
 
 @Component({
   selector: 'app-problem-list',
@@ -6,7 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./problem-list.component.scss']
 })
 export class ProblemListComponent implements OnInit {
-  constructor() {}
+  problems: IProblem[];
+  constructor(private problemListService: ProblemListService) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.problemListService.getProblems().subscribe((data) => {
+      this.problems = data.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          ...(e.payload.doc.data() as Record<string, unknown>)
+        } as IProblem;
+      }); // TODO: Handle error
+    });
+  }
 }
