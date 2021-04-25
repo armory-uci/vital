@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProblemListService } from './problem-list.service';
-import { Problem } from './problem.model';
+import { ProblemListService } from '../../services/utility-services/problem-list.service';
+import { IProblem } from './problem.model';
 
 @Component({
   selector: 'app-problem-list',
@@ -8,7 +8,7 @@ import { Problem } from './problem.model';
   styleUrls: ['./problem-list.component.scss']
 })
 export class ProblemListComponent implements OnInit {
-  problems: Problem[];
+  problems: IProblem[];
   constructor(private problemListService: ProblemListService) {}
 
   ngOnInit() {
@@ -17,8 +17,8 @@ export class ProblemListComponent implements OnInit {
         return {
           id: e.payload.doc.id,
           ...(e.payload.doc.data() as Record<string, unknown>)
-        } as Problem;
-      });
+        } as IProblem;
+      }); // TODO: Handle error
     });
   }
 }
