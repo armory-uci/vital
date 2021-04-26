@@ -19,6 +19,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { FooterComponent } from './footer/footer.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { FooterComponent } from './footer/footer.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    MatPasswordStrengthModule
+    MatPasswordStrengthModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

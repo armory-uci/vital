@@ -1,6 +1,25 @@
 @import '~@angular/material/_theming';
 @include mat-core();
 
+//Work in progress. Do not delete
+@mixin generate-theme-vars($theme) {
+  $foreground-palette: map-get($theme, foreground);
+  $background-palette: map-get($theme, background);
+
+  $primary: mat-color(map-get($theme, primary));
+  $accent: mat-color(map-get($theme, accent));
+  $warn: mat-color(map-get($theme, warn));
+
+  //@debug "text color: #{mat-color($foreground-palette, text)}";
+  $vital-text: mat-color($foreground-palette, text);
+}
+
+//Work in progress. Do not delete
+@function get_text_color($theme) {
+  $foreground-palette: map-get($theme, foreground);
+  @return ($text: mat-color($foreground-palette, text))
+}
+
 $vital-grey: mat-color($mat-grey, 700);
 
 /* For use in src/lib/core/theming/_palette.scss */
@@ -45,6 +64,7 @@ $vital-dark: (
 
   $vital-theme: mat-light-theme($vital-primary, $vital-warn, $vital-accent);
   @include angular-material-theme($vital-theme);
+  @include generate-theme-vars($vital-theme);
 }
 
 .vital-dark-theme {
@@ -54,6 +74,7 @@ $vital-dark: (
 
   $vital-dark-theme: mat-light-theme($vital-dark-primary, $vital-warn, $vital-accent);
   @include angular-material-theme($vital-dark-theme);
+  @include generate-theme-vars($vital-dark-theme);
 }
 
 
