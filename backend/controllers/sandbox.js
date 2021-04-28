@@ -1,4 +1,5 @@
 const config = require('../config');
+const { registerSandbox, getActiveSandbox, del } = require('../db');
 const api404Error = require('../error/api404Error');
 
 const AWS = require('aws-sdk');
@@ -48,15 +49,11 @@ const listSandboxes = async (req, res, next) => {
   }
 };
 
-const getUserTaskId = (userId) => {
-  return userId;
-};
-
 const redirectToTask = async (req, res, next) => {
   try {
     const params = {
       cluster: config.cluster,
-      tasks: [getUserTaskId(req.params.userId)]
+      tasks: [await getActiveSandbox(req.userId)]
     };
     const taskInfo = await ecs.waitFor('tasksRunning', params).promise();
     const networkInterfaceId = extractNetworkEID(taskInfo);
@@ -78,7 +75,7 @@ const cleanupTask = async (req, res, next) => {
   try {
     const params = {
       cluster: config.cluster,
-      task: getUserTaskId(req.params.userId)
+      task: await getActiveSandbox(req.userId)
     };
     const stopTaskRes = await ecs.stopTask(params).promise();
     return res.json(stopTaskRes);
@@ -87,19 +84,43 @@ const cleanupTask = async (req, res, next) => {
   }
 };
 
+const cleanupUserTasks = async (userId) => {
+  try {
+    const prevSandboxArn = await getActiveSandbox(userId);
+    const describeTaskParams = {
+      cluster: config.cluster,
+      tasks: [prevSandboxArn]
+    };
+    const taskInfo = await ecs.describeTasks(describeTaskParams).promise();
+    if (taskInfo.failures.length && taskInfo.failures[0].reason === 'MISSING')
+      return `task: ${prevSandboxArn} already destroyed`;
+
+    const stopTaskParams = {
+      cluster: config.cluster,
+      task: prevSandboxArn
+    };
+    const cleanupUserTaskRes = await ecs.stopTask(stopTaskParams).promise();
+    return cleanupUserTaskRes;
+  } catch (error) {
+    if (error instanceof api404Error) return error.name;
+    throw error;
+  }
+};
+
 const createTask = async (req, res, next) => {
   try {
+    const userTaskCleanupRes = await cleanupUserTasks(req.userId);
+    // eslint-disable-next-line no-console
+    console.debug('userTaskCleanupRes', userTaskCleanupRes);
     const spawnParams = getSpawnConfig(req.params.vulnerability);
     const spawnRes = await ecs.runTask(spawnParams).promise();
     // NOTE: no need to validation response as AWS Docs state that an error is thrown if something doesn't work else all below fields are guaranteed.
     // so whatever validation you add it won't ever get reached.
     const arn = spawnRes.tasks[0].taskArn.split('/').pop();
 
+    await registerSandbox(req.userId, arn);
     // TODO: save the userId arn mapping to persistant storage
     if (req.method === 'GET') {
-      // HACK: setting userId to arn so that the redirect works
-      req.params.userId = arn;
-      // return res.json(arn);
       return redirectToTask(req, res);
     } else {
       return res.json(arn);

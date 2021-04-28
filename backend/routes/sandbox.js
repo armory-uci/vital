@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const sandboxController = require('../controllers/sandbox');
+const { validateIdToken } = require('../middlewares/auth');
 
 router.get('/', sandboxController.listSandboxes);
 
@@ -7,8 +8,11 @@ router.get('/', sandboxController.listSandboxes);
 // won't allow one user to open multiple sessions/tabs.
 // so we can use userId as task_id.
 
+router.use(validateIdToken);
+
+// TODO: below routes are only for backend dev not to be used by UI.
 router
-  .route('/:userId')
+  .route('/task')
   .get(sandboxController.redirectToTask)
   .delete(sandboxController.cleanupTask);
 // .put(sandboxController.createTask)

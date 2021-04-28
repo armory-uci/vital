@@ -37,9 +37,10 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "firebase": "^8.4.1",
-    "ngx-auth-firebaseui": "^5.2.0",
+    "firebase-admin": "^9.6.0",
     "joi": "^17.4.0",
     "morgan": "^1.10.0",
+    "ngx-auth-firebaseui": "^5.2.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
