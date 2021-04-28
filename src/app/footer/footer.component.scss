@@ -1,0 +1,18 @@
+@import "../../assets/scss/partials/variables";
+
+.footer-pos{
+  position: fixed;
+  bottom: 0%;
+  width: 100%;
+ }
+
+ .footer-design {
+     color: $vital-grey;
+     font-size: small;
+     position: relative;
+     left: 5rem;
+ }
+
+ .mat-icon {
+  vertical-align: middle;
+}
