@@ -130,9 +130,65 @@ const createTask = async (req, res, next) => {
   }
 };
 
+const stopInactiveTask = async (arn) => {
+  // return new Promise((resolve) => setTimeout(() => resolve(arn), 1000));
+  try {
+    const stopTaskParams = {
+      cluster: config.cluster,
+      task: arn
+    };
+    const describeTaskParams = {
+      cluster: config.cluster,
+      tasks: [arn]
+    };
+    const taskInfo = await ecs.describeTasks(describeTaskParams).promise();
+    if (taskInfo.failures.length && taskInfo.failures[0].reason === 'MISSING')
+      return `task: ${arn} already destroyed`;
+
+    const timeLeft =
+      config.sandboxTTLSeconds * 1000 -
+      (Date.now() - taskInfo.tasks[0].createdAt);
+    let cleaupRes = `sandbox id: ${arn} 's time left(ms): ${timeLeft}`;
+    if (timeLeft <= 0) {
+      const stopTaskRes = await ecs.stopTask(stopTaskParams).promise();
+      cleaupRes = `sandbox id: ${arn} cleaned after ${
+        stopTaskRes.task.stoppingAt - stopTaskRes.task.startedAt
+      } (ms)`;
+    }
+
+    return cleaupRes;
+  } catch (error) {
+    if (error instanceof api404Error) {
+      // eslint-disable-next-line no-console
+      console.debug(`cleaning not found sandbox id: ${arn}`, error.name);
+      const cleaupRes = await ecs.stopTask(stopTaskParams).promise();
+      return cleaupRes;
+    }
+    throw error;
+  }
+};
+
+const cleanupAllTasks = async () => {
+  // eslint-disable-next-line no-console
+  console.debug('cleaning up sandboxes');
+  try {
+    // const tasks = { taskArns: ['98e08da8cc764e98a711b0c1303a0584'] };
+    const tasks = await ecs.listTasks({ cluster: config.cluster }).promise();
+    const cleanupTasks = tasks.taskArns.map((arn) =>
+      stopInactiveTask(arn.split('/').pop())
+    );
+    const cleanupRes = await Promise.allSettled(cleanupTasks);
+    console.log('cleanupRes', cleanupRes);
+    return cleanupRes;
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   listSandboxes,
   redirectToTask,
   cleanupTask,
-  createTask
+  createTask,
+  cleanupAllTasks
 };

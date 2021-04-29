@@ -41,6 +41,7 @@
     "joi": "^17.4.0",
     "morgan": "^1.10.0",
     "ngx-auth-firebaseui": "^5.2.0",
+    "node-cron": "^3.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

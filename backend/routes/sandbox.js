@@ -10,7 +10,7 @@ router.get('/', sandboxController.listSandboxes);
 
 router.use(validateIdToken);
 
-// TODO: below routes are only for backend dev not to be used by UI.
+// TODO: below get route is only for backend dev not to be used by UI as it uses get query for idtoken.
 router
   .route('/task')
   .get(sandboxController.redirectToTask)
