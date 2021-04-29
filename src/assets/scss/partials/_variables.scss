@@ -1,4 +1,5 @@
 @import '~@angular/material/_theming';
+@import 'mixins';
 @include mat-core();
 
 /* For use in src/lib/core/theming/_palette.scss */
@@ -43,6 +44,7 @@ $vital-dark: (
 
   $vital-theme: mat-light-theme($vital-primary, $vital-warn, $vital-accent);
   @include angular-material-theme($vital-theme);
+  @include generate-theme-vars($vital-theme);
 }
 
 .vital-dark-theme {
@@ -50,8 +52,9 @@ $vital-dark: (
   $vital-warn: mat-palette($mat-red);
   $vital-accent: mat-palette($mat-pink);
 
-  $vital-dark-theme: mat-light-theme($vital-dark-primary, $vital-warn, $vital-accent);
+  $vital-dark-theme: mat-dark-theme($vital-dark-primary, $vital-warn, $vital-accent);
   @include angular-material-theme($vital-dark-theme);
+  @include generate-theme-vars($vital-dark-theme);
 }
 
 

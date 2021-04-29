@@ -1,6 +1,27 @@
-<div class="wrapper login-card">
-  <h1>Login</h1>
-  <div class="card-row">
+<div
+  class="vital-default-theme"
+  fxLayout="row"
+  fxLayoutAlign="space-evenly"
+  fxLayoutGap="10%"
+>
+  <div fxFlex="80%" fxFlexOffset="10%" fxFlexAlign="center">
+    <div class="logo">
+      <img src="../../assets/images/Asset 4.svg" />
+      <br /><br />
+      <div class="full-form">
+        <strong
+          ><h1>
+            Vulnerabilities Identification, Tackling, and Learning
+          </h1></strong
+        >
+      </div>
+    </div>
+  </div>
+
+  <div fxFlex="20%" class="login-card">
+    <div class="title">
+      <h1>Login</h1>
+    </div>
     <ngx-auth-firebaseui-providers
       layout="column"
       [providers]="[
@@ -14,3 +35,5 @@
     ></ngx-auth-firebaseui-providers>
   </div>
 </div>
+
+<app-footer></app-footer>
