@@ -138,7 +138,10 @@ describe('sandboxes', () => {
 
     await createTask(req, res, next);
     expect(next).not.toHaveBeenCalled();
-    expect(res.redirect).toHaveBeenCalledWith('http://localhost:3001');
+    expect(res.json).toHaveBeenCalledWith({
+      terminalUrl: 'http://localhost:3001',
+      websiteUrl: 'http://localhost:5000'
+    });
   });
 
   test('spawn sandbox fail', async () => {
@@ -152,7 +155,7 @@ describe('sandboxes', () => {
     expect(next).toHaveBeenCalled();
   });
 
-  test('sandbox redirection success', async () => {
+  test('sandbox creation success', async () => {
     const req = mockRequest();
     req.params = { userId: 'mockUserId' };
     const res = mockResponse();
@@ -160,6 +163,9 @@ describe('sandboxes', () => {
 
     await redirectToTask(req, res, next);
     expect(next).not.toHaveBeenCalled();
-    expect(res.redirect).toHaveBeenCalledWith('http://localhost:3001');
+    expect(res.json).toHaveBeenCalledWith({
+      terminalUrl: 'http://localhost:3001',
+      websiteUrl: 'http://localhost:5000'
+    });
   });
 });
