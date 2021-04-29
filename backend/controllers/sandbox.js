@@ -2,7 +2,7 @@ const config = require('../config');
 const api404Error = require('../error/api404Error');
 
 const AWS = require('aws-sdk');
-AWS.config.update({ region: 'us-east-1' });
+AWS.config.update({ region: config.awsRegion });
 const ecs = new AWS.ECS();
 const ec2 = new AWS.EC2();
 
@@ -64,11 +64,12 @@ const redirectToTask = async (req, res, next) => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
       .describeNetworkInterfaces({ NetworkInterfaceIds: [networkInterfaceId] })
       .promise();
-    return res.redirect(
-      `${config.sandbox.ssl}://${extractPublicIP(networkInfo)}:${
+    return res.json({
+      terminalUrl: `${config.sandbox.ssl}://${extractPublicIP(networkInfo)}:${
         config.sandbox.port
-      }`
-    );
+      }`,
+      websiteUrl: `${config.sandbox.ssl}://${extractPublicIP(networkInfo)}:5000`
+    }); // TODO Check with Vineet on best way to parameterize port 5000
   } catch (error) {
     next(error);
   }
@@ -100,7 +101,8 @@ const createTask = async (req, res, next) => {
       // HACK: setting userId to arn so that the redirect works
       req.params.userId = arn;
       // return res.json(arn);
-      return redirectToTask(req, res);
+      // FIXME: Rename this function, it's not redirecting anymore
+      return redirectToTask(req, res, next);
     } else {
       return res.json(arn);
     }

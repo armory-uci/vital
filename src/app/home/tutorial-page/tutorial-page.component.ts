@@ -1,5 +1,8 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { SandboxService } from 'src/app/sandbox.service';
 
 @Component({
   selector: 'app-tutorial-page',
@@ -17,18 +20,43 @@ export class TutorialPageComponent implements OnInit {
     terminalUrl: SafeResourceUrl;
     websiteUrl: SafeResourceUrl;
   } = {
-    terminalUrl: 'http://localhost:3001',
-    websiteUrl: 'http://localhost:5000'
+    terminalUrl: 'http://localhost:4200/loading',
+    websiteUrl: 'http://localhost:4200/loading'
   };
 
-  constructor(private sanitizer: DomSanitizer) {
+  private problem: string;
+
+  constructor(
+    private sanitizer: DomSanitizer,
+    private router: Router,
+    private sandboxService: SandboxService,
+    private location: Location
+  ) {
     this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       this.sandbox.terminalUrl as string
     );
     this.sandbox.websiteUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       this.sandbox.websiteUrl as string
     );
+    this.problem = this.router.getCurrentNavigation()?.extras.state?.problem;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Only create on problem, or maybe not?
+    if (!this.problem) return;
+    console.log(this.problem);
+    this.sandboxService
+      .create()
+      .subscribe((response: { terminalUrl: string; websiteUrl: string }) => {
+        this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+          response.terminalUrl
+        );
+        // FIXME Wait 10 secs for thr website
+        setTimeout(() => {
+          this.sandbox.websiteUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+            response.websiteUrl
+          );
+        }, 10000);
+      });
+  }
 }

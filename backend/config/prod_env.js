@@ -1,4 +1,5 @@
 const cluster = 'vital-sandbox';
+const awsRegion = 'us-east-1';
 const subnets = [
   'subnet-92afc7f4',
   'subnet-b22b5fed',
@@ -31,5 +32,6 @@ const sandbox = {
 module.exports = {
   cluster,
   vulnerabilities,
-  sandbox
+  sandbox,
+  awsRegion
 };
