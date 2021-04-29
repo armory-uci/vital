@@ -12,6 +12,7 @@ const {
 const tasksListMockSuccessRes = { taskArns: ['mockListArnId'] };
 const stopTaskSuccessRes = { tasks: { taskArn: 'arn:/mockStoppedArnId' } };
 const startTaskSuccessRes = { tasks: [{ taskArn: 'arn:/mockStartedArnId' }] };
+const describedTasksRes = { failures: [{ reason: 'MISSING' }] };
 
 jest.mock('aws-sdk', () => {
   const listTasksPromiseResponse = jest
@@ -38,6 +39,14 @@ jest.mock('aws-sdk', () => {
     .fn()
     .mockImplementation(() => ({ promise: startTaskPromiseResponse }));
 
+  const describeTasksPromiseResponse = jest
+    .fn()
+    .mockResolvedValue(describedTasksRes);
+
+  const describeTasksFn = jest
+    .fn()
+    .mockImplementation(() => ({ promise: describeTasksPromiseResponse }));
+
   const waitForFnPromiseResponse = jest.fn().mockResolvedValue({
     tasks: [
       {
@@ -61,6 +70,7 @@ jest.mock('aws-sdk', () => {
     stopTask = stopTaskFn;
     runTask = runTaskFn;
     waitFor = waitForFn;
+    describeTasks = describeTasksFn;
   }
 
   const describeNetworkInterfacesPromiseResponse = jest.fn().mockResolvedValue({
@@ -92,6 +102,7 @@ const mockResponse = () => {
 
 const mockRequest = (sessionData) => {
   return {
+    userId: 'FTQsBKfxODgHRsXwoVjNSSayIhi1',
     session: { data: sessionData }
   };
 };

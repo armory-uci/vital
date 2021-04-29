@@ -60,8 +60,20 @@ const registerSandbox = async (userId, sandboxId) => {
   }
 };
 
+const getSandboxInfo = (sandboxId) => {
+  const userSandboxeInfo = db
+    .collection(collections.sandbox)
+    .where('active', '==', sandboxId)
+    .get();
+  if (userSandboxeInfo.empty)
+    return api404Error(`no user have active sandbox with arn:${sandboxId}`);
+  return userSandboxeInfoRef.data();
+};
+
 module.exports = {
+  getSandboxInfo,
   registerSandbox,
   getActiveSandbox,
-  del
+  del,
+  getCollectionDocs
 };
