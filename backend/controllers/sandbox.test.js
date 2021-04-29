@@ -92,6 +92,36 @@ jest.mock('aws-sdk', () => {
   };
 });
 
+jest.mock('firebase-admin', () => {
+  const getMock = jest.fn().mockResolvedValue({
+    docs: [],
+    exists: true,
+    data: () => ({ active: 'mockArnId' })
+  });
+  const setMock = jest.fn().mockResolvedValue({
+    data: () => ({ active: 'arn:/mockArnId' })
+  });
+  const updateMock = jest.fn().mockResolvedValue({});
+  const docMock = jest.fn().mockImplementation(() => ({
+    get: getMock,
+    set: setMock,
+    update: updateMock
+  }));
+  const collectionMock = jest.fn().mockImplementation((collectionId) => ({
+    get: getMock,
+    doc: docMock
+  }));
+  const arrayUnionMock = jest.fn().mockImplementation(() => 'mockArnId');
+  const firestoreMock = jest.fn().mockImplementation(() => ({
+    collection: collectionMock
+  }));
+  firestoreMock.FieldValue = { arrayUnion: arrayUnionMock };
+  return {
+    initializeApp: jest.fn().mockImplementation(() => true),
+    firestore: firestoreMock
+  };
+});
+
 const mockResponse = () => {
   const res = {};
   res.status = jest.fn().mockReturnValue(res);
@@ -102,7 +132,7 @@ const mockResponse = () => {
 
 const mockRequest = (sessionData) => {
   return {
-    userId: 'FTQsBKfxODgHRsXwoVjNSSayIhi1',
+    userId: 'firestore_mock_user_id',
     session: { data: sessionData }
   };
 };
