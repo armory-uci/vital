@@ -52,7 +52,7 @@ $vital-dark: (
   $vital-warn: mat-palette($mat-red);
   $vital-accent: mat-palette($mat-pink);
 
-  $vital-dark-theme: mat-light-theme($vital-dark-primary, $vital-warn, $vital-accent);
+  $vital-dark-theme: mat-dark-theme($vital-dark-primary, $vital-warn, $vital-accent);
   @include angular-material-theme($vital-dark-theme);
   @include generate-theme-vars($vital-dark-theme);
 }

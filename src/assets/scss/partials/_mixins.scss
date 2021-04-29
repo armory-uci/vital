@@ -1,5 +1,3 @@
-@include mat-core();
-
 @mixin generate-theme-vars($theme) {
   $foreground-palette: map-get($theme, foreground);
   $background-palette: map-get($theme, background);
@@ -7,7 +5,7 @@
   // @debug "text color primary: #{mat-color(map-get($theme, primary))}";
   // @debug "text color accent: #{mat-color(map-get($theme, accent))}";
   // @debug "text color warn: #{mat-color(map-get($theme, warn))}";
-  $primary: mat-color(map-get($theme, primary)) !global;
+  $primary: mat-color(map-get($theme, primary));
   $accent: mat-color(map-get($theme, accent)) !global;
   $warn: mat-color(map-get($theme, warn)) !global;
 
@@ -18,4 +16,12 @@
   changes to #0b0b0b (Black). Uncomment @debug to see. The accent and warn works
   fine though. Therefore created a indigo color below. */
   $vital-primary-hue: #3f51b5 !global;
+
+  // USE THESE CSS VARIABLES FOR STYLING
+  --primary-color: #{$primary};
+  --accent-color: #{$accent};
+  --warn-color: #{$warn};
+  --vital-text: #{$vital-text};
+  --vital-grey: #{$vital-grey};
+  --vital-base: #{$vital-base};
 }
