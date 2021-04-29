@@ -21,8 +21,15 @@ const sandbox = {
   ssl: 'http'
 };
 
+const sandboxWebsite = {
+  port: 5000,
+  ssl: 'http'
+};
+
 module.exports = {
   cluster,
   vulnerabilities,
-  sandbox
+  sandbox,
+  sandboxWebsite,
+  awsRegion: null // Please fill in
 };
