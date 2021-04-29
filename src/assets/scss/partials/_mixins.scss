@@ -6,16 +6,16 @@
   // @debug "text color accent: #{mat-color(map-get($theme, accent))}";
   // @debug "text color warn: #{mat-color(map-get($theme, warn))}";
   $primary: mat-color(map-get($theme, primary));
-  $accent: mat-color(map-get($theme, accent)) !global;
-  $warn: mat-color(map-get($theme, warn)) !global;
+  $accent: mat-color(map-get($theme, accent));
+  $warn: mat-color(map-get($theme, warn));
 
-  $vital-text: mat-color($foreground-palette, text) !global;
-  $vital-grey: mat-color($mat-grey, 700) !global;
-  $vital-base: mat-color($foreground-palette, text) !global;
+  $vital-text: mat-color($foreground-palette, text);
+  $vital-grey: mat-color($mat-grey, 700);
+  $vital-base: mat-color($foreground-palette, text);
   /*For reasons I don't understand $primary should be  #3f51b5 (Indigo) but it
   changes to #0b0b0b (Black). Uncomment @debug to see. The accent and warn works
   fine though. Therefore created a indigo color below. */
-  $vital-primary-hue: #3f51b5 !global;
+  //$vital-primary-hue: #3f51b5 !global;
 
   // USE THESE CSS VARIABLES FOR STYLING
   --primary-color: #{$primary};
