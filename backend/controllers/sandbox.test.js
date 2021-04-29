@@ -6,13 +6,23 @@ const {
   listSandboxes,
   cleanupTask,
   createTask,
-  redirectToTask
+  redirectToTask,
+  cleanupAllTasks
 } = require('./sandbox');
 
 const tasksListMockSuccessRes = { taskArns: ['mockListArnId'] };
-const stopTaskSuccessRes = { tasks: { taskArn: 'arn:/mockStoppedArnId' } };
+const stopTaskSuccessRes = {
+  task: {
+    taskArn: 'arn:/mockStoppedArnId',
+    stoppingAt: 1,
+    startedAt: 1000000000000
+  }
+};
 const startTaskSuccessRes = { tasks: [{ taskArn: 'arn:/mockStartedArnId' }] };
-const describedTasksRes = { failures: [{ reason: 'MISSING' }] };
+const describeTasksExpiredRes = {
+  tasks: [{ createdAt: 1000000000000 }],
+  failures: []
+};
 
 jest.mock('aws-sdk', () => {
   const listTasksPromiseResponse = jest
@@ -41,7 +51,7 @@ jest.mock('aws-sdk', () => {
 
   const describeTasksPromiseResponse = jest
     .fn()
-    .mockResolvedValue(describedTasksRes);
+    .mockResolvedValue(describeTasksExpiredRes);
 
   const describeTasksFn = jest
     .fn()
@@ -202,5 +212,10 @@ describe('sandboxes', () => {
     await redirectToTask(req, res, next);
     expect(next).not.toHaveBeenCalled();
     expect(res.redirect).toHaveBeenCalledWith('http://localhost:3001');
+  });
+
+  test('test cleanup expired sandboxes', async () => {
+    const cleanupRes = await cleanupAllTasks();
+    expect(cleanupRes[0].status).toEqual('fulfilled');
   });
 });
