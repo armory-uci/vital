@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProblemListService } from '../../services/utility-services/problem-list.service';
 import { IProblem } from './problem.model';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-problem-list',
@@ -27,10 +27,11 @@ export class ProblemListComponent implements OnInit {
     });
   }
 
-  onClick(): void {
+  onClick(problem: IProblem): void {
+    problem.serverId = 'sqlInjection'; // FIXME Get this from firebase. Or find a better way.
     this.router.navigate(['home/tutorial'], {
       // TODO What all do we need? And does it make sense as a query parameter? Side effect: refreshing the page will have different behaviours in each case
-      state: { problem: 'sqlInjection' }
+      state: { problem }
     });
   }
 }

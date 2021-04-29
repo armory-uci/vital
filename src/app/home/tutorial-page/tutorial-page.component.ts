@@ -1,8 +1,13 @@
-import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { SandboxService } from 'src/app/sandbox.service';
+import { of, Subject } from 'rxjs';
+import { retry, takeUntil, tap, delay, mergeMap } from 'rxjs/operators';
+import {
+  ISandbox,
+  SandboxService
+} from 'src/app/services/http-services/sandbox.service';
+import { IProblem } from '../problem-list/problem.model';
 
 @Component({
   selector: 'app-tutorial-page',
@@ -24,13 +29,12 @@ export class TutorialPageComponent implements OnInit {
     websiteUrl: 'http://localhost:4200/loading'
   };
 
-  private problem: string;
+  private problem: IProblem;
 
   constructor(
     private sanitizer: DomSanitizer,
     private router: Router,
-    private sandboxService: SandboxService,
-    private location: Location
+    private sandboxService: SandboxService
   ) {
     this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       this.sandbox.terminalUrl as string
@@ -42,21 +46,44 @@ export class TutorialPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Only create on problem, or maybe not?
+    // Only create on problem that comes from the problems page.
+    // TODO Maybe this makes sense as a query parameter once the backend supports only one container per user?
     if (!this.problem) return;
-    console.log(this.problem);
     this.sandboxService
-      .create()
-      .subscribe((response: { terminalUrl: string; websiteUrl: string }) => {
-        this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-          response.terminalUrl
-        );
-        // FIXME Wait 10 secs for thr website
-        setTimeout(() => {
-          this.sandbox.websiteUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-            response.websiteUrl
+      .create(this.problem.serverId)
+      .subscribe((response: ISandbox) => {
+        const { terminalUrl, websiteUrl } = response;
+        this.waitUntilSiteIsUp(terminalUrl).subscribe((_) => {
+          this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+            terminalUrl
           );
-        }, 10000);
+        });
+        this.waitUntilSiteIsUp(websiteUrl).subscribe((_) => {
+          this.sandbox.websiteUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+            websiteUrl
+          );
+        });
       });
+  }
+
+  // This function tries to hit a url using a "opaque" request.
+  // This kind of a request doesn't depend on CORS setup
+  private waitUntilSiteIsUp(
+    url: string,
+    every: number = 3000,
+    times: number = 10
+  ) {
+    const stop = new Subject();
+    return of({}).pipe(
+      mergeMap((_) => fetch(url, { mode: 'no-cors' })),
+      tap((opaqueResponse) => {
+        if (opaqueResponse.ok) {
+          stop.next();
+        }
+      }),
+      delay(every),
+      retry(times),
+      takeUntil(stop)
+    );
   }
 }
