@@ -68,8 +68,10 @@ const redirectToTask = async (req, res, next) => {
       terminalUrl: `${config.sandbox.ssl}://${extractPublicIP(networkInfo)}:${
         config.sandbox.port
       }`,
-      websiteUrl: `${config.sandbox.ssl}://${extractPublicIP(networkInfo)}:5000`
-    }); // TODO Check with Vineet on best way to parameterize port 5000
+      websiteUrl: `${config.sandboxWebsite.ssl}://${extractPublicIP(
+        networkInfo
+      )}:${config.sandboxWebsite.port}`
+    });
   } catch (error) {
     next(error);
   }

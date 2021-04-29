@@ -33,6 +33,11 @@ const config = convict({
     format: Object,
     default: {}
   },
+  sandboxWebsite: {
+    doc: 'Website URL that the sandbox is exposing',
+    format: Object,
+    default: {}
+  },
   cluster: {
     format: String,
     default: 'default_cluster'
