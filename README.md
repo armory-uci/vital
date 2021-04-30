@@ -25,7 +25,7 @@ Run `ng test` or `npm run test` to execute the unit tests via [Karma](https://ka
 
 ## Running Code Coverage
 
-Run `npm run coverage` to calculate the code covergae using [Istanbul](https://istanbul.js.org/).
+Run `npm run coverage` to calculate the code coverage using [Istanbul](https://istanbul.js.org/).
 
 ## Running end-to-end tests
 

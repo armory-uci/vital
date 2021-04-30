@@ -1,17 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FooterComponent } from '../footer/footer.component';
-import { Router, Routes } from '@angular/router';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { LoginComponent } from './login.component';
 import { ProblemListComponent } from '../home/problem-list/problem-list.component';
-import { HomeComponent } from '../home/home.component';
-import { TutorialPageComponent } from '../home/tutorial-page/tutorial-page.component';
-import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
-import { ReferenceComponent } from '../reference/reference.component';
 import { IUserInfo } from './login.model';
 import { UserInfoService } from '../services/utility-services/user-info.service';
+import { routes } from '../app-routing.module';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -19,22 +16,6 @@ describe('LoginComponent', () => {
   let location: Location;
   let router: Router;
   let userInfoService: UserInfoService;
-
-  const routes: Routes = [
-    { path: '', component: LoginComponent },
-    { path: 'reference', component: ReferenceComponent },
-    {
-      path: 'home',
-      component: HomeComponent,
-      children: [
-        { path: '', component: ProblemListComponent },
-        { path: 'problem', component: ProblemListComponent },
-        { path: 'tutorial', component: TutorialPageComponent }
-      ]
-    },
-    { path: 'notfound', component: PageNotFoundComponent },
-    { path: '**', redirectTo: '/notfound' }
-  ];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

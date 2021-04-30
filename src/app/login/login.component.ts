@@ -11,12 +11,6 @@ import { IUserInfo } from './login.model';
 })
 export class LoginComponent implements OnInit {
   providers = AuthProvider;
-  userInfo: IUserInfo = {
-    displayName: null,
-    email: null,
-    photoUrl: null,
-    uid: null
-  };
 
   constructor(
     private route: ActivatedRoute,
@@ -27,11 +21,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   login($event) {
-    this.userInfo.displayName = $event.displayName;
-    this.userInfo.email = $event.email;
-    this.userInfo.photoUrl = $event.photoURL;
-    this.userInfo.uid = $event.uid;
-    this.userInfoService.setUserInfo(this.userInfo);
+    const userInfo: IUserInfo = {
+      displayName: $event.displayName,
+      email: $event.email,
+      photoUrl: $event.photoURL,
+      uid: $event.uid
+    };
+    this.userInfoService.setUserInfo(userInfo);
     this.router.navigate(['home/problem'], { relativeTo: this.route });
   }
 }

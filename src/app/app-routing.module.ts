@@ -7,7 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ReferenceComponent } from './reference/reference.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'reference', component: ReferenceComponent },
   {
