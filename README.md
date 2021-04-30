@@ -17,15 +17,19 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `backend/frontend` directory. Use the `--prod` flag for a production build.
+Run `ng build` or `npm run build` to build the project. The build artifacts will be stored in the `backend/frontend` directory. Use the `--prod` flag for a production build.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test` or `npm run test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running Code Coverage
+
+Run `npm run coverage` to calculate the code covergae using [Istanbul](https://istanbul.js.org/).
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `ng e2e` or `npm run e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Development server Node Backend
 
