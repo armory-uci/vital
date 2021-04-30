@@ -14,7 +14,7 @@
     "prepare": "husky install",
     "pre-commit-hook": "lint-staged",
     "test:server": "jest",
-    "serve": "pm2 reload ./backend/bin/server.js"
+    "serve": "pm2 stop all; pm2 start ./backend/bin/server.js"
   },
   "private": true,
   "dependencies": {

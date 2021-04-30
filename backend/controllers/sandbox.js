@@ -131,7 +131,6 @@ const createTask = async (req, res, next) => {
 };
 
 const stopInactiveTask = async (arn) => {
-  // return new Promise((resolve) => setTimeout(() => resolve(arn), 1000));
   try {
     const stopTaskParams = {
       cluster: config.cluster,
@@ -170,15 +169,14 @@ const stopInactiveTask = async (arn) => {
 
 const cleanupAllTasks = async () => {
   // eslint-disable-next-line no-console
-  console.debug('cleaning up sandboxes');
   try {
-    // const tasks = { taskArns: ['98e08da8cc764e98a711b0c1303a0584'] };
     const tasks = await ecs.listTasks({ cluster: config.cluster }).promise();
     const cleanupTasks = tasks.taskArns.map((arn) =>
       stopInactiveTask(arn.split('/').pop())
     );
     const cleanupRes = await Promise.allSettled(cleanupTasks);
-    console.log('cleanupRes', cleanupRes);
+    // eslint-disable-next-line no-console
+    console.debug('cleanupRes', cleanupRes);
     return cleanupRes;
   } catch (error) {
     next(error);

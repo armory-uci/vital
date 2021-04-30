@@ -5,27 +5,26 @@ const api404Error = require('../error/api404Error');
 
 const getCollectionDocs = async (collection) => {
   try {
-    const booksRef = db.collection(collection);
+    const docsRef = db.collection(collection);
 
-    booksRef.get().then((snapshot) => {
+    return docsRef.get().then((snapshot) => {
       const data = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data()
       }));
-      console.log(`All docs in ${collection} collection`, data);
       return data;
     });
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 };
 
 const del = async (docId) => {
   try {
-    const booksRef = db.collection(collections.sandbox);
-    await booksRef.doc(docId).delete();
+    const docsRef = db.collection(collections.sandbox);
+    await docsRef.doc(docId).delete();
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 };
 
@@ -53,7 +52,6 @@ const registerSandbox = async (userId, sandboxId) => {
       history: admin.firestore.FieldValue.arrayUnion(sandboxId)
     });
 
-    await getCollectionDocs(collections.sandbox);
     return { ...registerRes, ...updateHistoryRes };
   } catch (error) {
     throw error;
