@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { of, Subject } from 'rxjs';
-import { retry, takeUntil, tap, delay, mergeMap } from 'rxjs/operators';
 import {
   ISandbox,
   SandboxService
 } from 'src/app/services/http-services/sandbox.service';
 import { IProblem } from '../problem-list/problem.model';
+
+interface IRetryResponse {
+  isUp: boolean;
+  isRetriesExhausted: boolean;
+}
 
 @Component({
   selector: 'app-tutorial-page',
@@ -53,15 +56,19 @@ export class TutorialPageComponent implements OnInit {
       .create(this.problem.serverId)
       .subscribe((response: ISandbox) => {
         const { terminalUrl, websiteUrl } = response;
-        this.waitUntilSiteIsUp(terminalUrl).subscribe((_) => {
-          this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-            terminalUrl
-          );
+        this.waitUntilSiteIsUp(terminalUrl).then(({ isUp }) => {
+          if (isUp) {
+            this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+              terminalUrl
+            );
+          }
         });
-        this.waitUntilSiteIsUp(websiteUrl).subscribe((_) => {
-          this.sandbox.websiteUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-            websiteUrl
-          );
+        this.waitUntilSiteIsUp(websiteUrl).then(({ isUp }) => {
+          if (isUp) {
+            this.sandbox.websiteUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+              websiteUrl
+            );
+          }
         });
       });
   }
@@ -72,18 +79,19 @@ export class TutorialPageComponent implements OnInit {
     url: string,
     every: number = 3000,
     times: number = 10
-  ) {
-    const stop = new Subject();
-    return of({}).pipe(
-      mergeMap((_) => fetch(url, { mode: 'no-cors' })),
-      tap((opaqueResponse) => {
-        if (opaqueResponse.ok) {
-          stop.next();
-        }
-      }),
-      delay(every),
-      retry(times),
-      takeUntil(stop)
-    );
+  ): Promise<IRetryResponse> {
+    if (times === 0)
+      return Promise.reject({ isUp: false, isRetriesExhausted: true });
+    return fetch(url, { mode: 'no-cors' })
+      .then(() => ({ isUp: true, isRetriesExhausted: false }))
+      .catch(() => {
+        return new Promise((resolve, reject) =>
+          setTimeout(
+            () =>
+              this.waitUntilSiteIsUp(url, every, times--).then(resolve, reject),
+            every
+          )
+        );
+      });
   }
 }
