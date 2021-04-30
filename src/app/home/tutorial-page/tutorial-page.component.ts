@@ -6,6 +6,8 @@ import {
   SandboxService
 } from 'src/app/services/http-services/sandbox.service';
 import { IProblem } from '../problem-list/problem.model';
+import { DOCUMENT, Location } from '@angular/common';
+import { Inject } from '@angular/core';
 
 interface IRetryResponse {
   isUp: boolean;
@@ -28,8 +30,8 @@ export class TutorialPageComponent implements OnInit {
     terminalUrl: SafeResourceUrl;
     websiteUrl: SafeResourceUrl;
   } = {
-    terminalUrl: 'http://localhost:4200/loading',
-    websiteUrl: 'http://localhost:4200/loading'
+    terminalUrl: this.getLoadingPageUrl(),
+    websiteUrl: this.getLoadingPageUrl()
   };
 
   private problem: IProblem;
@@ -37,7 +39,8 @@ export class TutorialPageComponent implements OnInit {
   constructor(
     private sanitizer: DomSanitizer,
     private router: Router,
-    private sandboxService: SandboxService
+    private sandboxService: SandboxService,
+    @Inject(DOCUMENT) private document: Document
   ) {
     this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       this.sandbox.terminalUrl as string
@@ -93,5 +96,9 @@ export class TutorialPageComponent implements OnInit {
           )
         );
       });
+  }
+
+  private getLoadingPageUrl(): string {
+    return Location.joinWithSlash(this.document.location.origin, 'loading');
   }
 }

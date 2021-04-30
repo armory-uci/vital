@@ -31,5 +31,5 @@ module.exports = {
   vulnerabilities,
   sandbox,
   sandboxWebsite,
-  awsRegion: null // Please fill in
+  awsRegion: 'us-east-1' // Please fill in your region
 };
