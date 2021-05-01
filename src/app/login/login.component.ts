@@ -21,13 +21,16 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   login($event) {
-    const userInfo: IUserInfo = {
-      displayName: $event.displayName,
-      email: $event.email,
-      photoUrl: $event.photoURL,
-      uid: $event.uid
-    };
-    this.userInfoService.setUserInfo(userInfo);
-    this.router.navigate(['home/problem'], { relativeTo: this.route });
+    $event.getIdToken().then((idToken) => {
+      const userInfo: IUserInfo = {
+        displayName: $event.displayName,
+        email: $event.email,
+        photoUrl: $event.photoURL,
+        uid: $event.uid,
+        idToken
+      };
+      this.userInfoService.setUserInfo(userInfo);
+      this.router.navigate(['home/problem'], { relativeTo: this.route });
+    });
   }
 }

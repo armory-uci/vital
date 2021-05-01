@@ -20,6 +20,21 @@ const extractPublicIP = (networkInfo) => {
   return networkInterface.Association.PublicIp;
 };
 
+const getNetworkInfo = async (userId) => {
+  const params = {
+    cluster: config.cluster,
+    tasks: [await getActiveSandbox(userId)]
+  };
+  const taskInfo = await ecs.waitFor('tasksRunning', params).promise();
+  const networkInterfaceId = extractNetworkEID(taskInfo);
+  return (
+    ec2
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      .describeNetworkInterfaces({ NetworkInterfaceIds: [networkInterfaceId] })
+      .promise()
+  );
+};
+
 const getSpawnConfig = (vulnerability) => {
   if (!(vulnerability in config.vulnerabilities))
     throw new api404Error(`vulnerability of type: ${vulnerability} not found`);
@@ -51,24 +66,12 @@ const listSandboxes = async (req, res, next) => {
 
 const redirectToTask = async (req, res, next) => {
   try {
-    const params = {
-      cluster: config.cluster,
-      tasks: [await getActiveSandbox(req.userId)]
-    };
-    const taskInfo = await ecs.waitFor('tasksRunning', params).promise();
-    const networkInterfaceId = extractNetworkEID(taskInfo);
-    const networkInfo = await ec2
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      .describeNetworkInterfaces({ NetworkInterfaceIds: [networkInterfaceId] })
-      .promise();
-    return res.json({
-      terminalUrl: `${config.sandbox.ssl}://${extractPublicIP(networkInfo)}:${
+    const networkInfo = await getNetworkInfo(req.userId);
+    return res.redirect(
+      `${config.sandbox.ssl}://${extractPublicIP(networkInfo)}:${
         config.sandbox.port
-      }`,
-      websiteUrl: `${config.sandboxWebsite.ssl}://${extractPublicIP(
-        networkInfo
-      )}:${config.sandboxWebsite.port}`
-    });
+      }`
+    );
   } catch (error) {
     next(error);
   }
@@ -126,7 +129,16 @@ const createTask = async (req, res, next) => {
     if (req.method === 'GET') {
       return redirectToTask(req, res);
     } else {
-      return res.json(arn);
+      const networkInfo = await getNetworkInfo(req.userId);
+      return res.json({
+        arn,
+        terminalUrl: `${config.sandbox.ssl}://${extractPublicIP(networkInfo)}:${
+          config.sandbox.port
+        }`,
+        websiteUrl: `${config.sandboxWebsite.ssl}://${extractPublicIP(
+          networkInfo
+        )}:${config.sandboxWebsite.port}`
+      });
     }
   } catch (error) {
     next(error);

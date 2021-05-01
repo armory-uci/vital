@@ -9,7 +9,8 @@ export class UserInfoService {
     displayName: null,
     email: null,
     photoUrl: null,
-    uid: null
+    uid: null,
+    idToken: null
   };
 
   setUserInfo(userInformation: IUserInfo) {
