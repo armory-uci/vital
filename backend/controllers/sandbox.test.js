@@ -177,7 +177,11 @@ describe('sandboxes', () => {
 
     await createTask(req, res, next);
     expect(next).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith('mockStartedArnId');
+    expect(res.json).toHaveBeenCalledWith({
+      arn: 'mockStartedArnId',
+      terminalUrl: 'http://localhost:3001',
+      websiteUrl: 'http://localhost:5000'
+    });
   });
 
   test('GET spawn sandbox success', async () => {
@@ -189,10 +193,7 @@ describe('sandboxes', () => {
 
     await createTask(req, res, next);
     expect(next).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith({
-      terminalUrl: 'http://localhost:3001',
-      websiteUrl: 'http://localhost:5000'
-    });
+    expect(res.redirect).toHaveBeenCalledWith('http://localhost:3001');
   });
 
   test('spawn sandbox fail', async () => {
@@ -206,7 +207,7 @@ describe('sandboxes', () => {
     expect(next).toHaveBeenCalled();
   });
 
-  test('sandbox creation success', async () => {
+  test('sandbox redirection success', async () => {
     const req = mockRequest();
     req.params = { userId: 'mockUserId' };
     const res = mockResponse();
@@ -214,10 +215,7 @@ describe('sandboxes', () => {
 
     await redirectToTask(req, res, next);
     expect(next).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith({
-      terminalUrl: 'http://localhost:3001',
-      websiteUrl: 'http://localhost:5000'
-    });
+    expect(res.redirect).toHaveBeenCalledWith('http://localhost:3001');
   });
 
   test('test cleanup expired sandboxes', async () => {
