@@ -1,0 +1,29 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user/vital
+permissions:
+  - object: /home/ec2-user
+    owner: ec2-user
+    group: ec2-user
+    mode: 777
+    type:
+      - directory
+hooks:
+  BeforeInstall:
+    - location: scripts/install_dependencies
+      timeout: 300
+      runas: ec2-user
+  AfterInstall:
+    - location: scripts/build_server
+      timeout: 300
+      runas: ec2-user
+  ApplicationStop:
+    - location: scripts/stop_server
+      timeout: 300
+      runas: ec2-user
+  ApplicationStart:
+    - location: scripts/start_server
+      timeout: 300
+      runas: ec2-user

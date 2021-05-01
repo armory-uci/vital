@@ -11,9 +11,11 @@
     "lint:server": "eslint backend/**",
     "e2e": "ng e2e",
     "start:nodeserver": "nodemon ./backend/bin/server",
+    "coverage": "ng test --no-watch --code-coverage",
     "prepare": "husky install",
     "pre-commit-hook": "lint-staged",
-    "test:server": "jest"
+    "test:server": "jest",
+    "serve": "pm2 stop all; pm2 start ./backend/bin/server.js"
   },
   "private": true,
   "dependencies": {
@@ -38,9 +40,12 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "firebase": "^8.4.1",
-    "ngx-auth-firebaseui": "^5.2.0",
+    "firebase-admin": "^9.6.0",
     "joi": "^17.4.0",
     "morgan": "^1.10.0",
+    "ngx-auth-firebaseui": "^5.2.0",
+    "node-cron": "^3.0.0",
+    "pm2": "^4.5.6",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

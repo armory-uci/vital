@@ -49,6 +49,14 @@ const config = convict({
   vulnerabilities: {
     format: Object,
     default: {}
+  },
+  sandboxTTLSeconds: {
+    env: 'SANDBOX_TTL_SEC',
+    default: 1800,
+    format: (val) => {
+      if (typeof val !== 'number' || val <= 0 || val > 1800)
+        throw new Error(`${val} not in range [1, 1800]`);
+    }
   }
 });
 

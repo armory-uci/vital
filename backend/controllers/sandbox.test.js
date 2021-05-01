@@ -6,12 +6,23 @@ const {
   listSandboxes,
   cleanupTask,
   createTask,
-  redirectToTask
+  redirectToTask,
+  cleanupAllTasks
 } = require('./sandbox');
 
 const tasksListMockSuccessRes = { taskArns: ['mockListArnId'] };
-const stopTaskSuccessRes = { tasks: { taskArn: 'arn:/mockStoppedArnId' } };
+const stopTaskSuccessRes = {
+  task: {
+    taskArn: 'arn:/mockStoppedArnId',
+    stoppingAt: 1,
+    startedAt: 1000000000000
+  }
+};
 const startTaskSuccessRes = { tasks: [{ taskArn: 'arn:/mockStartedArnId' }] };
+const describeTasksExpiredRes = {
+  tasks: [{ createdAt: 1000000000000 }],
+  failures: []
+};
 
 jest.mock('aws-sdk', () => {
   const listTasksPromiseResponse = jest
@@ -38,6 +49,14 @@ jest.mock('aws-sdk', () => {
     .fn()
     .mockImplementation(() => ({ promise: startTaskPromiseResponse }));
 
+  const describeTasksPromiseResponse = jest
+    .fn()
+    .mockResolvedValue(describeTasksExpiredRes);
+
+  const describeTasksFn = jest
+    .fn()
+    .mockImplementation(() => ({ promise: describeTasksPromiseResponse }));
+
   const waitForFnPromiseResponse = jest.fn().mockResolvedValue({
     tasks: [
       {
@@ -61,6 +80,7 @@ jest.mock('aws-sdk', () => {
     stopTask = stopTaskFn;
     runTask = runTaskFn;
     waitFor = waitForFn;
+    describeTasks = describeTasksFn;
   }
 
   const describeNetworkInterfacesPromiseResponse = jest.fn().mockResolvedValue({
@@ -82,6 +102,36 @@ jest.mock('aws-sdk', () => {
   };
 });
 
+jest.mock('firebase-admin', () => {
+  const getMock = jest.fn().mockResolvedValue({
+    docs: [],
+    exists: true,
+    data: () => ({ active: 'mockArnId' })
+  });
+  const setMock = jest.fn().mockResolvedValue({
+    data: () => ({ active: 'arn:/mockArnId' })
+  });
+  const updateMock = jest.fn().mockResolvedValue({});
+  const docMock = jest.fn().mockImplementation(() => ({
+    get: getMock,
+    set: setMock,
+    update: updateMock
+  }));
+  const collectionMock = jest.fn().mockImplementation((collectionId) => ({
+    get: getMock,
+    doc: docMock
+  }));
+  const arrayUnionMock = jest.fn().mockImplementation(() => 'mockArnId');
+  const firestoreMock = jest.fn().mockImplementation(() => ({
+    collection: collectionMock
+  }));
+  firestoreMock.FieldValue = { arrayUnion: arrayUnionMock };
+  return {
+    initializeApp: jest.fn().mockImplementation(() => true),
+    firestore: firestoreMock
+  };
+});
+
 const mockResponse = () => {
   const res = {};
   res.status = jest.fn().mockReturnValue(res);
@@ -92,6 +142,7 @@ const mockResponse = () => {
 
 const mockRequest = (sessionData) => {
   return {
+    userId: 'firestore_mock_user_id',
     session: { data: sessionData }
   };
 };
@@ -167,5 +218,10 @@ describe('sandboxes', () => {
       terminalUrl: 'http://localhost:3001',
       websiteUrl: 'http://localhost:5000'
     });
+  });
+
+  test('test cleanup expired sandboxes', async () => {
+    const cleanupRes = await cleanupAllTasks();
+    expect(cleanupRes[0].status).toEqual('fulfilled');
   });
 });
