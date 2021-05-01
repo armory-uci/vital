@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { ProblemListService } from '../../services/utility-services/problem-list.service';
 import { IProblem } from './problem.model';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-problem-list',
@@ -12,7 +13,6 @@ export class ProblemListComponent implements OnInit {
   problems: IProblem[];
   constructor(
     private problemListService: ProblemListService,
-    private route: ActivatedRoute,
     private router: Router
   ) {}
 

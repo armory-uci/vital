@@ -29,9 +29,9 @@ describe('LoginComponent', () => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    router = TestBed.get(Router);
-    location = TestBed.get(Location);
-    userInfoService = TestBed.get(UserInfoService);
+    router = TestBed.inject(Router);
+    location = TestBed.inject(Location);
+    userInfoService = TestBed.inject(UserInfoService);
     router.initialNavigation();
   });
 
@@ -48,16 +48,19 @@ describe('LoginComponent', () => {
 
   it("should navigate to the Problem Page '/home/problem'", async(() => {
     fixture.detectChanges();
-    const USER_INFO: IUserInfo = {
-      displayName: 'Test User',
-      email: 'test@email.com',
-      photoUrl: 'https://someprofilephotos',
-      uid: '12jdbfk1233'
-    };
-    component.login(USER_INFO);
-    fixture.whenStable().then(() => {
-      expect(location.path()).toBe('/home/problem');
-    });
+    component
+      .login({
+        displayName: 'Test User',
+        email: 'test@email.com',
+        photoURL: 'https://someprofilephotos',
+        uid: '12jdbfk1233',
+        getIdToken: () => Promise.resolve('qwertyuiop')
+      })
+      .then(() => {
+        fixture.whenStable().then(() => {
+          expect(location.path()).toBe('/home/problem');
+        });
+      });
   }));
 
   it('should set user info value in utility service', async(() => {
@@ -66,11 +69,20 @@ describe('LoginComponent', () => {
       displayName: 'Test User',
       email: 'test@email.com',
       photoUrl: 'https://someprofilephotos',
-      uid: '12jdbfk1233'
+      uid: '12jdbfk1233',
+      idToken: 'qwertyuiop'
     };
-    spyOn(userInfoService, 'getUserInfo').and.returnValue(USER_INFO);
-    component.login(USER_INFO);
-    fixture.detectChanges();
-    expect(userInfoService.getUserInfo()).toEqual(USER_INFO);
+    component
+      .login({
+        displayName: 'Test User',
+        email: 'test@email.com',
+        photoURL: 'https://someprofilephotos',
+        uid: '12jdbfk1233',
+        getIdToken: () => Promise.resolve('qwertyuiop')
+      })
+      .then(() => {
+        fixture.detectChanges();
+        expect(userInfoService.getUserInfo()).toEqual(USER_INFO);
+      });
   }));
 });
