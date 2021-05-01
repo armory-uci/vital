@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ProblemListComponent } from './home/problem-list/problem-list.component';
 import { TutorialPageComponent } from './home/tutorial-page/tutorial-page.component';
+import { LoadingComponent } from './loading/loading.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ReferenceComponent } from './reference/reference.component';
@@ -10,6 +11,7 @@ import { ReferenceComponent } from './reference/reference.component';
 export const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'reference', component: ReferenceComponent },
+  { path: 'loading', component: LoadingComponent },
   {
     path: 'home',
     component: HomeComponent,

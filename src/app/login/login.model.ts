@@ -3,4 +3,5 @@ export interface IUserInfo {
   email: string;
   photoUrl: string;
   uid: string;
+  idToken: string;
 }

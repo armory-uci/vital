@@ -1,4 +1,5 @@
 const cluster = 'vital-sandbox';
+const awsRegion = 'us-east-1';
 const subnets = [
   'subnet-92afc7f4',
   'subnet-b22b5fed',
@@ -28,8 +29,15 @@ const sandbox = {
   ssl: 'http'
 };
 
+const sandboxWebsite = {
+  port: 5000,
+  ssl: 'http'
+};
+
 module.exports = {
   cluster,
   vulnerabilities,
-  sandbox
+  sandbox,
+  sandboxWebsite,
+  awsRegion
 };

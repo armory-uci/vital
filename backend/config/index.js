@@ -14,11 +14,27 @@ const config = convict({
     env: 'PORT',
     arg: 'port'
   },
+  awsRegion: {
+    doc: 'AWS Region for the container environment',
+    default: null, // Forcing a set of AWS region, as it's a hard problem to diagnose
+    format: (val) => {
+      if (!val) {
+        throw new Error(
+          'Must specify AWS Region. Check the top right on your AWS Console. Eg. us-east-1'
+        );
+      }
+    }
+  },
   ssl: {
     format: ['http', 'https'],
     default: 'http'
   },
   sandbox: {
+    format: Object,
+    default: {}
+  },
+  sandboxWebsite: {
+    doc: 'Website URL that the sandbox is exposing',
     format: Object,
     default: {}
   },

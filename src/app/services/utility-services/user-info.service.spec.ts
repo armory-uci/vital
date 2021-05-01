@@ -9,7 +9,8 @@ describe('UserInfoService', () => {
     displayName: 'Test User',
     email: 'test@email.com',
     photoUrl: 'https://someprofilephotos',
-    uid: '12jdbfk1233'
+    uid: '12jdbfk1233',
+    idToken: 'qwertyuiop'
   };
 
   beforeEach(() => {

@@ -1,4 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from 'src/app/material/material.module';
 
 import { TutorialPageComponent } from './tutorial-page.component';
@@ -9,7 +11,7 @@ describe('TutorialPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MaterialModule],
+      imports: [MaterialModule, RouterTestingModule, HttpClientTestingModule],
       declarations: [TutorialPageComponent]
     }).compileComponents();
   });

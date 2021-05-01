@@ -20,12 +20,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  login($event) {
+  async login($event) {
+    const idToken = await $event.getIdToken();
     const userInfo: IUserInfo = {
       displayName: $event.displayName,
       email: $event.email,
       photoUrl: $event.photoURL,
-      uid: $event.uid
+      uid: $event.uid,
+      idToken
     };
     this.userInfoService.setUserInfo(userInfo);
     this.router.navigate(['home/problem'], { relativeTo: this.route });
