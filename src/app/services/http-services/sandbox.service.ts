@@ -5,11 +5,7 @@ import { Location } from '@angular/common';
 
 import { environment } from '../../../environments/environment';
 import { UserInfoService } from '../utility-services/user-info.service';
-
-export interface ISandbox {
-  terminalUrl: string;
-  websiteUrl: string;
-}
+import { ISandbox } from '../../home/tutorial-page/tutorial-page.model';
 
 @Injectable({
   providedIn: 'root'

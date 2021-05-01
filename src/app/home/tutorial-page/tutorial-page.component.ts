@@ -1,18 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { SandboxService } from 'src/app/services/http-services/sandbox.service';
 import {
-  ISandbox,
-  SandboxService
-} from 'src/app/services/http-services/sandbox.service';
+  IRetryResponse,
+  ISandbox
+} from 'src/app/home/tutorial-page/tutorial-page.model';
 import { IProblem } from '../problem-list/problem.model';
 import { DOCUMENT, Location } from '@angular/common';
 import { Inject } from '@angular/core';
-
-interface IRetryResponse {
-  isUp: boolean;
-  isRetriesExhausted: boolean;
-}
 
 @Component({
   selector: 'app-tutorial-page',
