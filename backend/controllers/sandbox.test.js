@@ -177,7 +177,11 @@ describe('sandboxes', () => {
 
     await createTask(req, res, next);
     expect(next).not.toHaveBeenCalled();
-    expect(res.json).toHaveBeenCalledWith('mockStartedArnId');
+    expect(res.json).toHaveBeenCalledWith({
+      arn: 'mockStartedArnId',
+      terminalUrl: 'http://localhost:3001',
+      websiteUrl: 'http://localhost:5000'
+    });
   });
 
   test('GET spawn sandbox success', async () => {

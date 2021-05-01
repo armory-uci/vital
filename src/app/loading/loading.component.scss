@@ -1,0 +1,12 @@
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#updating-message {
+  white-space: pre; // So that the text doesn't move
+}

@@ -11,6 +11,7 @@
     "lint:server": "eslint backend/**",
     "e2e": "ng e2e",
     "start:nodeserver": "nodemon ./backend/bin/server",
+    "coverage": "ng test --no-watch --code-coverage",
     "prepare": "husky install",
     "pre-commit-hook": "lint-staged",
     "test:server": "jest",

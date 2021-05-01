@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthProvider } from 'ngx-auth-firebaseui';
+import { UserInfoService } from '../services/utility-services/user-info.service';
+import { IUserInfo } from './login.model';
 
 @Component({
   selector: 'app-login',
@@ -9,28 +11,25 @@ import { AuthProvider } from 'ngx-auth-firebaseui';
 })
 export class LoginComponent implements OnInit {
   providers = AuthProvider;
-  username = '';
-  password = '';
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private userInfoService: UserInfoService
+  ) {}
 
   ngOnInit(): void {}
 
-  goToTutorial() {
-    this.router.navigate(['home/tutorial'], { relativeTo: this.route });
-  }
-
-  goToReference() {
-    this.router.navigate(['reference'], { relativeTo: this.route });
-  }
-
-  goToProblem() {
-    this.router.navigate(['home/problem'], { relativeTo: this.route });
-  }
-
-  onButtonClick($event) {
-    //TODO: Remove console. Pass info to backend/ session storage as needed.
-    console.log($event);
+  async login($event) {
+    const idToken = await $event.getIdToken();
+    const userInfo: IUserInfo = {
+      displayName: $event.displayName,
+      email: $event.email,
+      photoUrl: $event.photoURL,
+      uid: $event.uid,
+      idToken
+    };
+    this.userInfoService.setUserInfo(userInfo);
     this.router.navigate(['home/problem'], { relativeTo: this.route });
   }
 }
