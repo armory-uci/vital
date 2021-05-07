@@ -11,12 +11,7 @@ import { ISandbox } from '../../home/tutorial-page/tutorial-page.model';
   providedIn: 'root'
 })
 export class SandboxService {
-  private idToken: string;
-  constructor(private http: HttpClient, private userInfo: UserInfoService) {
-    userInfo.getUserInfo().subscribe((info) => {
-      this.idToken = info.idToken;
-    });
-  }
+  constructor(private http: HttpClient, private userInfo: UserInfoService) {}
 
   create(sandboxServerId: string): Observable<ISandbox> {
     return this.http.put<ISandbox>(
@@ -25,7 +20,7 @@ export class SandboxService {
         `/sandbox/spawn/${sandboxServerId}`
       ),
       {
-        idtoken: this.idToken
+        idtoken: this.userInfo.getUserInfo().idToken
       }
     );
   }

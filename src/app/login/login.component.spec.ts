@@ -46,7 +46,7 @@ describe('LoginComponent', () => {
     });
   }));
 
-  it("should navigate to the Problem Page '/home/problem'", async(() => {
+  it("should navigate to the Problem Page '/problem'", async(() => {
     fixture.detectChanges();
     component
       .login({
@@ -65,9 +65,6 @@ describe('LoginComponent', () => {
 
   it('should set user info value in utility service', async(() => {
     fixture.detectChanges();
-
-    const userInfo$ = userInfoService.getUserInfo();
-
     const USER_INFO: IUserInfo = {
       displayName: 'Test User',
       email: 'test@email.com',
@@ -85,7 +82,7 @@ describe('LoginComponent', () => {
       })
       .then(() => {
         fixture.detectChanges();
-        userInfo$.subscribe((info) => expect(info).toEqual(USER_INFO));
+        expect(userInfoService.getUserInfo()).toEqual(USER_INFO);
       });
   }));
 });
