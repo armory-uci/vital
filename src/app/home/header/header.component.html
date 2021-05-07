@@ -1,10 +1,5 @@
 <mat-toolbar color="primary">
   <span><a routerLink="/">vitaL</a></span>
   <span class="spacer"></span>
-  <button mat-icon-button aria-label="Avatar">
-    <img *ngIf="photoUrl; else elseBlock" [src]="photoUrl" alt="User Photo" />
-    <ng-template #elseBlock>
-      <mat-icon>account_circle</mat-icon>
-    </ng-template>
-  </button>
+  <ngx-auth-firebaseui-avatar></ngx-auth-firebaseui-avatar>
 </mat-toolbar>

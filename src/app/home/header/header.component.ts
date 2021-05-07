@@ -7,12 +7,7 @@ import { UserInfoService } from 'src/app/services/utility-services/user-info.ser
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  photoUrl: string;
-  constructor(private userInfo: UserInfoService) {
-    userInfo.getUserInfo().subscribe((info) => {
-      this.photoUrl = info.photoUrl;
-    });
-  }
+  constructor() {}
 
   ngOnInit(): void {}
 }
