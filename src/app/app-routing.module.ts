@@ -9,14 +9,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ReferenceComponent } from './reference/reference.component';
 
 export const routes: Routes = [
-  { path: '', component: LoginComponent },
   { path: 'reference', component: ReferenceComponent },
   { path: 'loading', component: LoadingComponent },
   {
-    path: 'home',
+    path: '',
     component: HomeComponent,
     children: [
-      { path: '', component: ProblemListComponent },
+      { path: '', component: LoginComponent },
       { path: 'problem', component: ProblemListComponent },
       { path: 'tutorial', component: TutorialPageComponent }
     ]
