@@ -1,6 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/theming';
-@import "assets/scss/partials/global";
+@import 'assets/scss/partials/global';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.vital-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: gra;
+
+  & .mat-card-title {
+    margin: 0 !important;
+  }
+}

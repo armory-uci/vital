@@ -1,7 +1,7 @@
 <h2>{{ title }}</h2>
 <div class="container">
-  <mat-card id="tutorial-card" class="mat-elevation-z4">
-    <mat-card-header>
+  <mat-card id="tutorial-card">
+    <mat-card-header class="vital-card-header">
       <mat-icon mat-card-avatar aria-hidden="false" aria-label="School icon">
         school
       </mat-icon>
@@ -12,8 +12,8 @@
       <button mat-button color="warn">Reset</button>
     </mat-card-actions>
   </mat-card>
-  <mat-card class="mat-elevation-z4">
-    <mat-card-header>
+  <mat-card>
+    <mat-card-header class="vital-card-header">
       <mat-icon mat-card-avatar aria-hidden="false" aria-label="Code icon">
         code
       </mat-icon>
@@ -23,8 +23,8 @@
       <iframe [src]="sandbox.terminalUrl"></iframe>
     </mat-card-content>
   </mat-card>
-  <mat-card class="mat-elevation-z4">
-    <mat-card-header>
+  <mat-card>
+    <mat-card-header class="vital-card-header">
       <mat-icon mat-card-avatar aria-hidden="false" aria-label="Language icon">
         language
       </mat-icon>
