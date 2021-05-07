@@ -58,13 +58,16 @@ describe('LoginComponent', () => {
       })
       .then(() => {
         fixture.whenStable().then(() => {
-          expect(location.path()).toBe('/home/problem');
+          expect(location.path()).toBe('/problem');
         });
       });
   }));
 
   it('should set user info value in utility service', async(() => {
     fixture.detectChanges();
+
+    const userInfo$ = userInfoService.getUserInfo();
+
     const USER_INFO: IUserInfo = {
       displayName: 'Test User',
       email: 'test@email.com',
@@ -82,7 +85,7 @@ describe('LoginComponent', () => {
       })
       .then(() => {
         fixture.detectChanges();
-        expect(userInfoService.getUserInfo()).toEqual(USER_INFO);
+        userInfo$.subscribe((info) => expect(info).toEqual(USER_INFO));
       });
   }));
 });

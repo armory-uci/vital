@@ -21,8 +21,11 @@ describe('UserInfoService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should set and get the user info', () => {
+  it('should set and get the user info', async () => {
+    const userInfo$ = service.getUserInfo();
+
     service.setUserInfo(USER_INFO);
-    expect(service.getUserInfo()).toBe(USER_INFO);
+
+    userInfo$.subscribe((info) => expect(info).toBe(USER_INFO));
   });
 });
