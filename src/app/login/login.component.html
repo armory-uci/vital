@@ -12,22 +12,24 @@
     </div>
   </div>
 
-  <div class="login-card">
-    <div class="title">
-      <h1>Login</h1>
-    </div>
-    <ngx-auth-firebaseui-providers
-      layout="column"
-      [providers]="[
-        providers.Google,
-        providers.Facebook,
-        providers.Github,
-        providers.Microsoft,
-        providers.Twitter
-      ]"
-      (onSuccess)="login($event)"
-    ></ngx-auth-firebaseui-providers>
-  </div>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Login or Sign Up</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ngx-auth-firebaseui-providers
+        layout="column"
+        [providers]="[
+          providers.Google,
+          providers.Facebook,
+          providers.Github,
+          providers.Microsoft,
+          providers.Twitter
+        ]"
+        (onSuccess)="login($event)"
+      ></ngx-auth-firebaseui-providers>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <app-footer></app-footer>
