@@ -1,7 +1,10 @@
 <mat-toolbar color="primary">
-  <span>vitaL</span>
+  <span><a routerLink="/">vitaL</a></span>
   <span class="spacer"></span>
   <button mat-icon-button aria-label="Avatar">
-    <mat-icon>account_circle</mat-icon>
+    <img *ngIf="photoUrl; else elseBlock" [src]="photoUrl" alt="User Photo" />
+    <ng-template #elseBlock>
+      <mat-icon>account_circle</mat-icon>
+    </ng-template>
   </button>
 </mat-toolbar>
