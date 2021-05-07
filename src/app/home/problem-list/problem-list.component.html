@@ -1,18 +1,20 @@
-<table>
-  <thead>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Solve</th>
-  </thead>
-  <tbody>
-    <tr *ngFor="let problem of problems">
-      <td>{{ problem.title }}</td>
-      <td>{{ problem.description }}</td>
-      <td>
-        <button color="primary" mat-button (click)="onClick(problem)">
-          SQL Injection
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="container">
+  <table>
+    <thead>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Solve</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let problem of problems">
+        <td>{{ problem.title }}</td>
+        <td>{{ problem.description }}</td>
+        <td>
+          <button color="primary" mat-button (click)="onClick(problem)">
+            SQL Injection
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
