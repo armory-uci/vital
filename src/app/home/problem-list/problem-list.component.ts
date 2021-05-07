@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { ProblemListService } from '../../services/utility-services/problem-list.service';
 import { IProblem } from './problem.model';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-problem-list',
@@ -11,20 +12,26 @@ import { IProblem } from './problem.model';
 })
 export class ProblemListComponent implements OnInit {
   problems: IProblem[];
+  listdata: MatTableDataSource<any>;
+  displayColumns: string[] = ['Id', 'title', 'difficulty', 'status', 'launch'];
+
   constructor(
     private problemListService: ProblemListService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.problemListService.getProblems().subscribe((data) => {
-      this.problems = data.map((e) => {
-        return {
-          id: e.payload.doc.id,
-          ...(e.payload.doc.data() as Record<string, unknown>)
-        } as IProblem;
-      }); // TODO: Handle error
-    });
+    // this.problemListService.getProblems().subscribe((data) => {
+    //   this.problems = data.map((e) => {
+    //     return {
+    //       id: e.payload.doc.id,
+    //       ...(e.payload.doc.data() as Record<string, unknown>)
+    //     } as IProblem;
+    //   }); // TODO: Handle error
+    // });
+
+    this.problems = this.problemListService.getProblemsList();
+    this.listdata = new MatTableDataSource(this.problems);
   }
 
   onClick(problem: IProblem): void {
@@ -33,5 +40,25 @@ export class ProblemListComponent implements OnInit {
       // TODO What all do we need? And does it make sense as a query parameter? Side effect: refreshing the page will have different behaviours in each case
       state: { problem }
     });
+  }
+
+  getStatusIcon(element) {
+    if (element.status === 'd') {
+      return 'check_circle';
+    } else if (element.status == 'u') {
+      return 'play_circle_filled';
+    } else {
+      return 'clear'
+    }
+  }
+
+  getColor(element) {
+    if (element.status === 'd') {
+      return 'primary';
+    } else if (element.status == 'u') {
+      return '';
+    } else {
+      return 'warn'
+    }
   }
 }
