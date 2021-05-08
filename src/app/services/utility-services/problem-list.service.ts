@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UserInfoService } from '../../services/utility-services/user-info.service';
 import { map } from 'rxjs/operators';
 import { IProblem } from 'src/app/home/problem-list/problem.model';
+import { ProblemStatus } from 'src/app/home/problem-list/problem-list.component';
 
 @Injectable({
   providedIn: 'root'
@@ -26,25 +27,25 @@ export class ProblemListService {
           id: '1hx234f',
           title: 'SQL Injection',
           difficulty: 'Medium',
-          status: 'd'
+          status: ProblemStatus.correct
         },
         {
           id: 'dffdsfds',
           title: 'XSS Reflected',
           difficulty: 'Medium',
-          status: 'w'
+          status: ProblemStatus.incorrect
         },
         {
           id: 'dffdsfds',
           title: 'XSS Persistent',
           difficulty: 'Medium',
-          status: 'u'
+          status: ProblemStatus.correct
         },
         {
           id: '01fec67',
           title: 'XSS Dom Based',
           difficulty: 'Easy',
-          status: 'd'
+          status: ProblemStatus.correct
         }
       ];
     } else {
@@ -53,13 +54,13 @@ export class ProblemListService {
           id: '234f1hx',
           title: 'SQL Injection',
           difficulty: 'Medium',
-          status: 'd'
+          status: ProblemStatus.correct
         },
         {
           id: '431tyu',
           title: 'CORS',
           difficulty: 'Medium',
-          status: 'w'
+          status: ProblemStatus.incorrect
         }
       ];
     }

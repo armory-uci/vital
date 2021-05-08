@@ -3,5 +3,5 @@ export interface IProblem {
   id: string;
   title: string;
   difficulty: string;
-  status: string;
+  status: number;
 }

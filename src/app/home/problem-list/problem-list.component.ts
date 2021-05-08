@@ -8,6 +8,12 @@ import { FormControl } from '@angular/forms';
 import { UserInfoService } from 'src/app/services/utility-services/user-info.service';
 import { IUserInfo } from 'src/app/login/login.model';
 
+export enum ProblemStatus {
+  notStarted = 0,
+  correct = 1,
+  incorrect = 2
+}
+
 @Component({
   selector: 'app-problem-list',
   templateUrl: './problem-list.component.html',
@@ -30,10 +36,10 @@ export class ProblemListComponent implements OnInit {
   ngOnInit() {
     this.getProblemSet(this.language);
   }
-  getStatus(language): string {
+  getStatus(language): number {
     // get status for a user
     const userDetails: IUserInfo = this.userInfoService.getUserInfo();
-    return 'u';
+    return ProblemStatus.notStarted;
   }
 
   onClick(problem: IProblem): void {
@@ -63,22 +69,24 @@ export class ProblemListComponent implements OnInit {
   }
 
   getStatusIcon(element) {
-    if (element.status === 'd') {
+    if (element.status === ProblemStatus.correct) {
       return 'check_circle';
-    } else if (element.status === 'u') {
+    } else if (element.status === ProblemStatus.notStarted) {
       return 'play_circle_filled';
-    } else {
+    } else if (element.status === ProblemStatus.incorrect) {
       return 'clear';
+    } else {
+      return 'warning';
     }
   }
 
   getColor(element) {
-    if (element.status === 'd') {
+    if (element.status === ProblemStatus.correct) {
       return 'primary';
-    } else if (element.status === 'u') {
-      return '';
-    } else {
+    } else if (element.status === ProblemStatus.incorrect) {
       return 'warn';
+    } else {
+      return '';
     }
   }
 }
