@@ -38,6 +38,7 @@ export class ProblemListComponent implements OnInit {
     });
   }
   getStatus(language): string {
+    // get status for a user
     return 'u';
   }
 
