@@ -30,6 +30,6 @@ export class LoginComponent implements OnInit {
       idToken
     };
     this.userInfoService.setUserInfo(userInfo);
-    this.router.navigate(['home/problem'], { relativeTo: this.route });
+    this.router.navigate(['/problem']);
   }
 }

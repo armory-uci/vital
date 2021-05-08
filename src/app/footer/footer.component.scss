@@ -1,18 +1,7 @@
-@import "../../assets/scss/partials/variables";
+mat-toolbar {
+  display: flex;
+}
 
-.footer-pos{
-  position: fixed;
-  bottom: 0%;
-  width: 100%;
- }
-
- .footer-design {
-     color: var(--vital-grey);
-     font-size: small;
-     position: relative;
-     left: 5rem;
- }
-
- .mat-icon {
-  vertical-align: middle;
+.spacer {
+  flex: 1 1 auto;
 }

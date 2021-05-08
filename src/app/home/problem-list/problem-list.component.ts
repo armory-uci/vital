@@ -40,7 +40,7 @@ export class ProblemListComponent implements OnInit {
 
   onClick(problem: IProblem): void {
     problem.serverId = 'sqlInjection'; // FIXME Get this from firebase. Or find a better way.
-    this.router.navigate(['home/tutorial'], {
+    this.router.navigate(['/tutorial'], {
       // TODO What all do we need? And does it make sense as a query parameter? Side effect: refreshing the page will have different behaviours in each case
       state: { problem }
     });
