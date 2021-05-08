@@ -46,7 +46,7 @@ describe('LoginComponent', () => {
     });
   }));
 
-  it("should navigate to the Problem Page '/home/problem'", async(() => {
+  it("should navigate to the Problem Page '/problem'", async(() => {
     fixture.detectChanges();
     component
       .login({
@@ -58,7 +58,7 @@ describe('LoginComponent', () => {
       })
       .then(() => {
         fixture.whenStable().then(() => {
-          expect(location.path()).toBe('/home/problem');
+          expect(location.path()).toBe('/problem');
         });
       });
   }));

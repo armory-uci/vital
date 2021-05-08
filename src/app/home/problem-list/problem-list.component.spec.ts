@@ -49,7 +49,7 @@ describe('ProblemListComponent', () => {
     };
     component.onClick(problem);
     fixture.whenStable().then(() => {
-      expect(location.path()).toBe('/home/tutorial');
+      expect(location.path()).toBe('/tutorial');
     });
   });
 });
