@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSelectModule } from '@angular/material/select';
 
 const MATERIAL = [
   //Add all your material components in thus array.
@@ -13,7 +15,9 @@ const MATERIAL = [
   MatIconModule,
   MatFormFieldModule,
   MatToolbarModule,
-  MatTableModule
+  MatTableModule,
+  MatDividerModule,
+  MatSelectModule
 ];
 
 @NgModule({
