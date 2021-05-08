@@ -16,21 +16,21 @@
   <mat-divider></mat-divider>
 </div>
 <div class="mat-elevation-z8">
-  <mat-table [dataSource]="listdata">
+  <mat-table [dataSource]="listdata" matSort>
     <ng-container matColumnDef="Id">
       <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="title">
-      <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.title }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="difficulty">
-      <mat-header-cell *matHeaderCellDef>Difficulty</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Difficulty</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.difficulty }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="status">
-      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
       <mat-cell *matCellDef="let element">
         <button mat-icon-button color="{{ getColor(element) }}">
           <mat-icon>{{ getStatusIcon(element) }}</mat-icon>
@@ -45,8 +45,14 @@
         </button>
       </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Loading data...
+      </mat-footer-cell>
+    </ng-container>
     <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayColumns"></mat-row>
+    <mat-footer-row [ngClass]="{'hide': listdata!=null}" *matFooterRowDef="['loading']"></mat-footer-row>
   </mat-table>
 </div>
 

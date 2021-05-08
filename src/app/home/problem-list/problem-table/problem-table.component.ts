@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ProblemListService } from '../../../services/utility-services/problem-list.service';
@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
 import { UserInfoService } from 'src/app/services/utility-services/user-info.service';
 import { IUserInfo } from 'src/app/login/login.model';
+import { MatSort } from '@angular/material/sort';
 
 export enum ProblemStatus {
   notStarted = 0,
@@ -20,6 +21,7 @@ export enum ProblemStatus {
   styleUrls: ['./problem-table.component.scss']
 })
 export class ProblemTableComponent implements OnInit {
+  @ViewChild(MatSort) sort: MatSort;
   disableSelect = new FormControl(false);
   problems: IProblem[];
   listdata: MatTableDataSource<any>;
@@ -61,7 +63,8 @@ export class ProblemTableComponent implements OnInit {
             ...(e.payload.doc.data() as Record<string, unknown>)
           } as IProblem;
         })
-      ); // TODO: Handle error
+      );
+      this.listdata.sort = this.sort; // TODO: Handle error
     });
   }
 
