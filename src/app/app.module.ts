@@ -22,6 +22,7 @@ import { FooterComponent } from './footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoadingComponent } from './loading/loading.component';
 import { FormsModule } from '@angular/forms';
+import { ProblemTableComponent } from './home/problem-list/problem-table/problem-table.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { FormsModule } from '@angular/forms';
     PageNotFoundComponent,
     ProblemListComponent,
     FooterComponent,
-    LoadingComponent
+    LoadingComponent,
+    ProblemTableComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
