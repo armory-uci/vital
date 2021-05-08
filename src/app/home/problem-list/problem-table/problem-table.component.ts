@@ -75,9 +75,12 @@ export class ProblemTableComponent implements OnInit {
                   id: d.payload.doc.id,
                   status: stat.payload.doc.get('status'),
                   ...(d.payload.doc.data() as Record<string, unknown>)
-                };
+                } as IProblem;
               })
             );
+            this.listdata.sort = this.sort;
+            this.listdata.paginator = this.paginator;
+            console.log(this.listdata);
           });
       });
       console.log(this.listdata);
