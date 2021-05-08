@@ -53,8 +53,9 @@ export class ProblemListService {
           title: 'CORS',
           difficulty: 'Medium',
           status: 'w'
-        }]
-     }
+        }
+      ];
+    }
     return mock;
   }
 }

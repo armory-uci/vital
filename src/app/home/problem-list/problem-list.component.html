@@ -1,7 +1,11 @@
 <div>
   <mat-form-field appearance="fill">
     <mat-label>Choose your language</mat-label>
-    <mat-select [disabled]="disableSelect.value" [(value)]="selectedLanguage" (selectionChange)="changeLanguage($event.value)" >
+    <mat-select
+      [disabled]="disableSelect.value"
+      [(value)]="selectedLanguage"
+      (selectionChange)="changeLanguage($event.value)"
+    >
       <mat-option value="node">Node JS</mat-option>
       <mat-option value="java" disabled>Java (disabled)</mat-option>
       <mat-option value="python">Python</mat-option>
@@ -15,21 +19,21 @@
   <mat-table [dataSource]="listdata">
     <ng-container matColumnDef="Id">
       <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="title">
       <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.title}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.title }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="difficulty">
       <mat-header-cell *matHeaderCellDef>Difficulty</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{element.difficulty}}</mat-cell>
+      <mat-cell *matCellDef="let element">{{ element.difficulty }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="status">
       <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <button mat-icon-button color={{getColor(element)}}>
-          <mat-icon>{{getStatusIcon(element)}}</mat-icon>
+        <button mat-icon-button color="{{ getColor(element) }}">
+          <mat-icon>{{ getStatusIcon(element) }}</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
@@ -42,6 +46,6 @@
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayColumns"></mat-row>
   </mat-table>
 </div>
