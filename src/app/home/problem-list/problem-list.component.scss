@@ -1,11 +1,24 @@
+@import '../../../assets/scss/partials/mixins';
+
+:host {
+  @include page-style;
+}
+
+.container {
+  flex-grow: 1;
+  display: flex;
+
+  // TODO More layouting as required here
+}
+
 table,
 th,
 td {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 th,
 td {
-    padding: 5px;
-    text-align: left;
+  padding: 5px;
+  text-align: left;
 }
