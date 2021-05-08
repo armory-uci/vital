@@ -9,10 +9,7 @@ import { IProblem } from 'src/app/home/problem-list/problem.model';
   providedIn: 'root'
 })
 export class ProblemListService {
-  constructor(
-    private firestore: AngularFirestore,
-    private userInfo: UserInfoService
-  ) {}
+  constructor(private firestore: AngularFirestore) {}
   getProblems(language) {
     return this.firestore
       .collection('problems', (ref) =>

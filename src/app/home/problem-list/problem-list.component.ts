@@ -5,6 +5,8 @@ import { ProblemListService } from '../../services/utility-services/problem-list
 import { IProblem } from './problem.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
+import { UserInfoService } from 'src/app/services/utility-services/user-info.service';
+import { IUserInfo } from 'src/app/login/login.model';
 
 @Component({
   selector: 'app-problem-list',
@@ -21,7 +23,8 @@ export class ProblemListComponent implements OnInit {
 
   constructor(
     private problemListService: ProblemListService,
-    private router: Router
+    private router: Router,
+    private userInfoService: UserInfoService
   ) {}
 
   ngOnInit() {
@@ -29,6 +32,7 @@ export class ProblemListComponent implements OnInit {
   }
   getStatus(language): string {
     // get status for a user
+    const userDetails: IUserInfo = this.userInfoService.getUserInfo();
     return 'u';
   }
 
