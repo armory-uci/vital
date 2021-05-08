@@ -13,7 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class ProblemListComponent implements OnInit {
   problems: IProblem[];
   listdata: MatTableDataSource<any>;
-  userId;
+  language = 'python';
   displayColumns: string[] = ['Id', 'title', 'difficulty', 'status', 'launch'];
 
   constructor(
@@ -22,12 +22,12 @@ export class ProblemListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.problemListService.getProblems('python').subscribe((data) => {
+    this.problemListService.getProblems(this.language).subscribe((data) => {
       this.listdata = new MatTableDataSource(
         data.map((e) => {
           return {
             id: e.payload.doc.id,
-            status: this.getStatus('python'),
+            status: this.getStatus(this.language),
             ...(e.payload.doc.data() as Record<string, unknown>)
           } as IProblem;
         })

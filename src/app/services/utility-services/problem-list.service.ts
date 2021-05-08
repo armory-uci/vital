@@ -21,22 +21,6 @@ export class ProblemListService {
       .snapshotChanges();
   }
 
-  findProblems(language): Observable<any> {
-    return this.firestore
-      .collection('problems', (ref) =>
-        ref.where('support', 'array-contains', language)
-      )
-      .snapshotChanges()
-      .pipe(
-        map((actions) => {
-          return actions.map((a) => {
-            const problems = a.payload.doc.data();
-            return problems;
-          }) as IProblem[];
-        })
-      );
-  }
-
   // getUserId(language){
   //   console.log("Displa yname is=");
   //   var uid = this.userInfo.getUserInfo().uid;
@@ -53,36 +37,33 @@ export class ProblemListService {
 
   //   // console.log("Getting status id="+idtoken);
   // }
-  //   getProblemsList() {
-
-  //     this.findProblems("python").subscribe((r)=> console.log(r));
-  //     const mock: IProblem[] =
-  //     [
-  //       {
-  //         id: '1hx234f',
-  //         title: 'SQL Injection',
-  //         difficulty: 'Medium',
-  //         status: 'd'
-  //       },
-  //       {
-  //         id: 'dffdsfds',
-  //         title: 'XSS Reflected',
-  //         difficulty: 'Medium',
-  //         status: 'w'
-  //       },
-  //       {
-  //         id: 'dffdsfds',
-  //         title: 'XSS Persistent',
-  //         difficulty: 'Medium',
-  //         status: 'u'
-  //       },
-  //       {
-  //         id: '01fec67',
-  //         title: 'XSS Dom Based',
-  //         difficulty: 'Easy',
-  //         status: 'd'
-  //       }
-  //     ];
-  //     return mock;
-  //   }
+  getProblemsList() {
+    const mock: IProblem[] = [
+      {
+        id: '1hx234f',
+        title: 'SQL Injection',
+        difficulty: 'Medium',
+        status: 'd'
+      },
+      {
+        id: 'dffdsfds',
+        title: 'XSS Reflected',
+        difficulty: 'Medium',
+        status: 'w'
+      },
+      {
+        id: 'dffdsfds',
+        title: 'XSS Persistent',
+        difficulty: 'Medium',
+        status: 'u'
+      },
+      {
+        id: '01fec67',
+        title: 'XSS Dom Based',
+        difficulty: 'Easy',
+        status: 'd'
+      }
+    ];
+    return mock;
+  }
 }
