@@ -22,6 +22,14 @@ const vulnerabilities = {
     securityGroups,
     assignPublicIp
   },
+  sqlInjectionNode: {
+    taskDefinition: 'sqlInjection-node-task',
+    cluster,
+    launchType,
+    subnets,
+    securityGroups,
+    assignPublicIp
+  },
   xssStored: {
     taskDefinition: 'xssStored-task',
     cluster,
