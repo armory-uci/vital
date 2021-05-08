@@ -25,17 +25,7 @@ export class ProblemListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.problemListService.getProblems(this.language).subscribe((data) => {
-      this.listdata = new MatTableDataSource(
-        data.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            status: this.getStatus(this.language),
-            ...(e.payload.doc.data() as Record<string, unknown>)
-          } as IProblem;
-        })
-      ); // TODO: Handle error
-    });
+    this.getProblemSet(this.language);
   }
   getStatus(language): string {
     // get status for a user
@@ -50,14 +40,23 @@ export class ProblemListComponent implements OnInit {
     });
   }
 
-  // getProblemSet(language: string) {
-  //   this.problems = this.problemListService.getProblemsList(language);
-  //   this.listdata = new MatTableDataSource(this.problems);
-  // }
+  getProblemSet(language?: string) {
+    this.problemListService.getProblems(language).subscribe((data) => {
+      this.listdata = new MatTableDataSource(
+        data.map((e) => {
+          return {
+            id: e.payload.doc.id,
+            status: this.getStatus(this.language),
+            ...(e.payload.doc.data() as Record<string, unknown>)
+          } as IProblem;
+        })
+      ); // TODO: Handle error
+    });
+  }
 
-  // changeLanguage(language: string): void {
-  //   this.getProblemSet(language);
-  // }
+  changeLanguage(language: string): void {
+    this.getProblemSet(language);
+  }
 
   getStatusIcon(element) {
     if (element.status === 'd') {
