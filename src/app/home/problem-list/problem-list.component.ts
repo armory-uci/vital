@@ -55,20 +55,20 @@ export class ProblemListComponent implements OnInit {
   getStatusIcon(element) {
     if (element.status === 'd') {
       return 'check_circle';
-    } else if (element.status == 'u') {
+    } else if (element.status === 'u') {
       return 'play_circle_filled';
     } else {
-      return 'clear'
+      return 'clear';
     }
   }
 
   getColor(element) {
     if (element.status === 'd') {
       return 'primary';
-    } else if (element.status == 'u') {
+    } else if (element.status === 'u') {
       return '';
     } else {
-      return 'warn'
+      return 'warn';
     }
   }
 }

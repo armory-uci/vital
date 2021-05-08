@@ -36,7 +36,7 @@
     <ng-container matColumnDef="launch">
       <mat-header-cell *matHeaderCellDef>Launch</mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-icon-button color="primary">
+        <button (click)="onClick(row)" mat-icon-button color="primary">
           <mat-icon>launch</mat-icon>
         </button>
       </mat-cell>
