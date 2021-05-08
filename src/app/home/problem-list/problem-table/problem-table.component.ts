@@ -39,12 +39,19 @@ export class ProblemTableComponent implements OnInit {
     this.getProblemSet(this.language);
   }
 
-  getStatus(language): number {
+  getStatus(language, problemId) {
     // get status for a user
     const userDetails: IUserInfo = this.userInfoService.getUserInfo();
-    return ProblemStatus.notStarted;
+    this.problemListService
+      .getProblemStatus(userDetails.uid, problemId, language)
+      .subscribe((data) => {
+        this.listdata = new MatTableDataSource(
+          data.map((e) => {
+            return e.payload.doc.get('status');
+          })
+        ); // TODO: Handle error
+      });
   }
-
   onClick(problem: IProblem): void {
     problem.serverId = 'sqlInjection'; // FIXME Get this from firebase. Or find a better way.
     this.router.navigate(['/tutorial'], {
@@ -54,16 +61,25 @@ export class ProblemTableComponent implements OnInit {
   }
 
   getProblemSet(language?: string) {
-    this.problemListService.getProblems(language).subscribe((data) => {
+    const userDetails: IUserInfo = this.userInfoService.getUserInfo();
+    this.problemListService.getProblems(language).subscribe((problemdata) => {
       this.listdata = new MatTableDataSource(
-        data.map((e) => {
+        problemdata.map((d) => {
           return {
-            id: e.payload.doc.id,
-            status: this.getStatus(this.language),
-            ...(e.payload.doc.data() as Record<string, unknown>)
-          } as IProblem;
+            id: d.payload.doc.id,
+            status: this.problemListService
+              .getProblemStatus(userDetails.uid, d.payload.doc.id, language)
+              .subscribe((statusdata) => {
+                statusdata.map((da) => {
+                  console.log(da.payload.doc.get('status'));
+                  return da.payload.doc.get('status');
+                });
+              }),
+            ...(d.payload.doc.data() as Record<string, unknown>)
+          };
         })
       );
+      console.log(this.listdata);
       this.listdata.sort = this.sort; // TODO: Handle error
     });
   }

@@ -46,7 +46,7 @@ describe('ProblemListComponent', () => {
       title: 'title',
       serverId: 'serverId',
       difficulty: 'difficulty',
-      status: 'status'
+      status: 1
     };
     component.onClick(problem);
     fixture.whenStable().then(() => {

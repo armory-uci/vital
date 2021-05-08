@@ -18,6 +18,17 @@ export class ProblemListService {
       )
       .snapshotChanges();
   }
+  getProblemStatus(uid, problemId, language) {
+    return this.firestore
+      .collection('users')
+      .doc(uid)
+      .collection('progress', (ref) =>
+        ref
+          .where('language', '==', language)
+          .where('problemId', '==', problemId)
+      )
+      .snapshotChanges();
+  }
 
   getProblemsList(language: string) {
     let mock: IProblem[];
