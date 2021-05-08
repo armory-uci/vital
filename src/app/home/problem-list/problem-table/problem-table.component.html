@@ -26,11 +26,15 @@
       <mat-cell *matCellDef="let element">{{ element.title }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="difficulty">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Difficulty</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Difficulty</mat-header-cell
+      >
       <mat-cell *matCellDef="let element">{{ element.difficulty }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="status">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header
+        >Status</mat-header-cell
+      >
       <mat-cell *matCellDef="let element">
         <button mat-icon-button color="{{ getColor(element) }}">
           <mat-icon>{{ getStatusIcon(element) }}</mat-icon>
@@ -52,7 +56,10 @@
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayColumns"></mat-row>
-    <mat-footer-row [ngClass]="{'hide': listdata!=null}" *matFooterRowDef="['loading']"></mat-footer-row>
+    <mat-footer-row
+      [ngClass]="{ hide: listdata != null }"
+      *matFooterRowDef="['loading']"
+    ></mat-footer-row>
   </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25]" [pageSize]="5"></mat-paginator>
 </div>
-

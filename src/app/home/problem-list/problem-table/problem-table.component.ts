@@ -8,6 +8,7 @@ import { FormControl } from '@angular/forms';
 import { UserInfoService } from 'src/app/services/utility-services/user-info.service';
 import { IUserInfo } from 'src/app/login/login.model';
 import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 export enum ProblemStatus {
   notStarted = 0,
@@ -22,6 +23,7 @@ export enum ProblemStatus {
 })
 export class ProblemTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   disableSelect = new FormControl(false);
   problems: IProblem[];
   listdata: MatTableDataSource<any>;
@@ -79,8 +81,8 @@ export class ProblemTableComponent implements OnInit {
           };
         })
       );
-      console.log(this.listdata);
-      this.listdata.sort = this.sort; // TODO: Handle error
+      this.listdata.sort = this.sort;
+      this.listdata.paginator = this.paginator; // TODO: Handle error
     });
   }
 
