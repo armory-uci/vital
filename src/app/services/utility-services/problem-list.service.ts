@@ -21,49 +21,51 @@ export class ProblemListService {
       .snapshotChanges();
   }
 
-  // getUserId(language){
-  //   console.log("Displa yname is=");
-  //   var uid = this.userInfo.getUserInfo().uid;
-  //   return this.firestore.collection('users', ref =>ref.where("uid", "==", uid)).snapshotChanges().pipe(
-  //     map(actions => {
-  //       return actions.map(a => {
-  //         var name = a.payload.doc.data();
-  //         console.log("Display yname is="+name);
-  //         const problems = a.payload.doc.data();
-  //         return problems;
-  //       })})
-  //   )
-  //   return this.userInfo.getUserInfo().uid;
-
-  //   // console.log("Getting status id="+idtoken);
-  // }
-  getProblemsList() {
-    const mock: IProblem[] = [
-      {
-        id: '1hx234f',
-        title: 'SQL Injection',
-        difficulty: 'Medium',
-        status: 'd'
-      },
-      {
-        id: 'dffdsfds',
-        title: 'XSS Reflected',
-        difficulty: 'Medium',
-        status: 'w'
-      },
-      {
-        id: 'dffdsfds',
-        title: 'XSS Persistent',
-        difficulty: 'Medium',
-        status: 'u'
-      },
-      {
-        id: '01fec67',
-        title: 'XSS Dom Based',
-        difficulty: 'Easy',
-        status: 'd'
-      }
-    ];
+  getProblemsList(language: string) {
+    let mock: IProblem[];
+    if (language === 'node') {
+      mock = [
+        {
+          id: '1hx234f',
+          title: 'SQL Injection',
+          difficulty: 'Medium',
+          status: 'd'
+        },
+        {
+          id: 'dffdsfds',
+          title: 'XSS Reflected',
+          difficulty: 'Medium',
+          status: 'w'
+        },
+        {
+          id: 'dffdsfds',
+          title: 'XSS Persistent',
+          difficulty: 'Medium',
+          status: 'u'
+        },
+        {
+          id: '01fec67',
+          title: 'XSS Dom Based',
+          difficulty: 'Easy',
+          status: 'd'
+        }
+      ];
+    } else {
+      mock = [
+        {
+          id: '234f1hx',
+          title: 'SQL Injection',
+          difficulty: 'Medium',
+          status: 'd'
+        },
+        {
+          id: '431tyu',
+          title: 'CORS',
+          difficulty: 'Medium',
+          status: 'w'
+        }
+      ];
+    }
     return mock;
   }
 }

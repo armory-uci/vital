@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ProblemListService } from '../../services/utility-services/problem-list.service';
 import { IProblem } from './problem.model';
 import { MatTableDataSource } from '@angular/material/table';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-problem-list',
@@ -11,10 +12,12 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./problem-list.component.scss']
 })
 export class ProblemListComponent implements OnInit {
+  disableSelect = new FormControl(false);
   problems: IProblem[];
   listdata: MatTableDataSource<any>;
   language = 'python';
   displayColumns: string[] = ['Id', 'title', 'difficulty', 'status', 'launch'];
+  selectedLanguage = 'node';
 
   constructor(
     private problemListService: ProblemListService,
@@ -45,6 +48,15 @@ export class ProblemListComponent implements OnInit {
       state: { problem }
     });
   }
+
+  // getProblemSet(language: string) {
+  //   this.problems = this.problemListService.getProblemsList(language);
+  //   this.listdata = new MatTableDataSource(this.problems);
+  // }
+
+  // changeLanguage(language: string): void {
+  //   this.getProblemSet(language);
+  // }
 
   getStatusIcon(element) {
     if (element.status === 'd') {
