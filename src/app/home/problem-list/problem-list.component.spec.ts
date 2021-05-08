@@ -44,8 +44,9 @@ describe('ProblemListComponent', () => {
     const problem: IProblem = {
       id: 'id',
       title: 'title',
-      description: 'description',
-      serverId: 'serverId'
+      serverId: 'serverId',
+      difficulty: 'difficulty',
+      status: 'status'
     };
     component.onClick(problem);
     fixture.whenStable().then(() => {

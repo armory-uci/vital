@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class ProblemListComponent implements OnInit {
   problems: IProblem[];
   listdata: MatTableDataSource<any>;
+  userId;
   displayColumns: string[] = ['Id', 'title', 'difficulty', 'status', 'launch'];
 
   constructor(
@@ -21,17 +22,20 @@ export class ProblemListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.problemListService.getProblems().subscribe((data) => {
-    //   this.problems = data.map((e) => {
-    //     return {
-    //       id: e.payload.doc.id,
-    //       ...(e.payload.doc.data() as Record<string, unknown>)
-    //     } as IProblem;
-    //   }); // TODO: Handle error
-    // });
-
-    this.problems = this.problemListService.getProblemsList();
-    this.listdata = new MatTableDataSource(this.problems);
+    this.problemListService.getProblems('python').subscribe((data) => {
+      this.listdata = new MatTableDataSource(
+        data.map((e) => {
+          return {
+            id: e.payload.doc.id,
+            status: this.getStatus('python'),
+            ...(e.payload.doc.data() as Record<string, unknown>)
+          } as IProblem;
+        })
+      ); // TODO: Handle error
+    });
+  }
+  getStatus(language): string {
+    return 'u';
   }
 
   onClick(problem: IProblem): void {
@@ -45,20 +49,20 @@ export class ProblemListComponent implements OnInit {
   getStatusIcon(element) {
     if (element.status === 'd') {
       return 'check_circle';
-    } else if (element.status == 'u') {
+    } else if (element.status === 'u') {
       return 'play_circle_filled';
     } else {
-      return 'clear'
+      return 'clear';
     }
   }
 
   getColor(element) {
     if (element.status === 'd') {
       return 'primary';
-    } else if (element.status == 'u') {
+    } else if (element.status === 'u') {
       return '';
     } else {
-      return 'warn'
+      return 'warn';
     }
   }
 }
