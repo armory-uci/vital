@@ -16,6 +16,7 @@ export class ProblemListComponent implements OnInit {
   problems: IProblem[];
   listdata: MatTableDataSource<any>;
   displayColumns: string[] = ['Id', 'title', 'difficulty', 'status', 'launch'];
+  selectedLanguage = 'node';
 
   constructor(
     private problemListService: ProblemListService,
@@ -31,9 +32,7 @@ export class ProblemListComponent implements OnInit {
     //     } as IProblem;
     //   }); // TODO: Handle error
     // });
-
-    this.problems = this.problemListService.getProblemsList();
-    this.listdata = new MatTableDataSource(this.problems);
+    this.getProblemSet('node');
   }
 
   onClick(problem: IProblem): void {
@@ -42,6 +41,15 @@ export class ProblemListComponent implements OnInit {
       // TODO What all do we need? And does it make sense as a query parameter? Side effect: refreshing the page will have different behaviours in each case
       state: { problem }
     });
+  }
+
+  getProblemSet(language: string) {
+    this.problems = this.problemListService.getProblemsList(language);
+    this.listdata = new MatTableDataSource(this.problems);
+  }
+
+  changeLanguage(language: string): void {
+    this.getProblemSet(language);
   }
 
   getStatusIcon(element) {
