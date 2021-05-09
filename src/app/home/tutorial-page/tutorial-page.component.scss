@@ -6,6 +6,8 @@
 
 .container {
   flex-grow: 1;
+  // Subtracting Angular toolbar height and added padding for now.
+  // TODO Would be nice to find these variables from Angular material later
   max-height: calc(100vh - 64px - 2rem);
   display: grid;
   grid-template-columns: repeat(8, 1fr);
