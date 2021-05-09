@@ -66,15 +66,12 @@ export class ProblemTableComponent implements OnInit {
     // TODO: add progress for the user if it doesnt exist
 
     this.problemListService.getProblems(language).subscribe((problemdata) => {
+      const uid = 'EsFp5EuWdWUDDglsmuqgabZvriH3';
       this.listdata = new MatTableDataSource(
         problemdata.map((d) => {
           return {
             id: d.payload.doc.id,
-            status: Number(
-              d.payload.doc.get('progress').EsFp5EuWdWUDDglsmuqgabZvriH3[
-                language
-              ]
-            ),
+            status: Number(d.payload.doc.get('progress')[uid][language]),
             ...(d.payload.doc.data() as Record<string, unknown>)
           };
         })
