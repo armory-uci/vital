@@ -21,6 +21,7 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import { FooterComponent } from './footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoadingComponent } from './loading/loading.component';
+import { VitalMarkdownModule } from './vital-markdown/vital-markdown.module';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { LoadingComponent } from './loading/loading.component';
     BrowserAnimationsModule,
     MaterialModule,
     MatPasswordStrengthModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    VitalMarkdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]

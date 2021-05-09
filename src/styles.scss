@@ -15,9 +15,24 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
-  border-bottom: gra;
 
   & .mat-card-title {
     margin: 0 !important;
+  }
+}
+
+// Have to style this on global styles, as the rendered markdown doesn't
+// abide by the Angular scoping rules
+markdown {
+  & blockquote {
+    border-left: 5px solid gray;
+    margin-left: 0;
+    padding-left: 1rem;
+    font-style: italic;
+  }
+
+  & code[class*='language-'],
+  pre[class*='language-'] {
+    white-space: pre-wrap !important;
   }
 }
