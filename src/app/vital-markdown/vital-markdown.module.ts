@@ -4,7 +4,7 @@ import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 const markedOptionsFactory = (): MarkedOptions => {
   return {
     smartLists: true,
-    smartypants: false
+    smartypants: true
   };
 };
 
