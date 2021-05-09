@@ -9,6 +9,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatInputModule } from '@angular/material/input';
 
 const MATERIAL = [
   //Add all your material components in thus array.
@@ -21,7 +22,9 @@ const MATERIAL = [
   MatDividerModule,
   MatSelectModule,
   MatPaginatorModule,
-  MatSortModule
+  MatSortModule,
+  MatFormFieldModule,
+  MatInputModule
 ];
 
 @NgModule({

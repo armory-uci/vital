@@ -30,6 +30,7 @@ export class ProblemTableComponent implements OnInit {
   language = 'python';
   displayColumns: string[] = ['Id', 'title', 'difficulty', 'status', 'launch'];
   selectedLanguage = 'node';
+  searchKey = "";
 
   constructor(
     private problemListService: ProblemListService,
@@ -66,7 +67,8 @@ export class ProblemTableComponent implements OnInit {
     // TODO: add progress for the user if it doesnt exist
 
     this.problemListService.getProblems(language).subscribe((problemdata) => {
-      const uid = 'EsFp5EuWdWUDDglsmuqgabZvriH3';
+      //const uid = 'EsFp5EuWdWUDDglsmuqgabZvriH3';
+      const uid = '1Hml3MbeyNhLwYd0j1G17cHBIZz2';
       this.listdata = new MatTableDataSource(
         problemdata.map((d) => {
           return {

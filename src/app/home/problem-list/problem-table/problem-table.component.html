@@ -15,6 +15,14 @@
 <div class="space">
   <mat-divider></mat-divider>
 </div>
+<div class="search-div">
+  <mat-form-field class="search-form-field">
+    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" />
+    <button mat-button matSuffix mat-icon-button aria-label="Clear">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="listdata" matSort>
     <ng-container matColumnDef="Id">
