@@ -63,50 +63,25 @@ export class ProblemTableComponent implements OnInit {
   }
 
   getProblemSet(language?: string) {
-    const userDetails: IUserInfo = this.userInfoService.getUserInfo();
-    this.problemListService.getProblems(language).subscribe((problemData) => {
-      problemData.map((d) => {
-        this.problemListService
-          .getProblemStatus(userDetails.uid, d.payload.doc.id, language)
-          .subscribe((status) => {
-            this.listdata = new MatTableDataSource(
-              status.map((stat) => {
-                return {
-                  id: d.payload.doc.id,
-                  status: stat.payload.doc.get('status'),
-                  ...(d.payload.doc.data() as Record<string, unknown>)
-                } as IProblem;
-              })
-            );
-            this.listdata.sort = this.sort;
-            this.listdata.paginator = this.paginator;
-            console.log(this.listdata);
-          });
-      });
-      console.log(this.listdata);
+    // TODO: add progress for the user if it doesnt exist
+
+    this.problemListService.getProblems(language).subscribe((problemdata) => {
+      this.listdata = new MatTableDataSource(
+        problemdata.map((d) => {
+          return {
+            id: d.payload.doc.id,
+            status: Number(
+              d.payload.doc.get('progress').EsFp5EuWdWUDDglsmuqgabZvriH3[
+                language
+              ]
+            ),
+            ...(d.payload.doc.data() as Record<string, unknown>)
+          };
+        })
+      );
+      this.listdata.sort = this.sort;
+      this.listdata.paginator = this.paginator; // TODO: Handle error
     });
-    // const problemData$ = this.problemListService.getProblems(language);
-    // const problemStatus$ = this.problemListService.getProblemsList()
-    // this.problemListService.getProblems(language).subscribe((problemdata) => {
-    //   this.listdata = new MatTableDataSource(
-    //     problemdata.map((d) => {
-    //       return {
-    //         id: d.payload.doc.id,
-    //         status: this.problemListService
-    //           .getProblemStatus(userDetails.uid, d.payload.doc.id, language)
-    //           .subscribe((statusdata) => {
-    //             statusdata.map((da) => {
-    //               console.log(da.payload.doc.get('status'));
-    //               return da.payload.doc.get('status');
-    //             });
-    //           }),
-    //         ...(d.payload.doc.data() as Record<string, unknown>)
-    //       };
-    //     })
-    //   );
-    //   this.listdata.sort = this.sort;
-    //   this.listdata.paginator = this.paginator; // TODO: Handle error
-    // });
   }
 
   changeLanguage(language: string): void {
