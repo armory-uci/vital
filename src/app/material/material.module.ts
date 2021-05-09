@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const MATERIAL = [
   //Add all your material components in thus array.
@@ -11,7 +12,8 @@ const MATERIAL = [
   MatCardModule,
   MatIconModule,
   MatFormFieldModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTabsModule
 ];
 
 @NgModule({

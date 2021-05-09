@@ -6,13 +6,30 @@
 
 .container {
   flex-grow: 1;
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
+  max-height: calc(100vh - 64px - 2rem);
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 0.5rem;
+  grid-template-areas:
+    'tutorial tutorial tutorial terminal terminal terminal terminal terminal'
+    'tutorial tutorial tutorial website website website website website';
+}
+
+.tutorial-card {
+  grid-area: tutorial;
+}
+
+.terminal-card {
+  grid-area: terminal;
+}
+
+.website-card {
+  grid-area: website;
 }
 
 mat-card {
-  flex-basis: 33.333%;
   display: flex;
   flex-direction: column;
 

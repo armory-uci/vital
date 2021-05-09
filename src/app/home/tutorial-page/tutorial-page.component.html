@@ -1,18 +1,29 @@
-<h2>{{ title }}</h2>
 <div class="container">
-  <mat-card id="tutorial-card">
-    <mat-card-header class="vital-card-header">
-      <mat-icon mat-card-avatar aria-hidden="false" aria-label="School icon">
-        school
-      </mat-icon>
-      <mat-card-title>Tutorial</mat-card-title>
-    </mat-card-header>
-    <mat-card-content [innerHTML]="tutorialContent"></mat-card-content>
-    <mat-card-actions>
-      <button mat-button color="warn">Reset</button>
-    </mat-card-actions>
+  <mat-card class="tutorial-card">
+    <mat-card-content>
+      <mat-tab-group disablePagination="true">
+        <mat-tab label="Explore"
+          ><markdown
+            ngPreserveWhitespaces
+            [data]="tutorialContent.explore"
+          ></markdown
+        ></mat-tab>
+        <mat-tab label="Exploit"
+          ><markdown
+            ngPreserveWhitespaces
+            [data]="tutorialContent.exploit"
+          ></markdown
+        ></mat-tab>
+        <mat-tab label="Mitigate"
+          ><markdown
+            ngPreserveWhitespaces
+            [data]="tutorialContent.mitigate"
+          ></markdown
+        ></mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
   </mat-card>
-  <mat-card>
+  <mat-card class="terminal-card">
     <mat-card-header class="vital-card-header">
       <mat-icon mat-card-avatar aria-hidden="false" aria-label="Code icon">
         code
@@ -23,7 +34,7 @@
       <iframe [src]="sandbox.terminalUrl"></iframe>
     </mat-card-content>
   </mat-card>
-  <mat-card>
+  <mat-card class="website-card">
     <mat-card-header class="vital-card-header">
       <mat-icon mat-card-avatar aria-hidden="false" aria-label="Language icon">
         language
