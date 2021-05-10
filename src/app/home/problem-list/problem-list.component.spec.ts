@@ -38,19 +38,4 @@ describe('ProblemListComponent', () => {
     location = TestBed.inject(Location);
     router.initialNavigation();
   });
-
-  it('should navigate to the Tutorial Page', async () => {
-    fixture.detectChanges();
-    const problem: IProblem = {
-      id: 'id',
-      title: 'title',
-      serverId: 'serverId',
-      difficulty: 'difficulty',
-      status: 1
-    };
-    component.onClick(problem);
-    fixture.whenStable().then(() => {
-      expect(location.path()).toBe('/tutorial');
-    });
-  });
 });

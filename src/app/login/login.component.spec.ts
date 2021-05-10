@@ -48,19 +48,10 @@ describe('LoginComponent', () => {
 
   it("should navigate to the Problem Page '/problem'", async(() => {
     fixture.detectChanges();
-    component
-      .login({
-        displayName: 'Test User',
-        email: 'test@email.com',
-        photoURL: 'https://someprofilephotos',
-        uid: '12jdbfk1233',
-        getIdToken: () => Promise.resolve('qwertyuiop')
-      })
-      .then(() => {
-        fixture.whenStable().then(() => {
-          expect(location.path()).toBe('/problem');
-        });
-      });
+    component.login();
+    fixture.whenStable().then(() => {
+      expect(location.path()).toBe('/problem');
+    });
   }));
 
   it('should set user info value in utility service', async(() => {
@@ -72,17 +63,9 @@ describe('LoginComponent', () => {
       uid: '12jdbfk1233',
       idToken: 'qwertyuiop'
     };
-    component
-      .login({
-        displayName: 'Test User',
-        email: 'test@email.com',
-        photoURL: 'https://someprofilephotos',
-        uid: '12jdbfk1233',
-        getIdToken: () => Promise.resolve('qwertyuiop')
-      })
-      .then(() => {
-        fixture.detectChanges();
-        expect(userInfoService.getUserInfo()).toEqual(USER_INFO);
-      });
+    component.login();
+    fixture.whenStable().then(() => {
+      expect(userInfoService.getUserInfo()).toEqual(USER_INFO);
+    });
   }));
 });
