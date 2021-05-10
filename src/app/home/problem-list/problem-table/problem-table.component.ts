@@ -9,11 +9,12 @@ import { UserInfoService } from 'src/app/services/utility-services/user-info.ser
 import { IUserInfo } from 'src/app/login/login.model';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { first, zipAll } from 'rxjs/operators';
 
 export enum ProblemStatus {
-  notStarted = 0,
-  correct = 1,
-  incorrect = 2
+  notStarted = '0',
+  correct = '1',
+  incorrect = '2'
 }
 
 @Component({
@@ -27,10 +28,10 @@ export class ProblemTableComponent implements OnInit {
   disableSelect = new FormControl(false);
   problems: IProblem[];
   listdata: MatTableDataSource<any>;
-  language = 'python';
-  displayColumns: string[] = ['Id', 'title', 'difficulty', 'status', 'launch'];
+  // language = 'python';
+  displayColumns: string[] = ['title', 'difficulty', 'status', 'launch'];
   selectedLanguage = 'node';
-  searchKey = "";
+  searchKey = '';
 
   constructor(
     private problemListService: ProblemListService,
@@ -39,22 +40,10 @@ export class ProblemTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getProblemSet(this.language);
+    this.getProblemSet(this.selectedLanguage);
   }
 
-  getStatus(language, problemId) {
-    // get status for a user
-    const userDetails: IUserInfo = this.userInfoService.getUserInfo();
-    this.problemListService
-      .getProblemStatus(userDetails.uid, problemId, language)
-      .subscribe((data) => {
-        this.listdata = new MatTableDataSource(
-          data.map((e) => {
-            return e.payload.doc.get('status');
-          })
-        ); // TODO: Handle error
-      });
-  }
+
   onClick(problem: IProblem): void {
     problem.serverId = 'sqlInjection'; // FIXME Get this from firebase. Or find a better way.
     this.router.navigate(['/tutorial'], {
@@ -66,18 +55,35 @@ export class ProblemTableComponent implements OnInit {
   getProblemSet(language?: string) {
     // TODO: add progress for the user if it doesnt exist
 
-    this.problemListService.getProblems(language).subscribe((problemdata) => {
-      //const uid = 'EsFp5EuWdWUDDglsmuqgabZvriH3';
-      const uid = '1Hml3MbeyNhLwYd0j1G17cHBIZz2';
-      this.listdata = new MatTableDataSource(
-        problemdata.map((d) => {
-          return {
-            id: d.payload.doc.id,
-            status: Number(d.payload.doc.get('progress')[uid][language]),
-            ...(d.payload.doc.data() as Record<string, unknown>)
-          };
-        })
-      );
+    const uid = '1Hml3MbeyNhLwYd0j1G17cHBIZz2';
+
+    const problemsPromise = this.problemListService
+      .getProblems(language)
+      .toPromise()
+      .then((problemdata) => {
+        return problemdata.docs
+          .map((d) => {
+            return {
+              uid,
+              problemId: d.id,
+              ...(d.data() as Record<string, unknown>)
+            };
+          })
+          .map((d) => {
+            return this.problemListService
+              .getProblemStatus(uid, d.problemId, language)
+              .toPromise()
+              .then((da) => {
+                return {
+                  ...d,
+                  status: da.docs[0].get('status')
+                };
+              });
+          });
+      });
+
+    problemsPromise.then(Promise.all).then((problemdata) => {
+      this.listdata = new MatTableDataSource(problemdata);
       this.listdata.sort = this.sort;
       this.listdata.paginator = this.paginator; // TODO: Handle error
     });
@@ -107,5 +113,9 @@ export class ProblemTableComponent implements OnInit {
     } else {
       return '';
     }
+  }
+
+  clear() {
+    this.searchKey = "";
   }
 }

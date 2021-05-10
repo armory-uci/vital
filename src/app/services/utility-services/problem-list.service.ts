@@ -16,7 +16,7 @@ export class ProblemListService {
       .collection('problems', (ref) =>
         ref.where('support', 'array-contains', language)
       )
-      .snapshotChanges();
+      .get();
   }
   getProblemStatus(uid, problemId, language) {
     return this.firestore
@@ -27,7 +27,7 @@ export class ProblemListService {
           .where('language', '==', language)
           .where('problemId', '==', problemId)
       )
-      .snapshotChanges();
+      .get();
   }
 
   getProblemsList(language: string) {

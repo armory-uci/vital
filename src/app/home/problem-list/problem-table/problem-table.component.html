@@ -17,8 +17,13 @@
 </div>
 <div class="search-div">
   <mat-form-field class="search-form-field">
-    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" />
-    <button mat-button matSuffix mat-icon-button aria-label="Clear">
+    <input
+      matInput
+      [(ngModel)]="searchKey"
+      placeholder="Search"
+      autocomplete="off"
+    />
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clear()" *ngIf="searchKey">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
