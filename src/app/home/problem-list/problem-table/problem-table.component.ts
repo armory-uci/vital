@@ -43,7 +43,6 @@ export class ProblemTableComponent implements OnInit {
     this.getProblemSet(this.selectedLanguage);
   }
 
-
   onClick(problem: IProblem): void {
     problem.serverId = 'sqlInjection'; // FIXME Get this from firebase. Or find a better way.
     this.router.navigate(['/tutorial'], {
@@ -57,7 +56,28 @@ export class ProblemTableComponent implements OnInit {
 
     const uid = '1Hml3MbeyNhLwYd0j1G17cHBIZz2';
 
-    const problemsPromise = this.problemListService
+    this.problemListService.getProblems(language).subscribe((data) => {
+      const tableData = data.map((e) => {
+        const stat = this.problemListService.getProblemStatus(
+          uid,
+          e.payload.doc.id,
+          language
+        );
+        return {
+          id: e.payload.doc.id,
+          status: stat,
+          ...(e.payload.doc.data() as Record<string, unknown>)
+        };
+      });
+      this.listdata = new MatTableDataSource(tableData);
+      this.listdata.sort = this.sort;
+      this.listdata.paginator = this.paginator; // TODO: Handle error
+    });
+
+    /**
+     * @author Kumar Vaibhav
+     * @note Keep the promise code for now. I will remove it subsequently.
+     * const problemsPromise = this.problemListService
       .getProblems(language)
       .toPromise()
       .then((problemdata) => {
@@ -87,6 +107,7 @@ export class ProblemTableComponent implements OnInit {
       this.listdata.sort = this.sort;
       this.listdata.paginator = this.paginator; // TODO: Handle error
     });
+     **/
   }
 
   changeLanguage(language: string): void {
