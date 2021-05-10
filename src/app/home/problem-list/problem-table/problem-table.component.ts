@@ -44,35 +44,15 @@ export class ProblemTableComponent implements OnInit {
   }
 
   onClick(problem: IProblem): void {
-    problem.serverId = 'sqlInjection'; // FIXME Get this from firebase. Or find a better way.
+    problem.serverId = problem.id;
     this.router.navigate(['/tutorial'], {
-      // TODO What all do we need? And does it make sense as a query parameter? Side effect: refreshing the page will have different behaviours in each case
       state: { problem }
     });
   }
 
   getProblemSet(language?: string) {
-    // TODO: add progress for the user if it doesnt exist
-
-    const uid = 'EsFp5EuWdWUDDglsmuqgabZvriH3';
-
-    // this.problemListService.getProblems(language).subscribe((data) => {
-    //   const tableData = data.map((e) => {
-    //     const stat = this.problemListService.getProblemStatus(
-    //       uid,
-    //       e.payload.doc.id,
-    //       language
-    //     );
-    //     return {
-    //       id: e.payload.doc.id,
-    //       status: stat,
-    //       ...(e.payload.doc.data() as Record<string, unknown>)
-    //     };
-    //   });
-    //   this.listdata = new MatTableDataSource(tableData);
-    //   this.listdata.sort = this.sort;
-    //   this.listdata.paginator = this.paginator; // TODO: Handle error
-    // });
+    const currentUserInfo: IUserInfo = this.userInfoService.getUserInfo();
+    const uid = currentUserInfo.uid;
 
     const problemsPromise = this.problemListService
       .getProblems(language)
@@ -80,9 +60,11 @@ export class ProblemTableComponent implements OnInit {
       .then((problemdata) => {
         return problemdata.docs
           .map((d) => {
+            const serverId = d.data().ids[language].server_id;
             return {
               uid,
               problemId: d.id,
+              serverId,
               ...(d.data() as Record<string, unknown>)
             };
           })
@@ -114,9 +96,9 @@ export class ProblemTableComponent implements OnInit {
     if (element.status === ProblemStatus.correct) {
       return 'check_circle';
     } else if (element.status === ProblemStatus.notStarted) {
-      return 'play_circle_filled';
+      return 'fiber_new';
     } else if (element.status === ProblemStatus.incorrect) {
-      return 'clear';
+      return 'play_circle_filled';
     } else {
       return 'warning';
     }
@@ -126,9 +108,9 @@ export class ProblemTableComponent implements OnInit {
     if (element.status === ProblemStatus.correct) {
       return 'primary';
     } else if (element.status === ProblemStatus.incorrect) {
-      return 'warn';
-    } else {
       return '';
+    } else {
+      return 'warn';
     }
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SandboxService } from 'src/app/services/http-services/sandbox.service';
 import {
   IRetryResponse,
@@ -35,6 +35,7 @@ export class TutorialPageComponent implements OnInit {
   constructor(
     private sanitizer: DomSanitizer,
     private router: Router,
+    private route: ActivatedRoute,
     private sandboxService: SandboxService,
     @Inject(DOCUMENT) private document: Document
   ) {

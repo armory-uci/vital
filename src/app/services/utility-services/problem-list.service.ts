@@ -11,13 +11,14 @@ import { ProblemStatus } from 'src/app/home/problem-list/problem-list.component'
 })
 export class ProblemListService {
   constructor(private firestore: AngularFirestore) {}
-  writeProgress(uid) {
+  writeProgress() {
+    const userInfo = JSON.parse(localStorage.getItem('user'));
+    const user = userInfo.uid;
     this.firestore
       .collection('problems')
       .snapshotChanges()
       .subscribe((actions) => {
         return actions.map((a) => {
-          console.log(a.payload.doc.id);
           this.getProblemStatus(uid, a.payload.doc.id, 'python').subscribe(
             (data) => {
               if (data.docs.length === 0) {

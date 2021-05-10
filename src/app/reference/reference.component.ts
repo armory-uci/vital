@@ -26,7 +26,6 @@ export class ReferenceComponent implements OnInit {
       content: 'Some post content'
     };
     this.referenceService.postReference(post).subscribe((responseData) => {
-      console.log(responseData.message);
     });
   }
 
