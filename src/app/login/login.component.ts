@@ -23,7 +23,33 @@ export class LoginComponent implements OnInit {
 
   login($event) {
     this.userInfoService.setUserInfo();
-    this.problemListService.writeProgress();
-    this.router.navigate(['/problem']);
+    const uid = this.userInfoService.getUserInfo().uid;
+    this.problemListService.writeProgress().subscribe((actions) => {
+      return actions.map((a) => {
+        this.problemListService
+          .getProblemStatus(uid, a.payload.doc.id, 'python')
+          .subscribe((data) => {
+            if (data.docs.length === 0) {
+              this.problemListService.addProgress(
+                uid,
+                a.payload.doc.id,
+                'python'
+              );
+            }
+          });
+        this.problemListService
+          .getProblemStatus(uid, a.payload.doc.id, 'node')
+          .subscribe((data) => {
+            if (data.docs.length === 0) {
+              this.problemListService.addProgress(
+                uid,
+                a.payload.doc.id,
+                'node'
+              );
+            }
+            this.router.navigate(['/problem']);
+          });
+      });
+    });
   }
 }
