@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  login($event) {
+  login() {
     this.userInfoService.setUserInfo();
     this.problemListService.writeProgress();
     this.router.navigate(['/problem']);
