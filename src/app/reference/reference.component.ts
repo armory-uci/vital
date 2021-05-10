@@ -25,8 +25,7 @@ export class ReferenceComponent implements OnInit {
       title: 'Post Request Title',
       content: 'Some post content'
     };
-    this.referenceService.postReference(post).subscribe((responseData) => {
-    });
+    this.referenceService.postReference(post).subscribe((responseData) => {});
   }
 
   receiveData() {

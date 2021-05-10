@@ -24,7 +24,6 @@ export class UserInfoService {
     public afAuth: AngularFireAuth
   ) {}
 
-
   setUserInfo(): void {
     this.afAuth.authState.subscribe(async (user) => {
       const idToken = await user.getIdToken();

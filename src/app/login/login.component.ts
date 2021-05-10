@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   login($event) {
     this.userInfoService.setUserInfo();
-    this.problemListService.writeProgress(userInfo.uid);
+    this.problemListService.writeProgress();
     this.router.navigate(['/problem']);
   }
 }

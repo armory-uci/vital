@@ -13,7 +13,7 @@ export class ProblemListService {
   constructor(private firestore: AngularFirestore) {}
   writeProgress() {
     const userInfo = JSON.parse(localStorage.getItem('user'));
-    const user = userInfo.uid;
+    const uid = userInfo.uid;
     this.firestore
       .collection('problems')
       .snapshotChanges()

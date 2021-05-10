@@ -60,7 +60,7 @@ export class ProblemTableComponent implements OnInit {
       .then((problemdata) => {
         return problemdata.docs
           .map((d) => {
-            const serverId = d.data().ids[language].server_id;
+            const serverId = d.get('ids')[language].server_id;
             return {
               uid,
               problemId: d.id,
