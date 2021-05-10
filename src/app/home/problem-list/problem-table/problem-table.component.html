@@ -22,6 +22,7 @@
       [(ngModel)]="searchKey"
       placeholder="Search"
       autocomplete="off"
+      (keyup)="searchTable()"
     />
     <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="clear()" *ngIf="searchKey">
       <mat-icon>close</mat-icon>

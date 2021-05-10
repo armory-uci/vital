@@ -116,6 +116,11 @@ export class ProblemTableComponent implements OnInit {
   }
 
   clear() {
-    this.searchKey = "";
+    this.searchKey = '';
+    this.searchTable();
+  }
+
+  searchTable() {
+    this.listdata.filter = this.searchKey.trim().toLowerCase();
   }
 }
