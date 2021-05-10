@@ -9,6 +9,7 @@ import { UserInfoService } from 'src/app/services/utility-services/user-info.ser
 import { IUserInfo } from 'src/app/login/login.model';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { first, zipAll } from 'rxjs/operators';
 
 export enum ProblemStatus {
   notStarted = '0',
@@ -27,6 +28,7 @@ export class ProblemTableComponent implements OnInit {
   disableSelect = new FormControl(false);
   problems: IProblem[];
   listdata: MatTableDataSource<any>;
+  // language = 'python';
   displayColumns: string[] = ['title', 'difficulty', 'status', 'launch'];
   selectedLanguage = 'node';
   searchKey = '';
@@ -42,15 +44,35 @@ export class ProblemTableComponent implements OnInit {
   }
 
   onClick(problem: IProblem): void {
-    problem.serverId = problem.id;
+    problem.serverId = 'sqlInjection'; // FIXME Get this from firebase. Or find a better way.
     this.router.navigate(['/tutorial'], {
+      // TODO What all do we need? And does it make sense as a query parameter? Side effect: refreshing the page will have different behaviours in each case
       state: { problem }
     });
   }
 
   getProblemSet(language?: string) {
-    const currentUserInfo: IUserInfo = this.userInfoService.getUserInfo();
-    const uid = currentUserInfo.uid;
+    // TODO: add progress for the user if it doesnt exist
+
+    const uid = 'EsFp5EuWdWUDDglsmuqgabZvriH3';
+
+    // this.problemListService.getProblems(language).subscribe((data) => {
+    //   const tableData = data.map((e) => {
+    //     const stat = this.problemListService.getProblemStatus(
+    //       uid,
+    //       e.payload.doc.id,
+    //       language
+    //     );
+    //     return {
+    //       id: e.payload.doc.id,
+    //       status: stat,
+    //       ...(e.payload.doc.data() as Record<string, unknown>)
+    //     };
+    //   });
+    //   this.listdata = new MatTableDataSource(tableData);
+    //   this.listdata.sort = this.sort;
+    //   this.listdata.paginator = this.paginator; // TODO: Handle error
+    // });
 
     const problemsPromise = this.problemListService
       .getProblems(language)
@@ -58,11 +80,9 @@ export class ProblemTableComponent implements OnInit {
       .then((problemdata) => {
         return problemdata.docs
           .map((d) => {
-            const serverId = d.get('ids')[language].server_id;
             return {
               uid,
               problemId: d.id,
-              serverId,
               ...(d.data() as Record<string, unknown>)
             };
           })
@@ -94,9 +114,9 @@ export class ProblemTableComponent implements OnInit {
     if (element.status === ProblemStatus.correct) {
       return 'check_circle';
     } else if (element.status === ProblemStatus.notStarted) {
-      return 'fiber_new';
-    } else if (element.status === ProblemStatus.incorrect) {
       return 'play_circle_filled';
+    } else if (element.status === ProblemStatus.incorrect) {
+      return 'clear';
     } else {
       return 'warning';
     }
@@ -106,9 +126,9 @@ export class ProblemTableComponent implements OnInit {
     if (element.status === ProblemStatus.correct) {
       return 'primary';
     } else if (element.status === ProblemStatus.incorrect) {
-      return '';
-    } else {
       return 'warn';
+    } else {
+      return '';
     }
   }
 
