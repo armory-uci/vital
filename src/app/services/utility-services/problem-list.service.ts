@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { UserInfoService } from '../../services/utility-services/user-info.service';
-import { map } from 'rxjs/operators';
-import { IProblem } from 'src/app/home/problem-list/problem.model';
-import { ProblemStatus } from 'src/app/home/problem-list/problem-list.component';
 
 @Injectable({
   providedIn: 'root'

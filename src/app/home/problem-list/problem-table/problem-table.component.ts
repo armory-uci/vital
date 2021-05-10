@@ -9,7 +9,6 @@ import { UserInfoService } from 'src/app/services/utility-services/user-info.ser
 import { IUserInfo } from 'src/app/login/login.model';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { first, zipAll } from 'rxjs/operators';
 
 export enum ProblemStatus {
   notStarted = '0',
@@ -28,7 +27,6 @@ export class ProblemTableComponent implements OnInit {
   disableSelect = new FormControl(false);
   problems: IProblem[];
   listdata: MatTableDataSource<any>;
-  // language = 'python';
   displayColumns: string[] = ['title', 'difficulty', 'status', 'launch'];
   selectedLanguage = 'node';
   searchKey = '';
