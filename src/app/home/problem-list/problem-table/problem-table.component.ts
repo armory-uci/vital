@@ -54,30 +54,27 @@ export class ProblemTableComponent implements OnInit {
   getProblemSet(language?: string) {
     // TODO: add progress for the user if it doesnt exist
 
-    const uid = '1Hml3MbeyNhLwYd0j1G17cHBIZz2';
+    const uid = 'EsFp5EuWdWUDDglsmuqgabZvriH3';
 
-    this.problemListService.getProblems(language).subscribe((data) => {
-      const tableData = data.map((e) => {
-        const stat = this.problemListService.getProblemStatus(
-          uid,
-          e.payload.doc.id,
-          language
-        );
-        return {
-          id: e.payload.doc.id,
-          status: stat,
-          ...(e.payload.doc.data() as Record<string, unknown>)
-        };
-      });
-      this.listdata = new MatTableDataSource(tableData);
-      this.listdata.sort = this.sort;
-      this.listdata.paginator = this.paginator; // TODO: Handle error
-    });
+    // this.problemListService.getProblems(language).subscribe((data) => {
+    //   const tableData = data.map((e) => {
+    //     const stat = this.problemListService.getProblemStatus(
+    //       uid,
+    //       e.payload.doc.id,
+    //       language
+    //     );
+    //     return {
+    //       id: e.payload.doc.id,
+    //       status: stat,
+    //       ...(e.payload.doc.data() as Record<string, unknown>)
+    //     };
+    //   });
+    //   this.listdata = new MatTableDataSource(tableData);
+    //   this.listdata.sort = this.sort;
+    //   this.listdata.paginator = this.paginator; // TODO: Handle error
+    // });
 
-    /**
-     * @author Kumar Vaibhav
-     * @note Keep the promise code for now. I will remove it subsequently.
-     * const problemsPromise = this.problemListService
+    const problemsPromise = this.problemListService
       .getProblems(language)
       .toPromise()
       .then((problemdata) => {
@@ -107,7 +104,6 @@ export class ProblemTableComponent implements OnInit {
       this.listdata.sort = this.sort;
       this.listdata.paginator = this.paginator; // TODO: Handle error
     });
-     **/
   }
 
   changeLanguage(language: string): void {
