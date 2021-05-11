@@ -1,5 +1,26 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import {
+  AngularFirestore,
+  QueryDocumentSnapshot,
+  QuerySnapshot
+} from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { IProblem } from 'src/app/home/problem-list/problem.model';
+import { IProblemContent } from 'src/app/home/tutorial-page/tutorial-page.model';
+
+const contentConverter = {
+  toFirestore: (data) => data,
+  fromFirestore: (snap: QueryDocumentSnapshot<IProblemContent>) => {
+    const data = snap.data();
+
+    ['explore', 'exploit', 'mitigate'].forEach((key) => {
+      data.content[key] = data.content[key]
+        ?.replaceAll('\\n', '\n') // Replace all new line placeholders with actual new lines
+        .replaceAll('\\"', '"'); // Double quotes as well
+    });
+    return data;
+  }
+};
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +57,17 @@ export class ProblemListService {
         ref
           .where('language', '==', language)
           .where('problemId', '==', problemId)
+      )
+      .get();
+  }
+
+  getProblemContent(
+    problem: IProblem
+  ): Observable<QuerySnapshot<IProblemContent>> {
+    const { serverId } = problem;
+    return this.firestore
+      .collection<IProblemContent>('problem_contents', (ref) =>
+        ref.where('server_id', '==', serverId).withConverter(contentConverter)
       )
       .get();
   }

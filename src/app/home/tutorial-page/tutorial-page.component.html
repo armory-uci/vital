@@ -2,23 +2,12 @@
   <mat-card class="tutorial-card">
     <mat-card-content>
       <mat-tab-group disablePagination="true">
-        <mat-tab label="Explore"
-          ><markdown
-            ngPreserveWhitespaces
-            [data]="tutorialContent.explore"
-          ></markdown
-        ></mat-tab>
-        <mat-tab label="Exploit"
-          ><markdown
-            ngPreserveWhitespaces
-            [data]="tutorialContent.exploit"
-          ></markdown
-        ></mat-tab>
-        <mat-tab label="Mitigate"
-          ><markdown
-            ngPreserveWhitespaces
-            [data]="tutorialContent.mitigate"
-          ></markdown
+        <mat-tab
+          *ngFor="
+            let tabContent of tutorialContent.content | keyvalue: tabOrder
+          "
+          [label]="tabContent.key | titlecase"
+          ><markdown ngPreserveWhitespaces [data]="tabContent.value"></markdown
         ></mat-tab>
       </mat-tab-group>
     </mat-card-content>
