@@ -7,7 +7,7 @@
       (selectionChange)="changeLanguage($event.value)"
     >
       <mat-option value="node">Node JS</mat-option>
-      <mat-option value="java" disabled>Java (disabled)</mat-option>
+      <mat-option value="java" disabled>Java (coming soon)</mat-option>
       <mat-option value="python">Python</mat-option>
     </mat-select>
   </mat-form-field>
@@ -50,7 +50,9 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header
         >Difficulty</mat-header-cell
       >
-      <mat-cell *matCellDef="let element">{{ element.difficulty }}</mat-cell>
+      <mat-cell *matCellDef="let element">{{
+        element.difficulty | titlecase
+      }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="status">
       <mat-header-cell *matHeaderCellDef mat-sort-header
