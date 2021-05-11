@@ -15,9 +15,39 @@ body {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
-  border-bottom: gra;
 
   & .mat-card-title {
     margin: 0 !important;
+  }
+}
+
+// Have to style this on global styles, as the rendered markdown doesn't
+// abide by the Angular scoping rules
+markdown {
+  & blockquote {
+    border-left: 5px solid var(--vital-grey);
+    margin-left: 0;
+    padding-left: 1rem;
+    font-style: italic;
+  }
+
+  & code[class*='language-'],
+  pre[class*='language-'] {
+    white-space: pre-wrap !important;
+  }
+}
+
+// Consolidating the entire hack to show the header on top over here
+// 1. Kill the padding at the top to avoid te z-index of the tab body causing problems
+// 2. overflow-y to auto to introduce a scroll is required
+// 3. mat-tab-header is sticky and high z-index to make it appear as though user is scrolling body
+.tutorial-card {
+  padding-top: 0 !important;
+  overflow-y: auto;
+  & mat-tab-header {
+    z-index: 100;
+    position: sticky;
+    top: 0;
+    background-color: var(--vital-background);
   }
 }

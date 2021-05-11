@@ -8,3 +8,11 @@ export interface IRetryResponse {
   isUp: boolean;
   isRetriesExhausted: boolean;
 }
+
+export interface IProblemContent {
+  content: {
+    explore?: string;
+    exploit?: string;
+    mitigate?: string;
+  };
+}

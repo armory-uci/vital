@@ -21,6 +21,7 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import { FooterComponent } from './footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoadingComponent } from './loading/loading.component';
+import { VitalMarkdownModule } from './vital-markdown/vital-markdown.module';
 import { FormsModule } from '@angular/forms';
 import { ProblemTableComponent } from './home/problem-list/problem-table/problem-table.component';
 
@@ -42,7 +43,9 @@ import { ProblemTableComponent } from './home/problem-list/problem-table/problem
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
+    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig, () => 'vital', {
+      toastMessageOnAuthSuccess: false
+    }),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -50,6 +53,7 @@ import { ProblemTableComponent } from './home/problem-list/problem-table/problem
     MaterialModule,
     MatPasswordStrengthModule,
     FlexLayoutModule,
+    VitalMarkdownModule,
     FormsModule
   ],
   providers: [],

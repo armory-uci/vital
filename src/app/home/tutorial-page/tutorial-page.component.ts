@@ -3,12 +3,14 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SandboxService } from 'src/app/services/http-services/sandbox.service';
 import {
+  IProblemContent,
   IRetryResponse,
   ISandbox
 } from 'src/app/home/tutorial-page/tutorial-page.model';
 import { IProblem } from '../problem-list/problem.model';
-import { DOCUMENT, Location } from '@angular/common';
+import { DOCUMENT, KeyValue, Location } from '@angular/common';
 import { Inject } from '@angular/core';
+import { ProblemListService } from 'src/app/services/utility-services/problem-list.service';
 
 @Component({
   selector: 'app-tutorial-page',
@@ -21,7 +23,10 @@ export class TutorialPageComponent implements OnInit {
   // 2. Get the types right. Seems hacky right now
   // 3. Put a loading indicator on all three, till there is content in them
   title = 'SQL Injection';
-  tutorialContent = '<p>Content of the tutorial</p>';
+  tutorialContent: IProblemContent = {
+    content: { explore: '', exploit: '', mitigate: '' }
+  };
+
   sandbox: {
     terminalUrl: SafeResourceUrl;
     websiteUrl: SafeResourceUrl;
@@ -36,6 +41,7 @@ export class TutorialPageComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private router: Router,
     private sandboxService: SandboxService,
+    private problemListService: ProblemListService,
     @Inject(DOCUMENT) private document: Document
   ) {
     this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -51,6 +57,11 @@ export class TutorialPageComponent implements OnInit {
     // Only create on problem that comes from the problems page.
     // TODO Maybe this makes sense as a query parameter once the backend supports only one container per user?
     if (!this.problem) return;
+
+    this.problemListService.getProblemContent(this.problem).subscribe(
+      (contents) => (this.tutorialContent = contents.docs[0].data()) // TODO 0?
+    );
+
     this.sandboxService
       .create(this.problem.serverId)
       .subscribe((response: ISandbox) => {
@@ -70,6 +81,11 @@ export class TutorialPageComponent implements OnInit {
           }
         });
       });
+  }
+
+  tabOrder(a: KeyValue<string, string>, b: KeyValue<string, string>) {
+    const possibleKeys = ['explore', 'exploit', 'mitigate'];
+    return possibleKeys.indexOf(a.key) - possibleKeys.indexOf(b.key);
   }
 
   // This function tries to hit a url using a "opaque" request.
