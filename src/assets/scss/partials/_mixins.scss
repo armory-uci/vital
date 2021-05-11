@@ -24,6 +24,7 @@
   --vital-text: #{$vital-text};
   --vital-grey: #{$vital-grey};
   --vital-base: #{$vital-base};
+  --vital-background: #{mat-color($background-palette, card)};
 }
 
 @mixin page-style() {
