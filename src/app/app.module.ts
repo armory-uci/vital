@@ -43,7 +43,9 @@ import { ProblemTableComponent } from './home/problem-list/problem-table/problem
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig),
+    NgxAuthFirebaseUIModule.forRoot(environment.firebaseConfig, () => 'vital', {
+      toastMessageOnAuthSuccess: false
+    }),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
