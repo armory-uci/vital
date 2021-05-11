@@ -12,47 +12,10 @@ import { UserInfoService } from '../services/utility-services/user-info.service'
 export class LoginComponent implements OnInit {
   providers = AuthProvider;
 
-  constructor(
-    private router: Router,
-    private userInfoService: UserInfoService,
-    private problemListService: ProblemListService
-  ) {}
+  constructor(private userInfoService: UserInfoService) {}
 
   ngOnInit(): void {}
-
   login() {
     this.userInfoService.setUserInfo();
-    this.updateProgress();
-  }
-
-  updateProgress() {
-    const uid = this.userInfoService.getUserInfo().uid;
-    this.problemListService.writeProgress().subscribe((actions) => {
-      return actions.map((a) => {
-        this.problemListService
-          .getProblemStatus(uid, a.payload.doc.id, 'python')
-          .subscribe((data) => {
-            if (data.docs.length === 0) {
-              this.problemListService.addProgress(
-                uid,
-                a.payload.doc.id,
-                'python'
-              );
-            }
-          });
-        this.problemListService
-          .getProblemStatus(uid, a.payload.doc.id, 'node')
-          .subscribe((data) => {
-            if (data.docs.length === 0) {
-              this.problemListService.addProgress(
-                uid,
-                a.payload.doc.id,
-                'node'
-              );
-            }
-            this.router.navigate(['/problem']);
-          });
-      });
-    });
   }
 }
