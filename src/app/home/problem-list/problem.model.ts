@@ -1,6 +1,7 @@
 export interface IProblem {
+  serverId: string;
   id: string;
   title: string;
-  description: string;
-  serverId: string;
+  difficulty: string;
+  status: string;
 }
