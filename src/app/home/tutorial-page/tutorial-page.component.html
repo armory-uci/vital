@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card class="tutorial-card">
     <mat-card-content>
-      <mat-tab-group disablePagination="true">
+      <mat-tab-group mat-stretch-tabs>
         <mat-tab
           *ngFor="
             let tabContent of tutorialContent.content | keyvalue: tabOrder

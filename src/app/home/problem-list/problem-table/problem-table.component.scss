@@ -1,10 +1,13 @@
 .space {
-  padding: 1rem;
+  padding: 1rem 0;
 }
 
-.mat-row:hover {
-  background-color: #d3d3d3;
+.mat-row {
   cursor: pointer;
+
+  &:hover {
+    background-color: var(--vital-hover);
+  }
 }
 
 .hide {
