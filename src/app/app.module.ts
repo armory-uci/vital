@@ -21,6 +21,8 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import { FooterComponent } from './footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoadingComponent } from './loading/loading.component';
+import { FormsModule } from '@angular/forms';
+import { ProblemTableComponent } from './home/problem-list/problem-table/problem-table.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { LoadingComponent } from './loading/loading.component';
     PageNotFoundComponent,
     ProblemListComponent,
     FooterComponent,
-    LoadingComponent
+    LoadingComponent,
+    ProblemTableComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -46,7 +49,8 @@ import { LoadingComponent } from './loading/loading.component';
     BrowserAnimationsModule,
     MaterialModule,
     MatPasswordStrengthModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
