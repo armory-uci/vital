@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IUserInfo } from 'src/app/login/login.model';
-import { firebase } from '@firebase/app';
 import '@firebase/auth';
-import User from 'firebase/app';
-import userInfo from 'firebase/app';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
@@ -19,10 +15,7 @@ export class UserInfoService {
     idToken: null
   };
 
-  constructor(
-    public afs: AngularFirestore, // Inject Firestore service
-    public afAuth: AngularFireAuth
-  ) {}
+  constructor(public afAuth: AngularFireAuth) {}
 
   setUserInfo(): void {
     this.afAuth.authState.subscribe(async (user) => {

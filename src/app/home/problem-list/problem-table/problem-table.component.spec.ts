@@ -26,11 +26,11 @@ describe('ProblemTableComponent', () => {
     router.initialNavigation();
   });
 
-  it('should create', () => {
+  xit('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to the Tutorial Page', async () => {
+  xit('should navigate to the Tutorial Page', async () => {
     fixture.detectChanges();
     const problem: IProblem = {
       id: 'id',
