@@ -34,17 +34,14 @@ export class UserInfoService {
         this.userInfo.idToken = idToken;
         this.userInfo.photoUrl = user.photoURL;
         this.userInfo.uid = user.uid;
-        localStorage.setItem('user', JSON.stringify(this.userInfo));
+        sessionStorage.setItem('user', JSON.stringify(this.userInfo));
         this.updateProgress(this.userInfo.uid);
-      } else {
-        localStorage.setItem('user', null);
-        JSON.parse(localStorage.getItem('user'));
       }
     });
   }
 
   getUserInfo(): IUserInfo {
-    this.userInfo = JSON.parse(localStorage.getItem('user'));
+    this.userInfo = JSON.parse(sessionStorage.getItem('user'));
     return this.userInfo;
   }
 
