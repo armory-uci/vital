@@ -22,6 +22,8 @@ import { FooterComponent } from './footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoadingComponent } from './loading/loading.component';
 import { VitalMarkdownModule } from './vital-markdown/vital-markdown.module';
+import { FormsModule } from '@angular/forms';
+import { ProblemTableComponent } from './home/problem-list/problem-table/problem-table.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { VitalMarkdownModule } from './vital-markdown/vital-markdown.module';
     PageNotFoundComponent,
     ProblemListComponent,
     FooterComponent,
-    LoadingComponent
+    LoadingComponent,
+    ProblemTableComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -48,7 +51,8 @@ import { VitalMarkdownModule } from './vital-markdown/vital-markdown.module';
     MaterialModule,
     MatPasswordStrengthModule,
     FlexLayoutModule,
-    VitalMarkdownModule
+    VitalMarkdownModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

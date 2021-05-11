@@ -1,8 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { ProblemListService } from '../../services/utility-services/problem-list.service';
-import { IProblem } from './problem.model';
 
 @Component({
   selector: 'app-problem-list',
@@ -10,28 +6,7 @@ import { IProblem } from './problem.model';
   styleUrls: ['./problem-list.component.scss']
 })
 export class ProblemListComponent implements OnInit {
-  problems: IProblem[];
-  constructor(
-    private problemListService: ProblemListService,
-    private router: Router
-  ) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.problemListService.getProblems().subscribe((data) => {
-      this.problems = data.map((e) => {
-        return {
-          id: e.payload.doc.id,
-          ...(e.payload.doc.data() as Record<string, unknown>)
-        } as IProblem;
-      }); // TODO: Handle error
-    });
-  }
-
-  onClick(problem: IProblem): void {
-    problem.serverId = 'sqlInjection'; // FIXME Get this from firebase. Or find a better way.
-    this.router.navigate(['/tutorial'], {
-      // TODO What all do we need? And does it make sense as a query parameter? Side effect: refreshing the page will have different behaviours in each case
-      state: { problem }
-    });
-  }
+  ngOnInit() {}
 }

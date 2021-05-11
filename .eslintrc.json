@@ -23,6 +23,10 @@
         "plugin:prettier/recommended"
       ],
       "rules": {
+        /* note you must disable the base rule as it can report incorrect errors.
+          Refer: https://github.com/typescript-eslint/typescript-eslint/issues?q=label%3A%22fix%3A+user+error%22+no-shadow*/
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": ["error"],
         "@angular-eslint/component-selector": [
           "error",
           {
