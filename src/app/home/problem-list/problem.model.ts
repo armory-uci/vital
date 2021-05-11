@@ -1,5 +1,5 @@
 export interface IProblem {
-  serverId?: string;
+  serverId: string;
   id: string;
   title: string;
   difficulty: string;

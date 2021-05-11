@@ -27,9 +27,6 @@ export class UserInfoService {
         this.userInfo.photoUrl = user.photoURL;
         this.userInfo.uid = user.uid;
         localStorage.setItem('user', JSON.stringify(this.userInfo));
-      } else {
-        localStorage.setItem('user', null);
-        JSON.parse(localStorage.getItem('user'));
       }
     });
   }

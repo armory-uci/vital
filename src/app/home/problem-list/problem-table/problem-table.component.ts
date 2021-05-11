@@ -42,7 +42,6 @@ export class ProblemTableComponent implements OnInit {
   }
 
   onClick(problem: IProblem): void {
-    problem.serverId = problem.id;
     this.router.navigate(['/tutorial'], {
       state: { problem }
     });
