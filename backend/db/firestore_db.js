@@ -63,7 +63,7 @@ const getSandboxInfo = (sandboxId) => {
     .collection(collections.sandbox)
     .where('active', '==', sandboxId)
     .get();
-  if (userSandboxeInfo.empty)
+  if (!userSandboxeInfo.exists)
     return api404Error(`no user have active sandbox with arn:${sandboxId}`);
   return userSandboxeInfoRef.data();
 };
