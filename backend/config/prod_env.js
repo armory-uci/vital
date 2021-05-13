@@ -37,6 +37,14 @@ const vulnerabilities = {
     subnets,
     securityGroups,
     assignPublicIp
+  },
+  csrfNode: {
+    taskDefinition: 'csrf-node-task',
+    cluster,
+    launchType,
+    subnets,
+    securityGroups,
+    assignPublicIp
   }
 };
 
