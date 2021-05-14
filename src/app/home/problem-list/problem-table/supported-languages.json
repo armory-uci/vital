@@ -1,0 +1,31 @@
+[{
+  "lang_id": 1,
+  "language": "Java (Coming Soon)",
+  "value": "java",
+  "status": "inactive"
+},
+{
+  "lang_id": 2,
+  "language": "Python",
+  "value": "python",
+  "status": "active"
+},
+{
+  "lang_id": 3,
+  "language": "Node JS",
+  "value": "node",
+  "status": "active"
+},
+{
+  "lang_id": 4,
+  "language": "PHP (Coming Soon)",
+  "value": "php",
+  "status": "inactive"
+},
+{
+  "lang_id": 5,
+  "language": "Perl (Coming Soon)",
+  "value": "perl",
+  "status": "inactive"
+}
+]

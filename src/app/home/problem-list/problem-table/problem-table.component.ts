@@ -2,13 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ProblemListService } from '../../../services/utility-services/problem-list.service';
-import { IProblem } from './../problem.model';
+import { ILanguage, IProblem } from './../problem.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
 import { UserInfoService } from 'src/app/services/utility-services/user-info.service';
 import { IUserInfo } from 'src/app/login/login.model';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import * as supportedLanguages from './supported-languages.json';
 
 export enum ProblemStatus {
   notStarted = '0',
@@ -28,8 +29,10 @@ export class ProblemTableComponent implements OnInit {
   problems: IProblem[];
   listdata: MatTableDataSource<any>;
   displayColumns: string[] = ['title', 'difficulty', 'status', 'launch'];
-  selectedLanguage = 'node';
+  selectedLanguage = [['node']];
   searchKey = '';
+  langControl = new FormControl(false);
+  languages: ILanguage[] = (supportedLanguages as any).default;
 
   constructor(
     private problemListService: ProblemListService,
@@ -47,17 +50,22 @@ export class ProblemTableComponent implements OnInit {
     });
   }
 
-  getProblemSet(language?: string) {
+  getProblemSet(supportedLanguage?: string[]) {
+    const [languages] = supportedLanguage;
+    if (languages === undefined) {
+      this.listdata = new MatTableDataSource();
+      return;
+    }
     const currentUserInfo: IUserInfo = this.userInfoService.getUserInfo();
     const uid = currentUserInfo.uid;
 
     const problemsPromise = this.problemListService
-      .getProblems(language)
+      .getProblems(languages[0])
       .toPromise()
       .then((problemdata) => {
         return problemdata.docs
           .map((d) => {
-            const serverId = d.get('ids')[language].server_id;
+            const serverId = d.get('ids')[languages[0]].server_id;
             return {
               uid,
               problemId: d.id,
@@ -67,7 +75,7 @@ export class ProblemTableComponent implements OnInit {
           })
           .map((d) => {
             return this.problemListService
-              .getProblemStatus(uid, d.problemId, language)
+              .getProblemStatus(uid, d.problemId, languages[0])
               .toPromise()
               .then((da) => {
                 return {
@@ -85,8 +93,8 @@ export class ProblemTableComponent implements OnInit {
     });
   }
 
-  changeLanguage(language: string): void {
-    this.getProblemSet(language);
+  changeLanguage(selectedLanguages: string[]): void {
+    this.getProblemSet(selectedLanguages);
   }
 
   getStatusIcon(element) {

@@ -5,3 +5,10 @@ export interface IProblem {
   difficulty: string;
   status: string;
 }
+
+export interface ILanguage {
+  id: number;
+  language: string;
+  value: string;
+  status: string;
+}

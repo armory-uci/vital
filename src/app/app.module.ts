@@ -22,7 +22,7 @@ import { FooterComponent } from './footer/footer.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LoadingComponent } from './loading/loading.component';
 import { VitalMarkdownModule } from './vital-markdown/vital-markdown.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProblemTableComponent } from './home/problem-list/problem-table/problem-table.component';
 
 @NgModule({
@@ -54,7 +54,8 @@ import { ProblemTableComponent } from './home/problem-list/problem-table/problem
     MatPasswordStrengthModule,
     FlexLayoutModule,
     VitalMarkdownModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
