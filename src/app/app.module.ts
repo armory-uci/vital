@@ -24,6 +24,7 @@ import { LoadingComponent } from './loading/loading.component';
 import { VitalMarkdownModule } from './vital-markdown/vital-markdown.module';
 import { FormsModule } from '@angular/forms';
 import { ProblemTableComponent } from './home/problem-list/problem-table/problem-table.component';
+import { UserProfileComponent } from './home/problem-list/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ProblemTableComponent } from './home/problem-list/problem-table/problem
     ProblemListComponent,
     FooterComponent,
     LoadingComponent,
-    ProblemTableComponent
+    ProblemTableComponent,
+    UserProfileComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
