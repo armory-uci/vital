@@ -1,1 +1,50 @@
-<p>user-profile works!</p>
+<div class="containerX">
+  <div class="container">
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <h1>Welcome {{ userInfo.displayName }} !</h1>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+  <div class="container">
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <mat-card>
+        <img [src]="userInfo.photoUrl" />
+      </mat-card>
+    </div>
+  </div>
+  <div>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-subtitle>
+          <span> Progress: {{ '4' }}/{{ '10' }} Solved </span>
+          <span>
+            <button
+              (click)="resetProgress()"
+              mat-icon-button
+              color="primary"
+            >
+              <mat-icon matTooltip="Reset progress">history</mat-icon>
+            </button>
+          </span>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <section class="example-section">
+          <mat-progress-bar color="primary" mode="'determinate'" value="40">
+          </mat-progress-bar>
+        </section>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div>
+    <mat-grid-list cols="4" rowHeight="100px">
+      <mat-grid-tile
+          *ngFor="let tile of tiles"
+          [colspan]="tile.cols"
+          [rowspan]="tile.rows"
+          [style.background]="tile.color">
+        {{tile.text}}
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
