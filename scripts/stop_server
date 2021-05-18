@@ -7,3 +7,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" 
 npx pm2 stop all
 npx pm2 delete all
+echo "server stopped"
