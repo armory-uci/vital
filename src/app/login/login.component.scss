@@ -6,9 +6,14 @@
   flex-direction: column;
 }
 
+* + * {
+  margin-top: 1rem;
+}
+
 .login-page {
-  flex-grow: 1;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  margin-top: 1rem;
 }

@@ -1,35 +1,52 @@
 <div class="login-page">
-  <div>
-    <div class="logo">
-      <img src="../../assets/images/Asset 4.svg" />
-      <div class="full-form">
-        <strong
-          ><h1>
-            Vulnerabilities Identification, Tackling, and Learning
-          </h1></strong
-        >
-      </div>
+  <div class="logo">
+    <img src="../../assets/images/Asset 4.svg" />
+    <div class="full-form">
+      <strong
+        ><h1>Vulnerabilities Identification, Tackling, and Learning</h1></strong
+      >
+    </div>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ngx-auth-firebaseui-providers
+          layout="column"
+          [providers]="[providers.Google, providers.Github]"
+          (onSuccess)="login()"
+        ></ngx-auth-firebaseui-providers>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="method">
+    <h1>Our method</h1>
+    <div class="terminology-cards">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Explore</mat-card-title>
+        </mat-card-header>
+        <mat-card-content> This is the explore content </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Exploit</mat-card-title>
+        </mat-card-header>
+        <mat-card-content> This is the exploit content </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Mitigate</mat-card-title>
+        </mat-card-header>
+        <mat-card-content> This is the mitigate content </mat-card-content>
+      </mat-card>
     </div>
   </div>
 
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Login</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <ngx-auth-firebaseui-providers
-        layout="column"
-        [providers]="[
-          providers.Google,
-          providers.Facebook,
-          providers.Github,
-          providers.Microsoft,
-          providers.Twitter
-        ]"
-        (onSuccess)="login()"
-      ></ngx-auth-firebaseui-providers>
-    </mat-card-content>
-  </mat-card>
+  <div class="about">
+    <h1>Who we are</h1>
+  </div>
 </div>
 
 <app-footer></app-footer>
