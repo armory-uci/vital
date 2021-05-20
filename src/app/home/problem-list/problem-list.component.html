@@ -1,1 +1,10 @@
-<app-problem-table></app-problem-table>
+<div fxLayout="row">
+  <div fxFlex="67">
+    <app-problem-table [userInfo]="userInfo"></app-problem-table>
+  </div>
+  <div fxFlex="3"></div>
+  <mat-divider [vertical]="true"></mat-divider>
+  <div fxFlex="30">
+    <app-user-profile [userInfo]="userInfo"></app-user-profile>
+  </div>
+</div>
