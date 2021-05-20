@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IUserInfo } from 'src/app/login/login.model';
 import { UserProfileService } from 'src/app/services/utility-services/user-profile.service';
+import { ProblemStatus } from '../problem-table/problem-table.component';
 import { IProfileDetails } from './user-profile.model';
 
 @Component({
@@ -24,9 +25,9 @@ export class UserProfileComponent implements OnInit {
       .subscribe((docArray) => {
         for (const item of docArray) {
           const itemData = item.payload.doc.data() as IProfileDetails;
-          if (itemData.status === '0') {
+          if (itemData.status === ProblemStatus.notStarted) {
             this.unattemptedCount++;
-          } else if (itemData.status === '1') {
+          } else if (itemData.status === ProblemStatus.correct) {
             this.doneCount++;
           } else {
             this.inProgressCount++;
