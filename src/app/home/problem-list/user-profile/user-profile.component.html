@@ -16,13 +16,9 @@
     <mat-card>
       <mat-card-header>
         <mat-card-subtitle>
-          <span> Progress: {{ '4' }}/{{ '10' }} Solved </span>
+          <span> Progress: {{ doneCount }}/{{ total }} Solved </span>
           <span>
-            <button
-              (click)="resetProgress()"
-              mat-icon-button
-              color="primary"
-            >
+            <button (click)="resetProgress()" mat-icon-button color="primary">
               <mat-icon matTooltip="Reset progress">history</mat-icon>
             </button>
           </span>
@@ -30,7 +26,11 @@
       </mat-card-header>
       <mat-card-content>
         <section class="example-section">
-          <mat-progress-bar color="primary" mode="'determinate'" value="40">
+          <mat-progress-bar
+            color="primary"
+            mode="'determinate'"
+            [value]="barValue"
+          >
           </mat-progress-bar>
         </section>
       </mat-card-content>
@@ -41,18 +41,29 @@
       <div fxLayout="row" fxLayoutAlign="space-evenly stretch">
         <div fxFlex>
           <mat-card>
-            <mat-card-subtitle>
-              Email: {{userInfo.email}}
-            </mat-card-subtitle>
+            <mat-card-subtitle> Email: {{ userInfo.email }} </mat-card-subtitle>
           </mat-card>
-          </div>
-          <div fxFlex>
-            <mat-card>
-              <mat-card-subtitle>
-                Last Visited: 04/28/2021
-              </mat-card-subtitle>
-            </mat-card>
-            </div>
+        </div>
+        <div fxFlex>
+          <mat-card>
+            <mat-card-subtitle> Last Visited: 04/28/2021 </mat-card-subtitle>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="container">
+      <div fxLayout="row" fxLayoutAlign="space-evenly stretch">
+        <div fxFlex>
+          <mat-card>
+            <mat-card-subtitle> Time Spent: 12 Hours </mat-card-subtitle>
+          </mat-card>
+        </div>
+        <div fxFlex>
+          <mat-card>
+            <mat-card-subtitle> Preferred Language: Node JS </mat-card-subtitle>
+          </mat-card>
+        </div>
       </div>
     </div>
     <mat-divider></mat-divider>
@@ -61,36 +72,17 @@
         <div fxFlex>
           <mat-card>
             <mat-card-subtitle>
-              Time Spent: 12 Hours
+              In Progress: {{ inProgressCount }}
             </mat-card-subtitle>
           </mat-card>
-          </div>
-          <div fxFlex>
-            <mat-card>
-              <mat-card-subtitle>
-                Preferred Language: Node JS
-              </mat-card-subtitle>
-            </mat-card>
-            </div>
-      </div>
-    </div>
-    <mat-divider></mat-divider>
-    <div class="container">
-      <div fxLayout="row" fxLayoutAlign="space-evenly stretch">
+        </div>
         <div fxFlex>
           <mat-card>
             <mat-card-subtitle>
-              In Progress: 2
+              Unattempted Questions: {{ unattemptedCount }}
             </mat-card-subtitle>
           </mat-card>
-          </div>
-          <div fxFlex>
-            <mat-card>
-              <mat-card-subtitle>
-                Unattempted Questions: 4
-              </mat-card-subtitle>
-            </mat-card>
-            </div>
+        </div>
       </div>
     </div>
     <mat-divider></mat-divider>
