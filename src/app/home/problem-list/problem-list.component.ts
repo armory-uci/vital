@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IUserInfo } from 'src/app/login/login.model';
+import { UserInfoService } from 'src/app/services/utility-services/user-info.service';
 
 @Component({
   selector: 'app-problem-list',
@@ -6,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./problem-list.component.scss']
 })
 export class ProblemListComponent implements OnInit {
-  constructor() {}
+  userInfo: IUserInfo;
 
-  ngOnInit() {}
+  constructor(private userInfoService: UserInfoService) {}
+
+  ngOnInit() {
+    this.userInfo = this.userInfoService.getUserInfo();
+  }
 }

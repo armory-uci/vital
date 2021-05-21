@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ProblemListService } from '../../../services/utility-services/problem-list.service';
 import { IProblem } from './../problem.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormControl } from '@angular/forms';
-import { UserInfoService } from 'src/app/services/utility-services/user-info.service';
 import { IUserInfo } from 'src/app/login/login.model';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
@@ -24,6 +23,7 @@ export enum ProblemStatus {
 export class ProblemTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @Input() userInfo: IUserInfo;
   disableSelect = new FormControl(false);
   problems: IProblem[];
   listdata: MatTableDataSource<any>;
@@ -33,8 +33,7 @@ export class ProblemTableComponent implements OnInit {
 
   constructor(
     private problemListService: ProblemListService,
-    private router: Router,
-    private userInfoService: UserInfoService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -48,9 +47,7 @@ export class ProblemTableComponent implements OnInit {
   }
 
   getProblemSet(language?: string) {
-    const currentUserInfo: IUserInfo = this.userInfoService.getUserInfo();
-    const uid = currentUserInfo.uid;
-
+    const uid = this.userInfo.uid;
     const problemsPromise = this.problemListService
       .getProblems(language)
       .toPromise()
