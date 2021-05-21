@@ -18,9 +18,9 @@
   }
 }
 
-// .light-text {
-//   border-bottom: 1px solid var(--vital-background);
-// }
+.light-text {
+  color: var(--vital-background);
+}
 
 .full-form {
   margin-top: 1rem;
@@ -73,12 +73,8 @@
 
 .hero-section {
   height: 100vh;
-  // clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
-  // background-image: linear-gradient(
-  //   to bottom,
-  //   var(--primary-color),
-  //   var(--accent-color)
-  // );
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+  background-image: linear-gradient(to bottom, var(--primary-color), black);
 
   & .logo img {
     display: block;
