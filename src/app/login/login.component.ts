@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AuthProvider } from 'ngx-auth-firebaseui';
-import { ProblemListService } from '../services/utility-services/problem-list.service';
 import { UserInfoService } from '../services/utility-services/user-info.service';
 
 @Component({
@@ -12,7 +12,16 @@ import { UserInfoService } from '../services/utility-services/user-info.service'
 export class LoginComponent implements OnInit {
   providers = AuthProvider;
 
-  constructor(private userInfoService: UserInfoService) {}
+  constructor(
+    private userInfoService: UserInfoService,
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
+  ) {
+    iconRegistry.addSvgIcon(
+      'linkedin',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/images/linkedin.svg')
+    );
+  }
 
   ngOnInit(): void {}
   login() {
