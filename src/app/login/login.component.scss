@@ -7,8 +7,105 @@
 }
 
 .login-page {
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  & * {
+    box-sizing: border-box;
+  }
+}
+
+.light-text {
+  color: var(--vital-background);
+}
+
+.full-form {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+}
+
+.slogan {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  & h3 {
+    margin: 0;
+  }
+}
+
+.card-row {
   display: flex;
   justify-content: space-around;
+  gap: 1rem;
+
+  & mat-card {
+    max-width: 20vw;
+  }
+}
+
+.section {
+  display: flex;
+  width: 100vw;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+
+  & + .section {
+    margin-bottom: 2rem;
+  }
+}
+
+.hero-section {
+  height: 100vh;
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+  background-image: linear-gradient(to bottom, var(--primary-color), black);
+
+  & .logo img {
+    display: block;
+    height: 30vh;
+  }
+}
+
+.linkedin {
+  color: #0072b1;
+}
+
+.people {
+  & mat-card {
+    display: flex;
+    flex-direction: column;
+  }
+  & mat-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+  }
+  & mat-card-actions {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  & img {
+    width: 60%;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+  }
 }
