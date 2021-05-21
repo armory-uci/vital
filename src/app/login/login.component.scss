@@ -91,16 +91,22 @@
 }
 
 .people {
+  & mat-card {
+    display: flex;
+    flex-direction: column;
+  }
   & mat-card-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex-grow: 1;
   }
 
   & img {
     width: 60%;
     border-radius: 50%;
+    margin-bottom: 0.5rem;
   }
 }
 
