@@ -1,51 +1,139 @@
 <div class="login-page">
-  <div class="logo">
-    <img src="../../assets/images/Asset 4.svg" />
-    <div class="full-form">
-      <strong
-        ><h1>Vulnerabilities Identification, Tackling, and Learning</h1></strong
-      >
+  <div class="hero-section section">
+    <div class="logo">
+      <img src="assets/images/Asset 4.svg" />
     </div>
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Login</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <ngx-auth-firebaseui-providers
-          layout="column"
-          [providers]="[providers.Google, providers.Github]"
-          (onSuccess)="login()"
-        ></ngx-auth-firebaseui-providers>
-      </mat-card-content>
+    <h1 class="full-form light-text">
+      Vulnerabilities Identification, Tackling, and Learning
+    </h1>
+    <h1 class="slogan light-text">
+      A CyberSecurity learning platform, for everyone.
+    </h1>
+
+    <mat-card class="login">
+      <h3>Login</h3>
+      <ngx-auth-firebaseui-providers
+        layout="row"
+        [providers]="[providers.Google, providers.Github]"
+        (onSuccess)="login()"
+      ></ngx-auth-firebaseui-providers>
     </mat-card>
   </div>
 
-  <div class="method">
-    <h1>Our method</h1>
-    <div class="terminology-cards">
+  <div class="method-section section">
+    <h1 class="section-title">Our method</h1>
+    <div class="method card-row">
       <mat-card>
         <mat-card-header>
+          <mat-icon mat-card-avatar class="search-icon">search</mat-icon>
           <mat-card-title>Explore</mat-card-title>
         </mat-card-header>
-        <mat-card-content> This is the explore content </mat-card-content>
+        <mat-card-content
+          >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum totam
+          ipsa perspiciatis vel aperiam excepturi illo fugit voluptatem
+          laboriosam magni, quam corrupti. Dolorem, facilis iste eaque quibusdam
+          nemo veniam accusamus.</mat-card-content
+        >
       </mat-card>
       <mat-card>
         <mat-card-header>
+          <mat-icon mat-card-avatar class="warning-icon">warning</mat-icon>
           <mat-card-title>Exploit</mat-card-title>
         </mat-card-header>
-        <mat-card-content> This is the exploit content </mat-card-content>
+        <mat-card-content
+          >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum totam
+          ipsa perspiciatis vel aperiam excepturi illo fugit voluptatem
+          laboriosam magni, quam corrupti. Dolorem, facilis iste eaque quibusdam
+          nemo veniam accusamus.</mat-card-content
+        >
       </mat-card>
       <mat-card>
         <mat-card-header>
+          <mat-icon mat-card-avatar class="lock-icon">lock</mat-icon>
           <mat-card-title>Mitigate</mat-card-title>
         </mat-card-header>
-        <mat-card-content> This is the mitigate content </mat-card-content>
+        <mat-card-content
+          >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Earum totam
+          ipsa perspiciatis vel aperiam excepturi illo fugit voluptatem
+          laboriosam magni, quam corrupti. Dolorem, facilis iste eaque quibusdam
+          nemo veniam accusamus.</mat-card-content
+        >
       </mat-card>
     </div>
   </div>
 
-  <div class="about">
-    <h1>Who we are</h1>
+  <div class="team-section section">
+    <h1 class="section-title">Who we are</h1>
+    <div class="people card-row">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Kumar Vaibhav</mat-card-title>
+          <mat-card-subtitle>Full-stack dev</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <img src="assets/images/maaz.JPG" alt="Maaz" />
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt
+          aspernatur ad id provident rem dolores earum, et quo, accusantium
+          repellat fuga inventore quisquam, tempore sint nobis libero
+          praesentium eum error!
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LinkedIn</button>
+          <button mat-button>GitHub</button>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Maaz Adeeb</mat-card-title>
+          <mat-card-subtitle>Full-stack dev</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <img src="../../assets/images/maaz.JPG" alt="Maaz" />
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt
+          aspernatur ad id provident rem dolores earum, et quo, accusantium
+          repellat fuga inventore quisquam, tempore sint nobis libero
+          praesentium eum error!
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LinkedIn</button>
+          <button mat-button>GitHub</button>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Shuvam Ghosh</mat-card-title>
+          <mat-card-subtitle>Full-stack dev</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <img src="../../assets/images/maaz.JPG" alt="Maaz" />
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt
+          aspernatur ad id provident rem dolores earum, et quo, accusantium
+          repellat fuga inventore quisquam, tempore sint nobis libero
+          praesentium eum error!
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LinkedIn</button>
+          <button mat-button>GitHub</button>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Vineet Bharot</mat-card-title>
+          <mat-card-subtitle>Full-stack dev</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <img src="../../assets/images/maaz.JPG" alt="Maaz" />
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt
+          aspernatur ad id provident rem dolores earum, et quo, accusantium
+          repellat fuga inventore quisquam, tempore sint nobis libero
+          praesentium eum error!
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LinkedIn</button>
+          <button mat-button>GitHub</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
   </div>
 </div>
 
