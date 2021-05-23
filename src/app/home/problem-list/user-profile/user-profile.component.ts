@@ -16,13 +16,14 @@ export class UserProfileComponent implements OnInit {
   doneCount = 0;
   inProgressCount = 0;
   unattemptedCount = 0;
-  total: number;
+  total = 0;
   constructor(private userProfileService: UserProfileService) {}
 
   ngOnInit(): void {
     this.userProfileService
       .getUserProfile(this.userInfo.uid)
       .subscribe((docArray) => {
+        this.unattemptedCount = this.doneCount = this.total = this.inProgressCount = 0;
         for (const item of docArray) {
           const itemData = item.payload.doc.data() as IProfileDetails;
           if (itemData.status === ProblemStatus.notStarted) {
