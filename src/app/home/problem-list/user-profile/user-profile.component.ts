@@ -23,7 +23,7 @@ export class UserProfileComponent implements OnInit {
     this.userProfileService
       .getUserProfile(this.userInfo.uid)
       .subscribe((docArray) => {
-        this.unattemptedCount = this.doneCount = this.total = this.inProgressCount = 0;
+        this.profileDetails = [];
         for (const item of docArray) {
           const itemData = item.payload.doc.data() as IProfileDetails;
           if (itemData.status === ProblemStatus.notStarted) {
