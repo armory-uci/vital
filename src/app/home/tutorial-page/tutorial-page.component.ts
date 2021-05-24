@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SandboxService } from 'src/app/services/http-services/sandbox.service';
@@ -11,6 +11,7 @@ import { IProblem } from '../problem-list/problem.model';
 import { DOCUMENT, KeyValue, Location } from '@angular/common';
 import { Inject } from '@angular/core';
 import { ProblemListService } from 'src/app/services/utility-services/problem-list.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-tutorial-page',
@@ -31,8 +32,8 @@ export class TutorialPageComponent implements OnInit {
     terminalUrl: SafeResourceUrl;
     websiteUrl: SafeResourceUrl;
   } = {
-    terminalUrl: this.getLoadingPageUrl(),
-    websiteUrl: this.getLoadingPageUrl()
+    terminalUrl: 'http://localhost:3001',
+    websiteUrl: 'http://localhost:5000'
   };
 
   private problem: IProblem;
@@ -42,6 +43,7 @@ export class TutorialPageComponent implements OnInit {
     private router: Router,
     private sandboxService: SandboxService,
     private problemListService: ProblemListService,
+    private snackBar: MatSnackBar,
     @Inject(DOCUMENT) private document: Document
   ) {
     this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -56,36 +58,50 @@ export class TutorialPageComponent implements OnInit {
   ngOnInit(): void {
     // Only create on problem that comes from the problems page.
     // TODO Maybe this makes sense as a query parameter once the backend supports only one container per user?
-    if (!this.problem) return;
-
-    this.problemListService.getProblemContent(this.problem).subscribe(
-      (contents) => (this.tutorialContent = contents.docs[0].data()) // TODO 0?
-    );
-
-    this.sandboxService
-      .create(this.problem.serverId)
-      .subscribe((response: ISandbox) => {
-        const { terminalUrl, websiteUrl } = response;
-        this.waitUntilSiteIsUp(terminalUrl).then(({ isUp }) => {
-          if (isUp) {
-            this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-              terminalUrl
-            );
-          }
-        });
-        this.waitUntilSiteIsUp(websiteUrl).then(({ isUp }) => {
-          if (isUp) {
-            this.sandbox.websiteUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-              websiteUrl
-            );
-          }
-        });
-      });
+    // if (!this.problem) return;
+    // this.problemListService.getProblemContent(this.problem).subscribe(
+    //   (contents) => (this.tutorialContent = contents.docs[0].data()) // TODO 0?
+    // );
+    // this.sandboxService
+    //   .create(this.problem.serverId)
+    //   .subscribe((response: ISandbox) => {
+    //     const { terminalUrl, websiteUrl } = response;
+    //     this.waitUntilSiteIsUp(terminalUrl).then(({ isUp }) => {
+    //       if (isUp) {
+    //         this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+    //           terminalUrl
+    //         );
+    //       }
+    //     });
+    //     this.waitUntilSiteIsUp(websiteUrl).then(({ isUp }) => {
+    //       if (isUp) {
+    //         this.sandbox.websiteUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+    //           websiteUrl
+    //         );
+    //       }
+    //     });
+    //   });
   }
 
   tabOrder(a: KeyValue<string, string>, b: KeyValue<string, string>) {
     const possibleKeys = ['explore', 'exploit', 'mitigate'];
     return possibleKeys.indexOf(a.key) - possibleKeys.indexOf(b.key);
+  }
+
+  onValidate() {
+    this.sandboxService
+      .validate(
+        this.sanitizer.sanitize(
+          SecurityContext.RESOURCE_URL,
+          this.sandbox.websiteUrl
+        ) as string
+      )
+      .subscribe((status) => {
+        const message = status.solved
+          ? `Congrats! You\'ve fixed the ${this.problem?.title} threat!`
+          : 'Keep trying! Use the mitigate tab.';
+        this.snackBar.open(message, 'OK');
+      });
   }
 
   // This function tries to hit a url using a "opaque" request.

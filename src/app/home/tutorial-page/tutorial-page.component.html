@@ -12,7 +12,13 @@
       </mat-tab-group>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-flat-button class="validate-btn" mat-button color="primary">
+      <button
+        mat-flat-button
+        class="validate-btn"
+        mat-button
+        color="primary"
+        (click)="onValidate()"
+      >
         Validate
       </button>
     </mat-card-actions>
