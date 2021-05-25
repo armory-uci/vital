@@ -37,7 +37,9 @@ describe('ProblemTableComponent', () => {
       title: 'title',
       serverId: 'serverId',
       difficulty: 'difficulty',
-      status: '1'
+      status: '1',
+      language: 'node',
+      problemId: 'problemId'
     };
     component.onClick(problem);
     fixture.whenStable().then(() => {
