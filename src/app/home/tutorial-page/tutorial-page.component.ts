@@ -33,9 +33,11 @@ export class TutorialPageComponent implements OnInit {
   sandbox: {
     terminalUrl: SafeResourceUrl;
     websiteUrl: SafeResourceUrl;
+    isLoading: boolean;
   } = {
     terminalUrl: this.getLoadingPageUrl(),
-    websiteUrl: this.getLoadingPageUrl()
+    websiteUrl: this.getLoadingPageUrl(),
+    isLoading: true
   };
 
   private problem: IProblem;
@@ -78,6 +80,7 @@ export class TutorialPageComponent implements OnInit {
         });
         this.waitUntilSiteIsUp(websiteUrl).then(({ isUp }) => {
           if (isUp) {
+            this.sandbox.isLoading = false;
             this.sandbox.websiteUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
               websiteUrl
             );
