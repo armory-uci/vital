@@ -34,8 +34,8 @@ export class TutorialPageComponent implements OnInit {
     terminalUrl: SafeResourceUrl;
     websiteUrl: SafeResourceUrl;
   } = {
-    terminalUrl: 'http://localhost:3001',
-    websiteUrl: 'http://localhost:5000'
+    terminalUrl: this.getLoadingPageUrl(),
+    websiteUrl: this.getLoadingPageUrl()
   };
 
   private problem: IProblem;
