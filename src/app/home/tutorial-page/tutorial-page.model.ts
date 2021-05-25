@@ -17,6 +17,6 @@ export interface IProblemContent {
   };
 }
 
-export interface IProblemStatus {
+export interface IProblemStatusResponse {
   solved: boolean;
 }

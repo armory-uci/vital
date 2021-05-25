@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { environment } from '../../../environments/environment';
 import { UserInfoService } from '../utility-services/user-info.service';
 import {
-  IProblemStatus,
+  IProblemStatusResponse,
   ISandbox
 } from '../../home/tutorial-page/tutorial-page.model';
 
@@ -28,8 +28,8 @@ export class SandboxService {
     );
   }
 
-  validate(sandboxWebsiteUrl: string): Observable<IProblemStatus> {
-    return this.http.get<IProblemStatus>(
+  validate(sandboxWebsiteUrl: string): Observable<IProblemStatusResponse> {
+    return this.http.get<IProblemStatusResponse>(
       Location.joinWithSlash(sandboxWebsiteUrl, 'status')
     );
   }

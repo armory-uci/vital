@@ -7,6 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { IProblem } from 'src/app/home/problem-list/problem.model';
 import { IProblemContent } from 'src/app/home/tutorial-page/tutorial-page.model';
+import { ProblemStatus } from 'src/app/home/problem-list/problem-table/problem-table.component';
 
 const contentConverter = {
   toFirestore: (data) => data,
@@ -34,6 +35,27 @@ export class ProblemListService {
       problemId
     });
   }
+
+  changeProgress(
+    uid: string,
+    problemId: string,
+    language: string,
+    status: ProblemStatus
+  ) {
+    this.firestore
+      .collection('users')
+      .doc(uid)
+      .collection('progress', (ref) =>
+        ref
+          .where('language', '==', language)
+          .where('problemId', '==', problemId)
+      )
+      .get()
+      .subscribe((statusRef) => {
+        statusRef.docs[0].ref.update({ status });
+      });
+  }
+
   writeProgress() {
     return this.firestore.collection('problems').snapshotChanges();
   }

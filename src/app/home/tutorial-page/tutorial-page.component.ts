@@ -12,6 +12,8 @@ import { DOCUMENT, KeyValue, Location } from '@angular/common';
 import { Inject } from '@angular/core';
 import { ProblemListService } from 'src/app/services/utility-services/problem-list.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserInfoService } from 'src/app/services/utility-services/user-info.service';
+import { ProblemStatus } from '../problem-list/problem-table/problem-table.component';
 
 @Component({
   selector: 'app-tutorial-page',
@@ -43,6 +45,7 @@ export class TutorialPageComponent implements OnInit {
     private router: Router,
     private sandboxService: SandboxService,
     private problemListService: ProblemListService,
+    private userInfoService: UserInfoService,
     private snackBar: MatSnackBar,
     @Inject(DOCUMENT) private document: Document
   ) {
@@ -58,29 +61,29 @@ export class TutorialPageComponent implements OnInit {
   ngOnInit(): void {
     // Only create on problem that comes from the problems page.
     // TODO Maybe this makes sense as a query parameter once the backend supports only one container per user?
-    // if (!this.problem) return;
-    // this.problemListService.getProblemContent(this.problem).subscribe(
-    //   (contents) => (this.tutorialContent = contents.docs[0].data()) // TODO 0?
-    // );
-    // this.sandboxService
-    //   .create(this.problem.serverId)
-    //   .subscribe((response: ISandbox) => {
-    //     const { terminalUrl, websiteUrl } = response;
-    //     this.waitUntilSiteIsUp(terminalUrl).then(({ isUp }) => {
-    //       if (isUp) {
-    //         this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-    //           terminalUrl
-    //         );
-    //       }
-    //     });
-    //     this.waitUntilSiteIsUp(websiteUrl).then(({ isUp }) => {
-    //       if (isUp) {
-    //         this.sandbox.websiteUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-    //           websiteUrl
-    //         );
-    //       }
-    //     });
-    //   });
+    if (!this.problem) return;
+    this.problemListService.getProblemContent(this.problem).subscribe(
+      (contents) => (this.tutorialContent = contents.docs[0].data()) // TODO 0?
+    );
+    this.sandboxService
+      .create(this.problem.serverId)
+      .subscribe((response: ISandbox) => {
+        const { terminalUrl, websiteUrl } = response;
+        this.waitUntilSiteIsUp(terminalUrl).then(({ isUp }) => {
+          if (isUp) {
+            this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+              terminalUrl
+            );
+          }
+        });
+        this.waitUntilSiteIsUp(websiteUrl).then(({ isUp }) => {
+          if (isUp) {
+            this.sandbox.websiteUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+              websiteUrl
+            );
+          }
+        });
+      });
   }
 
   tabOrder(a: KeyValue<string, string>, b: KeyValue<string, string>) {
@@ -97,10 +100,16 @@ export class TutorialPageComponent implements OnInit {
         ) as string
       )
       .subscribe((status) => {
+        this.problemListService.changeProgress(
+          this.userInfoService.getUserInfo().uid,
+          this.problem.problemId,
+          this.problem.language,
+          status.solved ? ProblemStatus.correct : ProblemStatus.incorrect
+        );
         const message = status.solved
           ? `Congrats! You\'ve fixed the ${this.problem?.title} threat!`
           : 'Keep trying! Use the mitigate tab.';
-        this.snackBar.open(message, 'OK');
+        this.snackBar.open(message, 'OK', { duration: 5000 });
       });
   }
 
