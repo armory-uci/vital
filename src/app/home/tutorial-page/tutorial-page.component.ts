@@ -14,6 +14,7 @@ import { ProblemListService } from 'src/app/services/utility-services/problem-li
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserInfoService } from 'src/app/services/utility-services/user-info.service';
 import { ProblemStatus } from '../problem-list/problem-table/problem-table.component';
+import { HeaderService } from 'src/app/services/utility-services/header.service';
 
 @Component({
   selector: 'app-tutorial-page',
@@ -35,9 +36,9 @@ export class TutorialPageComponent implements OnInit {
     websiteUrl: SafeResourceUrl;
     isLoading: boolean;
   } = {
-    terminalUrl: this.getLoadingPageUrl(),
-    websiteUrl: this.getLoadingPageUrl(),
-    isLoading: true
+    terminalUrl: 'http://localhost:3001',
+    websiteUrl: 'http://localhost:5000',
+    isLoading: false
   };
 
   private problem: IProblem;
@@ -48,6 +49,7 @@ export class TutorialPageComponent implements OnInit {
     private sandboxService: SandboxService,
     private problemListService: ProblemListService,
     private userInfoService: UserInfoService,
+    private headerService: HeaderService,
     private snackBar: MatSnackBar,
     @Inject(DOCUMENT) private document: Document
   ) {
@@ -64,9 +66,13 @@ export class TutorialPageComponent implements OnInit {
     // Only create on problem that comes from the problems page.
     // TODO Maybe this makes sense as a query parameter once the backend supports only one container per user?
     if (!this.problem) return;
+
+    this.setHeaderTitle();
+
     this.problemListService.getProblemContent(this.problem).subscribe(
       (contents) => (this.tutorialContent = contents.docs[0].data()) // TODO 0?
     );
+
     this.sandboxService
       .create(this.problem.serverId)
       .subscribe((response: ISandbox) => {
@@ -103,12 +109,16 @@ export class TutorialPageComponent implements OnInit {
         ) as string
       )
       .subscribe((status) => {
+        const currentStatus = status.solved
+          ? ProblemStatus.correct
+          : ProblemStatus.incorrect;
         this.problemListService.changeProgress(
           this.userInfoService.getUserInfo().uid,
           this.problem.problemId,
           this.problem.language,
-          status.solved ? ProblemStatus.correct : ProblemStatus.incorrect
+          currentStatus
         );
+        this.setHeaderTitle(currentStatus);
         const message = status.solved
           ? `Congrats! You\'ve fixed the ${this.problem?.title} threat!`
           : 'Keep trying! Use the mitigate tab.';
@@ -140,5 +150,19 @@ export class TutorialPageComponent implements OnInit {
 
   private getLoadingPageUrl(): string {
     return Location.joinWithSlash(this.document.location.origin, 'loading');
+  }
+
+  private setHeaderTitle(
+    status: ProblemStatus = this.problem.status as ProblemStatus
+  ) {
+    let statusText = 'Not Attempted';
+
+    if (status === ProblemStatus.correct) {
+      statusText = 'Solved';
+    } else if (status === ProblemStatus.incorrect) {
+      statusText = 'Unsolved';
+    }
+
+    this.headerService.setHeaderTitle(`${this.problem.title} - ${statusText}`);
   }
 }

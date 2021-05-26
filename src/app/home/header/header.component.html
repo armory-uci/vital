@@ -1,5 +1,7 @@
 <mat-toolbar color="primary">
   <span><a routerLink="/">vitaL</a></span>
   <span class="spacer"></span>
+  <h1>{{ headerService.getHeaderTitle() | async }}</h1>
+  <span class="spacer"></span>
   <ngx-auth-firebaseui-avatar></ngx-auth-firebaseui-avatar>
 </mat-toolbar>
