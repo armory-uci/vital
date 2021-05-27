@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SandboxService } from 'src/app/services/http-services/sandbox.service';
@@ -11,6 +11,10 @@ import { IProblem } from '../problem-list/problem.model';
 import { DOCUMENT, KeyValue, Location } from '@angular/common';
 import { Inject } from '@angular/core';
 import { ProblemListService } from 'src/app/services/utility-services/problem-list.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserInfoService } from 'src/app/services/utility-services/user-info.service';
+import { ProblemStatus } from '../problem-list/problem-table/problem-table.component';
+import { HeaderService } from 'src/app/services/utility-services/header.service';
 
 @Component({
   selector: 'app-tutorial-page',
@@ -30,9 +34,11 @@ export class TutorialPageComponent implements OnInit {
   sandbox: {
     terminalUrl: SafeResourceUrl;
     websiteUrl: SafeResourceUrl;
+    isLoading: boolean;
   } = {
-    terminalUrl: this.getLoadingPageUrl(),
-    websiteUrl: this.getLoadingPageUrl()
+    terminalUrl: 'http://localhost:3001',
+    websiteUrl: 'http://localhost:5000',
+    isLoading: false
   };
 
   private problem: IProblem;
@@ -42,6 +48,9 @@ export class TutorialPageComponent implements OnInit {
     private router: Router,
     private sandboxService: SandboxService,
     private problemListService: ProblemListService,
+    private userInfoService: UserInfoService,
+    private headerService: HeaderService,
+    private snackBar: MatSnackBar,
     @Inject(DOCUMENT) private document: Document
   ) {
     this.sandbox.terminalUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
@@ -57,6 +66,8 @@ export class TutorialPageComponent implements OnInit {
     // Only create on problem that comes from the problems page.
     // TODO Maybe this makes sense as a query parameter once the backend supports only one container per user?
     if (!this.problem) return;
+
+    this.setHeaderTitle();
 
     this.problemListService.getProblemContent(this.problem).subscribe(
       (contents) => (this.tutorialContent = contents.docs[0].data()) // TODO 0?
@@ -75,6 +86,7 @@ export class TutorialPageComponent implements OnInit {
         });
         this.waitUntilSiteIsUp(websiteUrl).then(({ isUp }) => {
           if (isUp) {
+            this.sandbox.isLoading = false;
             this.sandbox.websiteUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
               websiteUrl
             );
@@ -86,6 +98,32 @@ export class TutorialPageComponent implements OnInit {
   tabOrder(a: KeyValue<string, string>, b: KeyValue<string, string>) {
     const possibleKeys = ['explore', 'exploit', 'mitigate'];
     return possibleKeys.indexOf(a.key) - possibleKeys.indexOf(b.key);
+  }
+
+  onValidate() {
+    this.sandboxService
+      .validate(
+        this.sanitizer.sanitize(
+          SecurityContext.RESOURCE_URL,
+          this.sandbox.websiteUrl
+        ) as string
+      )
+      .subscribe((status) => {
+        const currentStatus = status.solved
+          ? ProblemStatus.correct
+          : ProblemStatus.incorrect;
+        this.problemListService.changeProgress(
+          this.userInfoService.getUserInfo().uid,
+          this.problem.problemId,
+          this.problem.language,
+          currentStatus
+        );
+        this.setHeaderTitle(currentStatus);
+        const message = status.solved
+          ? `Congrats! You\'ve fixed the ${this.problem?.title} threat!`
+          : 'Keep trying! Use the mitigate tab.';
+        this.snackBar.open(message, 'OK', { duration: 5000 });
+      });
   }
 
   // This function tries to hit a url using a "opaque" request.
@@ -112,5 +150,19 @@ export class TutorialPageComponent implements OnInit {
 
   private getLoadingPageUrl(): string {
     return Location.joinWithSlash(this.document.location.origin, 'loading');
+  }
+
+  private setHeaderTitle(
+    status: ProblemStatus = this.problem.status as ProblemStatus
+  ) {
+    let statusText = 'Not Attempted';
+
+    if (status === ProblemStatus.correct) {
+      statusText = 'Solved';
+    } else if (status === ProblemStatus.incorrect) {
+      statusText = 'Unsolved';
+    }
+
+    this.headerService.setHeaderTitle(`${this.problem.title} - ${statusText}`);
   }
 }

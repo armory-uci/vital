@@ -5,7 +5,10 @@ import { Location } from '@angular/common';
 
 import { environment } from '../../../environments/environment';
 import { UserInfoService } from '../utility-services/user-info.service';
-import { ISandbox } from '../../home/tutorial-page/tutorial-page.model';
+import {
+  IProblemStatusResponse,
+  ISandbox
+} from '../../home/tutorial-page/tutorial-page.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +25,12 @@ export class SandboxService {
       {
         idtoken: this.userInfo.getUserInfo().idToken
       }
+    );
+  }
+
+  validate(sandboxWebsiteUrl: string): Observable<IProblemStatusResponse> {
+    return this.http.get<IProblemStatusResponse>(
+      Location.joinWithSlash(sandboxWebsiteUrl, 'status')
     );
   }
 }
