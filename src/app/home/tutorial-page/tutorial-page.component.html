@@ -11,6 +11,18 @@
         ></mat-tab>
       </mat-tab-group>
     </mat-card-content>
+    <mat-card-actions>
+      <button
+        [disabled]="sandbox.isLoading"
+        mat-flat-button
+        class="validate-btn"
+        mat-button
+        color="primary"
+        (click)="onValidate()"
+      >
+        Validate
+      </button>
+    </mat-card-actions>
   </mat-card>
   <mat-card class="terminal-card">
     <mat-card-header class="vital-card-header">

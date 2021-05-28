@@ -69,6 +69,7 @@ export class ProblemTableComponent implements OnInit {
               .then((da) => {
                 return {
                   ...d,
+                  language,
                   status: da.docs[0].get('status')
                 };
               });

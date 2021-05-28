@@ -31,6 +31,12 @@
   grid-area: website;
 }
 
+.validate-btn {
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+}
+
 mat-card {
   display: flex;
   flex-direction: column;

@@ -16,3 +16,7 @@ export interface IProblemContent {
     mitigate?: string;
   };
 }
+
+export interface IProblemStatusResponse {
+  solved: boolean;
+}
