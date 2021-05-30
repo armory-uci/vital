@@ -22,11 +22,7 @@ import { HeaderService } from 'src/app/services/utility-services/header.service'
   styleUrls: ['./tutorial-page.component.scss']
 })
 export class TutorialPageComponent implements OnInit {
-  // TODO All these are hard-coded. Need to figure out the following
-  // 1. Get them from a service that's triggered as soon as the user selects something in the problems page
-  // 2. Get the types right. Seems hacky right now
-  // 3. Put a loading indicator on all three, till there is content in them
-  title = 'SQL Injection';
+  title = '';
   tutorialContent: IProblemContent = {
     content: { explore: '', exploit: '', mitigate: '' }
   };
@@ -36,9 +32,9 @@ export class TutorialPageComponent implements OnInit {
     websiteUrl: SafeResourceUrl;
     isLoading: boolean;
   } = {
-    terminalUrl: 'http://localhost:3001',
-    websiteUrl: 'http://localhost:5000',
-    isLoading: false
+    terminalUrl: this.getLoadingPageUrl(),
+    websiteUrl: this.getLoadingPageUrl(),
+    isLoading: true
   };
 
   private problem: IProblem;
@@ -69,9 +65,11 @@ export class TutorialPageComponent implements OnInit {
 
     this.setHeaderTitle();
 
-    this.problemListService.getProblemContent(this.problem).subscribe(
-      (contents) => (this.tutorialContent = contents.docs[0].data()) // TODO 0?
-    );
+    this.problemListService
+      .getProblemContent(this.problem)
+      .subscribe(
+        (contents) => (this.tutorialContent = contents.docs[0].data())
+      );
 
     this.sandboxService
       .create(this.problem.serverId)
