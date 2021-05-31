@@ -1,7 +1,12 @@
 <mat-toolbar color="primary">
+  <span *ngIf="headerService.isBackArrowVisible()"
+    ><button mat-icon-button routerLink="/problem">
+      <mat-icon>arrow_back</mat-icon>
+    </button></span
+  >
   <span><a routerLink="/">vitaL</a></span>
   <span class="spacer"></span>
-  <h1>{{ headerService.getHeaderTitle() | async }}</h1>
+  <h1>{{ headerService.getHeaderTitle() }}</h1>
   <span class="spacer"></span>
   <ngx-auth-firebaseui-avatar></ngx-auth-firebaseui-avatar>
 </mat-toolbar>
