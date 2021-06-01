@@ -1,29 +1,34 @@
 import { Injectable } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeaderService {
-  private title$ = new BehaviorSubject<string>('');
+  private title = '';
+  private backArrowVisible = false;
 
   constructor(private router: Router) {
     // Makes sure the header title is cleared off every time the page changes,
     // so as to not have stale info in the header
     this.router.events
       .pipe(filter((e) => e instanceof NavigationEnd))
-      .subscribe(() => {
+      .subscribe((e: NavigationEnd) => {
         this.setHeaderTitle('');
+        this.backArrowVisible = e.url.includes('tutorial');
       });
   }
 
   setHeaderTitle(title: string) {
-    this.title$.next(title);
+    this.title = title;
   }
 
   getHeaderTitle() {
-    return this.title$;
+    return this.title;
+  }
+
+  isBackArrowVisible() {
+    return this.backArrowVisible;
   }
 }

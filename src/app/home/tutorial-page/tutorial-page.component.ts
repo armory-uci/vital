@@ -1,4 +1,10 @@
-import { Component, OnInit, SecurityContext } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  SecurityContext,
+  ViewChild
+} from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { SandboxService } from 'src/app/services/http-services/sandbox.service';
@@ -22,11 +28,10 @@ import { HeaderService } from 'src/app/services/utility-services/header.service'
   styleUrls: ['./tutorial-page.component.scss']
 })
 export class TutorialPageComponent implements OnInit {
-  // TODO All these are hard-coded. Need to figure out the following
-  // 1. Get them from a service that's triggered as soon as the user selects something in the problems page
-  // 2. Get the types right. Seems hacky right now
-  // 3. Put a loading indicator on all three, till there is content in them
-  title = 'SQL Injection';
+  @ViewChild('website')
+  private website: ElementRef<HTMLIFrameElement>;
+
+  title = '';
   tutorialContent: IProblemContent = {
     content: { explore: '', exploit: '', mitigate: '' }
   };
@@ -36,9 +41,9 @@ export class TutorialPageComponent implements OnInit {
     websiteUrl: SafeResourceUrl;
     isLoading: boolean;
   } = {
-    terminalUrl: 'http://localhost:3001',
-    websiteUrl: 'http://localhost:5000',
-    isLoading: false
+    terminalUrl: this.getLoadingPageUrl(),
+    websiteUrl: this.getLoadingPageUrl(),
+    isLoading: true
   };
 
   private problem: IProblem;
@@ -69,9 +74,11 @@ export class TutorialPageComponent implements OnInit {
 
     this.setHeaderTitle();
 
-    this.problemListService.getProblemContent(this.problem).subscribe(
-      (contents) => (this.tutorialContent = contents.docs[0].data()) // TODO 0?
-    );
+    this.problemListService
+      .getProblemContent(this.problem)
+      .subscribe(
+        (contents) => (this.tutorialContent = contents.docs[0].data())
+      );
 
     this.sandboxService
       .create(this.problem.serverId)
@@ -98,6 +105,12 @@ export class TutorialPageComponent implements OnInit {
   tabOrder(a: KeyValue<string, string>, b: KeyValue<string, string>) {
     const possibleKeys = ['explore', 'exploit', 'mitigate'];
     return possibleKeys.indexOf(a.key) - possibleKeys.indexOf(b.key);
+  }
+
+  reloadWebsite() {
+    // https://stackoverflow.com/a/46902311/2950032
+    // Can't use the location.reload because of cross-origin iframe, hence this hack.
+    this.website.nativeElement.src += '';
   }
 
   onValidate() {
