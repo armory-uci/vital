@@ -1,14 +1,14 @@
 const cluster = 'vital-sandbox';
 const awsRegion = 'us-east-1';
 const subnets = [
-  'subnet-15d85e24',
-  'subnet-27794d29',
-  'subnet-7b3f4d1d',
-  'subnet-a9255c88',
-  'subnet-c4aaa989',
-  'subnet-52f18d0d'
+  'subnet-92afc7f4',
+  'subnet-b22b5fed',
+  'subnet-45fcde4b',
+  'subnet-8798a0ca',
+  'subnet-b3b30c82',
+  'subnet-8c7c0aad'
 ];
-const securityGroups = ['sg-0d0aaa428018a509a'];
+const securityGroups = ['sg-0e54782ee714f5a8e'];
 
 const launchType = 'FARGATE';
 const assignPublicIp = 'ENABLED';
