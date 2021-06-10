@@ -5,7 +5,6 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ReferenceComponent } from './reference/reference.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
@@ -29,7 +28,6 @@ import { UserProfileComponent } from './home/problem-list/user-profile/user-prof
 @NgModule({
   declarations: [
     AppComponent,
-    ReferenceComponent,
     LoginComponent,
     HomeComponent,
     HeaderComponent,
