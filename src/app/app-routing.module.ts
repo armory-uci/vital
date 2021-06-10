@@ -6,10 +6,8 @@ import { TutorialPageComponent } from './home/tutorial-page/tutorial-page.compon
 import { LoadingComponent } from './loading/loading.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ReferenceComponent } from './reference/reference.component';
 
 export const routes: Routes = [
-  { path: 'reference', component: ReferenceComponent },
   { path: 'loading', component: LoadingComponent },
   {
     path: '',
